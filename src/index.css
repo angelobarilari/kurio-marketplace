@@ -1,0 +1,155 @@
+@import '@fontsource/roboto-mono/400.css';
+@import '@fontsource/roboto-mono/500.css';
+@import '@fontsource/roboto-mono/700.css';
+@import 'tailwindcss';
+
+@theme inline {
+  --color-background: var(--color-ink);
+  --color-foreground: var(--palette-foreground);
+  --color-primary: var(--palette-primary);
+  --color-primary-foreground: var(--color-on-primary);
+  --color-secondary: var(--color-panel-raised);
+  --color-secondary-foreground: var(--palette-foreground);
+  --color-border: var(--palette-border);
+  --color-input: var(--palette-border);
+  --color-muted: var(--color-panel-raised);
+  --color-muted-foreground: var(--palette-muted);
+  --color-ring: var(--palette-primary-bright);
+  --color-destructive: var(--palette-destructive);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+}
+
+:root {
+  font-family: 'Roboto Mono', monospace;
+  color: var(--color-foreground);
+  background: var(--color-ink);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+
+  --palette-ink: #140d0a;
+  --palette-panel: #241610;
+  --palette-panel-raised: #2a1a13;
+  --palette-border: #4a2a1c;
+  --palette-foreground: #f5f1eb;
+  --palette-muted: #b69a72;
+  --palette-primary: #d28a4c;
+  --palette-primary-bright: #e89b55;
+  --palette-destructive: #cf5b43;
+  --palette-shimmer: #ffffff0c;
+  --palette-footer: #3a2413;
+  --palette-hero-highlight: #5f3b26;
+  --palette-hero-mid: #3e2719;
+  --palette-hero-start: #442919;
+  --palette-hero-end: #21150f;
+  --palette-hero-glow: #b4733d33;
+  --palette-shadow: #00000033;
+  --color-ink: var(--palette-ink);
+  --color-panel: var(--palette-panel);
+  --color-panel-raised: var(--palette-panel-raised);
+  --color-border: var(--palette-border);
+  --color-foreground: var(--palette-foreground);
+  --color-muted: var(--palette-muted);
+  --color-primary: var(--palette-primary);
+  --color-primary-bright: var(--palette-primary-bright);
+  --color-on-primary: #140d0a;
+  --color-destructive: var(--palette-destructive);
+  --color-shimmer: var(--palette-shimmer);
+  --color-footer: var(--palette-footer);
+  --color-hero-highlight: var(--palette-hero-highlight);
+  --color-hero-mid: var(--palette-hero-mid);
+  --color-hero-start: var(--palette-hero-start);
+  --color-hero-end: var(--palette-hero-end);
+  --color-hero-glow: var(--palette-hero-glow);
+  --color-shadow: var(--palette-shadow);
+  --content-width: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--color-ink);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+@layer base {
+  button,
+  input,
+  select {
+    font: inherit;
+  }
+}
+
+button,
+a,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+::selection {
+  color: var(--color-ink);
+  background: var(--color-primary);
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary-bright);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
