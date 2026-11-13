@@ -141,7 +141,7 @@ Antes de criar HTML/Radix novo, procure o wrapper local em `src/components/ui`. 
 
 Teste resultados observáveis, semântica acessível e cenários relevantes. Use `--grep`, arquivo/projeto Playwright específicos para validação focada; execute toda a suíte ao fechar uma fase ou quando solicitado. Mudanças visuais relevantes exigem comparação com o frame e manutenção consciente dos baselines, não apenas atualização automática das imagens.
 
-A auditoria atual encontrou Performance Lighthouse mobile abaixo da meta e diferenças nas baselines visuais; não declare esses critérios aprovados nem atualize snapshots sem comparar com os frames canônicos. Consulte o roadmap antes de assumir esses itens como resolvidos. O deploy público está adiado para a etapa final pelo responsável do projeto; não publique nem crie recursos de hospedagem antes de solicitação explícita.
+A auditoria atual encontrou Performance Lighthouse mobile abaixo da meta e diferenças nas baselines visuais. O responsável aceitou manter esses resultados na entrega atual, mas isso não autoriza regressões futuras nem atualização automática dos snapshots: compare mudanças com os frames canônicos e consulte o roadmap. A aplicação já possui deploy público; não altere configuração, projeto ou provedor de hospedagem sem solicitação explícita.
 
 ```bash
 npm run typecheck

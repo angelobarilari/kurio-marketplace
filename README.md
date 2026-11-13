@@ -15,15 +15,47 @@ O enunciado original está preservado em [TECHNICAL-CHALLENGE.md](./TECHNICAL-CH
 | Testes e qualidade    | Playwright e Lighthouse                                   |
 | Build                 | Vite                                                      |
 
-## Executar localmente
+## Pré-requisitos
 
-Requer Node.js compatível com a versão do Vite e npm. O projeto funciona sem backend privado.
+- Node.js `20.19+` ou `22.12+` (`^20.19.0 || >=22.12.0`).
+- npm, incluído na instalação do Node.js.
+- Git, apenas se o projeto for obtido por clone.
+
+O projeto funciona sem backend, credenciais privadas, carteira real ou serviço externo.
+
+## Início rápido
+
+```bash
+git clone https://github.com/angelobarilari/kurio-marketplace.git
+cd kurio-marketplace
+npm ci
+```
+
+Crie o arquivo local de ambiente a partir do exemplo.
+
+Windows PowerShell:
 
 ```powershell
-npm ci
-if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+Copy-Item .env.example .env
+```
+
+macOS/Linux:
+
+```bash
+cp .env.example .env
+```
+
+Inicie o ambiente de desenvolvimento:
+
+```bash
 npm run dev
 ```
+
+Abra a URL exibida pelo Vite no terminal, normalmente `http://localhost:5173`.
+
+Se a porta padrão estiver ocupada, o Vite selecionará outra e informará o endereço correto. Alterações no código são recarregadas automaticamente.
+
+## Ambiente local
 
 `.env.example` configura mocks no navegador e no build de demonstração:
 
@@ -35,10 +67,22 @@ npm run dev
 
 Para criar uma build de produção e servi-la localmente:
 
-```powershell
+```bash
 npm run build
 npm run preview
 ```
+
+O preview normalmente fica disponível em `http://localhost:4173`. A build é gerada em `dist/`.
+
+## Roteiro rápido de avaliação
+
+1. Acesse `/` para testar busca, filtros, ordenação e paginação do catálogo.
+2. Abra um NFT para testar galeria, edição, quantidade, favorito e inclusão no carrinho.
+3. Acesse `/cart`, altere quantidades e use o cupom `KURIO10`.
+4. Crie uma conta pelo fluxo de cadastro ou use o login social simulado.
+5. Cadastre uma carteira no perfil e prossiga por `/checkout` até o pedido e o recibo simulados.
+
+Os dados ficam no backend MSW simulado e podem persistir no armazenamento do navegador para permitir refresh e retomada dos fluxos. Nenhuma compra ou conexão blockchain real é executada.
 
 ## Contas e cenários simulados
 
@@ -83,7 +127,15 @@ O reset restaura sessão, contas, favoritos, catálogo, carrinhos e pedidos. O c
 | `npm run test:visual`                                           | Executa as regressões visuais.                                            |
 | `npm run audit:lighthouse:matrix`                               | Executa três medições Lighthouse por rota e perfil, após `npm run build`. |
 
-O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile (390 × 844). A suíte inclui testes funcionais e regressões por screenshots. As diferenças visuais remanescentes foram aceitas pelo responsável porque os frames de referência do Figma têm problemas conhecidos; isso não significa equivalência pixel a pixel nem autorização para atualizar baselines em lote. A matriz Lighthouse inicia um Vite Preview local e salva relatórios HTML/JSON em `reports/lighthouse/phase-6/`, além das medianas em `docs/performance/LIGHTHOUSE-PHASE-6.md`. Não mantenha outro servidor usando a porta `4173` durante essas execuções.
+Na primeira execução dos testes, instale o navegador gerenciado pelo Playwright:
+
+```bash
+npx playwright install chromium
+```
+
+O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile (390 × 844). A suíte inclui testes funcionais e regressões por screenshots. A execução completa mais recente registrou 179 casos aprovados, 91 ignorados por viewport e nove diferenças visuais conhecidas. Essas diferenças foram aceitas pelo responsável por inconsistências nos frames do Figma; isso não significa equivalência pixel a pixel nem autorização para atualizar baselines em lote.
+
+A matriz Lighthouse inicia um Vite Preview local e salva relatórios HTML/JSON em `reports/lighthouse/phase-6/`. Essa pasta é um artefato local ignorado pelo Git; as medianas versionadas ficam em `docs/performance/LIGHTHOUSE-PHASE-6.md`. Não mantenha outro servidor usando a porta `4173` durante essas execuções.
 
 ## Documentação
 
@@ -96,4 +148,6 @@ O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile
 
 ## Estado da entrega
 
-A aplicação está publicada no Vercel: [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app). O deploy usa dados e autenticação simulados; não envia transações reais nem conecta serviços externos. As diferenças visuais do Playwright foram aceitas devido a problemas nos frames Figma, e a pontuação Lighthouse atual será mantida sem novas otimizações. A navegação manual por teclado foi validada pelo responsável. Consulte o roadmap para o estado da entrega.
+O código-fonte está publicado no repositório público [angelobarilari/kurio-marketplace](https://github.com/angelobarilari/kurio-marketplace), e a aplicação está disponível em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app).
+
+As diferenças visuais conhecidas e a decisão de manter o Lighthouse mobile atual estão registradas no roadmap. A rodada manual completa de teclado foi validada pelo responsável; foco, semântica, reflow e cenários automatizáveis também possuem cobertura Playwright.

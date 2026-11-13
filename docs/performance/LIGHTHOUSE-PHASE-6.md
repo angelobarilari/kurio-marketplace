@@ -1,6 +1,6 @@
 # Lighthouse — matriz da Fase 6
 
-Execução concluída em 2026-11-13T18:10:55.438Z. Cada combinação de rota/perfil foi medida 3 vezes; os resultados abaixo são medianas. Relatórios HTML e JSON por execução estão em [reports/lighthouse/phase-6](../../reports/lighthouse/phase-6/).
+Execução concluída em 2026-11-13T18:10:55.438Z. Cada combinação de rota/perfil foi medida 3 vezes; os resultados abaixo são medianas. Os relatórios HTML e JSON são gerados localmente em `reports/lighthouse/phase-6/` e não são versionados; esta síntese preserva os resultados relevantes no repositório.
 
 - Lighthouse: 12.8.2
 - Navegador: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36

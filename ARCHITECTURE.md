@@ -169,7 +169,7 @@ No mobile:
 5. relacionados em grid responsivo ou carrossel apenas se houver controles reais;
 6. footer/navegação conforme o shell público, sem duplicação.
 
-Breakpoints mínimos de validação: 390, 768 e 1440 px. Reflow a 320 CSS px, movimento reduzido, foco e overflow possuem cobertura automatizada; o responsável também confirmou a validação manual de navegação por teclado.
+Breakpoints mínimos de validação: 390, 768 e 1440 px. Reflow a 320 CSS px, movimento reduzido, foco e overflow possuem cobertura automatizada; a rodada manual completa de navegação por teclado também foi validada pelo responsável.
 
 ## Carrinho anônimo e cotação
 
@@ -251,18 +251,18 @@ Breakpoints mínimos de validação: 390, 768 e 1440 px. Reflow a 320 CSS px, mo
 - MSW oferece cenários determinísticos de catálogo vazio/erro e latência diferencial, detalhe com erro/retry, NFT indisponível, edições esgotadas, carrinho lento/indisponível, cotação e pedido em timeout, respostas HTTP e conflitos realtime. `catalog-out-of-order` é testado pelo worker MSW controlando a conclusão das respostas Ethereum/Polygon/Solana.
 - Baselines Playwright versionadas existem para home, detalhe, carrinho, checkout/recibo e autenticação. A execução completa mais recente detectou diferenças em nove screenshots (home, detalhe, carrinho e checkout em desktop/mobile, além do login desktop); não foram atualizadas automaticamente. Os frames canônicos permanecem a referência visual.
 - Baselines de conta cobrem login/cadastro desktop e mobile, perfil e gerenciamento de carteiras. Testes também verificam sessão/isolamento, erros associados aos campos, validação de upload/endereço/senha, foco do Dialog e zoom/reflow a 200%.
-- A matriz Playwright completa executada com 279 casos registrou 178 aprovados, 91 ignorados por viewport e 10 falhas. Uma falha de favorito no tablet passou ao ser repetida isoladamente; permanecem nove divergências visuais. Após essa matriz, os testes direcionados de ordenação de respostas/catalog e prioridade de imagem passaram.
+- A matriz Playwright completa mais recente executou 279 casos: 179 aprovados, 91 ignorados por viewport e nove divergências visuais aceitas pelo responsável. Os testes funcionais adicionados para clique repetido, recuperação de pedido após reconexão e remoção parcial de quantidades também passaram.
 - A cobertura E2E verifica merge idempotente, persistência por usuário, logout sem vazamento, reset determinístico e pedidos/recibos, incluindo duplicatas, eventos antigos e reconexão.
-- A build de produção passou; Vite reporta chunks de aproximadamente 867 kB (`index`) e 489 kB (`browser`) antes de gzip. O bundle é uma oportunidade de code splitting, não um erro de build.
+- A build de produção passou com divisão por rota; os maiores chunks observados ficaram em aproximadamente 476 kB (`browser`) e 276 kB (entrada principal) antes de gzip, sem aviso de chunk acima de 500 kB.
 - Playwright cobre a autenticação desktop como modal, a página dedicada mobile e a retomada do favorito solicitado; os cenários de falha mantêm rollback/feedback em vez de sucesso fictício.
-- A matriz Lighthouse de produção foi executada três vezes por rota e perfil. Os resultados atuais estão em [LIGHTHOUSE-PHASE-6.md](./docs/performance/LIGHTHOUSE-PHASE-6.md), com os relatórios HTML/JSON correspondentes em `reports/lighthouse/phase-6/`.
+- A matriz Lighthouse de produção foi executada três vezes por rota e perfil. Os resultados versionados estão em [LIGHTHOUSE-PHASE-6.md](./docs/performance/LIGHTHOUSE-PHASE-6.md); os relatórios HTML/JSON detalhados são artefatos locais gerados em `reports/lighthouse/phase-6/` e ignorados pelo Git.
 - Acessibilidade Lighthouse atingiu 100 nos quatro perfis, Best Practices 96 e SEO 92. Performance desktop ficou em 97/98; mobile em 68/72, abaixo da meta original ≥90. O responsável decidiu manter a pontuação atual sem novas otimizações nesta etapa.
-- Foco de diálogo, nomes/alt, contraste, reduced motion e reflow estão automatizados; a navegação manual por teclado também foi validada pelo responsável.
+- Foco de diálogo, nomes/alt, contraste, reduced motion e reflow estão automatizados; a rodada manual completa de teclado também foi validada pelo responsável.
 
 ## Escopo e limitações atuais
 
 Implementado: homepage e catálogo, detalhe de NFT e carrinho responsivos; contratos summary/detail/cart/quote; acesso direto/404; persistência visitante e carrinhos autenticados; cotação e cupom; mutations otimistas; conflitos de preço/disponibilidade; atualização versionada via Socket.IO e reconciliação REST; sessão simulada, autenticação desktop/mobile, merge idempotente, perfil, carteiras e favoritos por usuário; checkout, pedidos idempotentes, confirmação/recusa simuladas e recibo imutável.
 
-Publicado em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app). Os diffs visuais do Playwright foram aceitos devido a problemas conhecidos nos frames Figma; a pontuação Lighthouse mobile abaixo da meta original será mantida conforme decisão do responsável. Integrações reais com blockchain/carteiras/gateway de pagamento permanecem fora do escopo.
+O código-fonte está publicado no repositório público [angelobarilari/kurio-marketplace](https://github.com/angelobarilari/kurio-marketplace), e a aplicação está publicada em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app). Os diffs visuais do Playwright foram aceitos devido a problemas conhecidos nos frames Figma; a pontuação Lighthouse mobile abaixo da meta original será mantida conforme decisão do responsável. Integrações reais com blockchain/carteiras/gateway de pagamento permanecem fora do escopo.
 
-Conclusão atual: **as Fases 1 a 6 estão implementadas e a aplicação está publicada**. Diffs visuais e a pontuação Lighthouse atual foram aceitos conforme registrado no roadmap.
+Conclusão atual: **as Fases 1 a 6 estão implementadas, validadas e publicadas**. Diffs visuais e a pontuação Lighthouse atual foram aceitos conforme registrado no roadmap.

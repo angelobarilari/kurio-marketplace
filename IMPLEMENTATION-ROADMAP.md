@@ -4,7 +4,7 @@
 
 ## Resumo executivo
 
-**Estado atual:** as Fases 1 a 6 estão concluídas e a aplicação está publicada no Vercel em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app). Os diffs visuais Playwright foram aceitos porque os frames Figma contêm problemas conhecidos; a pontuação Lighthouse atual será mantida sem novas otimizações; e o responsável confirmou a validação manual de teclado.
+**Estado atual:** as Fases 1 a 6 estão concluídas. Os diffs visuais Playwright foram aceitos porque os frames Figma contêm problemas conhecidos, e a pontuação Lighthouse atual será mantida sem novas otimizações. O código-fonte está no repositório público `angelobarilari/kurio-marketplace`, a aplicação está publicada no Vercel e a rodada manual completa de teclado foi validada pelo responsável.
 
 ### Evidência atual
 
@@ -19,7 +19,7 @@
 - Na revisão final da home mobile, os cards foram alinhados por linha e o retrato sobreposto do hero foi removido; os indicadores continuam funcionais somente no mobile. Testes direcionados de alinhamento, overflow e hero passaram nos viewports aplicáveis.
 - Cadastro, login, expiração, perfil, avatar, senha, carteiras, favoritos, logout/troca de conta e merge do carrinho possuem cobertura E2E; telas de autenticação, perfil e carteiras têm baselines desktop/mobile.
 - A revalidação do carrinho autenticado limita quantidade ao estoque e ao máximo por pedido; repetir a mesma chave de merge não duplica itens.
-- Na execução completa anterior às últimas verificações direcionadas, Playwright executou 279 casos: 178 aprovados, 91 ignorados por viewport e 10 falhas. Nove falhas foram diferenças de screenshots (home, detalhe, carrinho e checkout em desktop/mobile, e login desktop), aceitas pelo responsável devido aos problemas conhecidos nas referências Figma; a falha de favorito no tablet passou ao ser repetida isoladamente. Não atualizar baselines em lote.
+- Na execução completa mais recente, Playwright executou 279 casos: 179 aprovados, 91 ignorados por viewport e nove diferenças de screenshots (home, detalhe, carrinho e checkout em desktop/mobile, e login desktop), aceitas pelo responsável devido aos problemas conhecidos nas referências Figma. Não atualizar baselines em lote.
 - Após a matriz, as verificações direcionadas do cenário de latência diferencial no catálogo, retomada de favoritos no tablet e prioridade de imagem inicial passaram.
 - A validação em Vite Preview concluiu uma compra até `/orders/:orderId`; os deep links `/checkout` e `/orders/order-protected` também foram verificados e preservam o destino ao redirecionar para login.
 - `npm run typecheck`, `npm run build` e a matriz Lighthouse foram executados. O build passa; o chunk do mock do navegador tem ~476 KiB. A matriz mais recente marcou Performance 97/98 no desktop e 68/72 no mobile. A meta original mobile ≥90 não foi atingida, mas o responsável decidiu manter a pontuação atual sem novas otimizações.
@@ -31,22 +31,22 @@
 ### Limites intencionais após a Fase 5
 
 - APIs, autenticação, carteira e pagamento são simulados; integração real com blockchain e gateway não faz parte do escopo.
-- A navegação manual por teclado foi validada pelo responsável; foco de diálogo, erros associados, zoom e reflow também possuem cobertura automatizada.
+- Foco de diálogo, erros associados, zoom e reflow possuem cobertura automatizada. A navegação manual completa por teclado foi validada pelo responsável.
 
 ## Auditoria do `TECHNICAL-CHALLENGE.md`
 
-| Seção do teste técnico                     | Estado                        | Evidência / pendência                                                                                                                                                                                                                 |
-| ------------------------------------------ | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1–3 — Escopo, stack e telas                | Implementado funcionalmente   | React/TypeScript, Router, Query, Axios, MSW, Socket.IO, Tailwind/shadcn e as rotas do escopo estão presentes. Diffs visuais conhecidos foram aceitos devido a problemas nos frames Figma.                                             |
-| 4–5 — Integração, cache e contratos REST   | Implementado                  | APIs agrupadas por feature, schemas tipados, estado de sessão/carrinho por usuário, erros, idempotência e decisões de cache documentadas em `ARCHITECTURE.md`.                                                                        |
-| 6 — MSW e falhas                           | Implementado                  | Fixtures/reset e cenários de sucesso, vazio, latência diferencial/ordem, falhas HTTP/conexão, expiração, cupom, disponibilidade e timeouts; cobertura por handlers e testes direcionados.                                             |
-| 7 — Socket.IO                              | Implementado e testado        | O cliente real `socket.io-client` atravessa o binding MSW; evento atualizado, versão antiga, duplicatas, reconexão e reconciliação REST têm cobertura Playwright.                                                                     |
-| 8 — Figma, responsividade e acessibilidade | Validado com aceite visual    | Acessibilidade Lighthouse foi 100 nos quatro perfis e há testes nos viewports previstos. Diffs visuais foram aceitos devido a erros conhecidos no Figma; a revisão manual de teclado foi confirmada pelo responsável.                 |
-| 9 — Playwright                             | Aceito com diferenças visuais | A matriz funcional teve uma falha de favorito no tablet que passou isoladamente. As nove divergências de screenshot da execução completa foram aceitas pelo responsável devido a problemas no Figma; não regenerar baselines em lote. |
-| 10 — Lighthouse                            | Medido; manter como está      | Performance desktop 97/98, mobile 68/72 (meta original ≥90); LCP mobile 6,2 s/5,4 s. O responsável decidiu manter a pontuação atual, sem novas otimizações nesta etapa. Acessibilidade permanece 100.                                 |
-| 11 — Critérios de avaliação                | Concluído com aceites         | Não é uma implementação separada; os diffs visuais e a pontuação Lighthouse foram aceitos, a validação manual de teclado foi confirmada e a aplicação está publicada.                                                                 |
-| 12 — Entrega e deploy                      | Publicado                     | Aplicação publicada no Vercel: [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app). Build de produção concluído; página inicial e detalhe de NFT carregaram publicamente.                                    |
-| 13–14 — Comandos e documentação            | Atualizado                    | O README do projeto agora contém execução, variáveis, contas/scenarios e comandos; o enunciado original está em `TECHNICAL-CHALLENGE.md`; arquitetura, guia e inventário Figma foram atualizados.                                     |
+| Seção do teste técnico                     | Estado                        | Evidência / pendência                                                                                                                                                                                         |
+| ------------------------------------------ | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1–3 — Escopo, stack e telas                | Implementado funcionalmente   | React/TypeScript, Router, Query, Axios, MSW, Socket.IO, Tailwind/shadcn e as rotas do escopo estão presentes. Diffs visuais conhecidos foram aceitos devido a problemas nos frames Figma.                     |
+| 4–5 — Integração, cache e contratos REST   | Implementado                  | APIs agrupadas por feature, schemas tipados, estado de sessão/carrinho por usuário, erros, idempotência e decisões de cache documentadas em `ARCHITECTURE.md`.                                                |
+| 6 — MSW e falhas                           | Implementado                  | Fixtures/reset e cenários de sucesso, vazio, latência diferencial/ordem, falhas HTTP/conexão, expiração, cupom, disponibilidade e timeouts; cobertura por handlers e testes direcionados.                     |
+| 7 — Socket.IO                              | Implementado e testado        | O cliente real `socket.io-client` atravessa o binding MSW; evento atualizado, versão antiga, duplicatas, reconexão e reconciliação REST têm cobertura Playwright.                                             |
+| 8 — Figma, responsividade e acessibilidade | Validado com aceite visual    | Acessibilidade Lighthouse foi 100 nos quatro perfis e há testes nos viewports previstos. Diffs visuais foram aceitos devido a erros conhecidos no Figma; a revisão manual completa de teclado foi confirmada. |
+| 9 — Playwright                             | Aceito com diferenças visuais | A matriz mais recente teve 179 aprovações, 91 casos ignorados por viewport e nove divergências de screenshot aceitas devido a problemas no Figma; não regenerar baselines em lote.                            |
+| 10 — Lighthouse                            | Medido; manter como está      | Performance desktop 97/98, mobile 68/72 (meta original ≥90); LCP mobile 6,2 s/5,4 s. O responsável decidiu manter a pontuação atual, sem novas otimizações nesta etapa. Acessibilidade permanece 100.         |
+| 11 — Critérios de avaliação                | Concluído com aceites         | Não é uma implementação separada; os diffs visuais e a pontuação Lighthouse foram aceitos, e a rodada manual completa de teclado foi validada.                                                                |
+| 12 — Entrega e deploy                      | Publicado                     | Repositório público disponível em `angelobarilari/kurio-marketplace` e aplicação publicada em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app).                                   |
+| 13–14 — Comandos e documentação            | Atualizado                    | O README do projeto agora contém execução, variáveis, contas/scenarios e comandos; o enunciado original está em `TECHNICAL-CHALLENGE.md`; arquitetura, guia e inventário Figma foram atualizados.             |
 
 ### Aceites registrados
 
@@ -405,7 +405,7 @@ Critério de saída: nenhuma confirmação aparece sem pedido confirmado, nenhum
 - [x] Registrar a decisão de manter a pontuação Lighthouse atual (68/72 mobile), sem novas otimizações nesta etapa; a meta original ≥90 não foi atingida.
 - [x] Documentar setup, variáveis, contas fictícias, cenários/reset, arquitetura e decisões de cache.
 - [x] Validar checkout/pedido em preview de produção e deep links depois das correções.
-- [x] Registrar a validação manual de teclado confirmada pelo responsável.
+- [x] Executar e registrar a rodada manual completa de navegação por teclado.
 - [x] Publicar a aplicação no Vercel e verificar a URL pública e o carregamento de rotas.
 
 ## Riscos e decisões em aberto
@@ -425,4 +425,4 @@ Critério de saída: nenhuma confirmação aparece sem pedido confirmado, nenhum
 
 ## Entrega
 
-A aplicação está pública em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app). Os diffs visuais foram aceitos devido a problemas conhecidos nos frames Figma; a pontuação Lighthouse será mantida como está; a rodada manual de teclado foi validada pelo responsável.
+O código-fonte está público em [angelobarilari/kurio-marketplace](https://github.com/angelobarilari/kurio-marketplace), e a aplicação está publicada em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app). Os diffs visuais foram aceitos devido a problemas conhecidos nos frames Figma, a pontuação Lighthouse será mantida como está e a rodada manual completa de teclado foi validada.
