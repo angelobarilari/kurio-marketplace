@@ -115,7 +115,7 @@ export const CartSummary = ({ hasItems, hasConflict }: CartSummaryProps) => {
         </form>
 
         {quote.isPending && hasItems ? (
-          <p className="text-sm text-(--color-muted)" role="status">
+          <p className={cn('text-sm text-(--color-muted)', mobile && 'min-h-[149px]')} role="status">
             Atualizando valores...
           </p>
         ) : quote.isError && !error ? (

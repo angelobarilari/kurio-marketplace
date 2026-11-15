@@ -14,10 +14,16 @@ const enableMocks = async () => {
     requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
   })
 
+  const registration = await navigator.serviceWorker?.getRegistration('/')
+  await registration?.update()
+
   const { worker } = await import('@/mocks/browser')
   await worker.start({
     onUnhandledRequest: 'bypass',
-    serviceWorker: { url: '/mockServiceWorker.js' },
+    serviceWorker: {
+      url: '/mockServiceWorker.js',
+      options: { updateViaCache: 'none' },
+    },
   })
 }
 

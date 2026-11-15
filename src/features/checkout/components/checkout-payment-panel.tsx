@@ -95,20 +95,22 @@ export const CheckoutPaymentPanel = ({
         />
       )}
 
-      <section className={isMobile ? 'hidden' : ''} aria-labelledby="order-items-title">
-        <h2 id="order-items-title" className="mb-3 text-xl font-bold">
-          Seus NFTs
-        </h2>
-        <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-center border-b border-(--color-border) pb-3 text-sm font-bold">
-          <span>NFTs</span>
-          <span>Subtotal</span>
-        </div>
-        <div className="space-y-3">
-          {cart.items.map((item) => (
-            <CartItemRow key={item.id} variant="summary" item={item} />
-          ))}
-        </div>
-      </section>
+      {!isMobile && (
+        <section aria-labelledby="order-items-title">
+          <h2 id="order-items-title" className="mb-3 text-xl font-bold">
+            Seus NFTs
+          </h2>
+          <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-center border-b border-(--color-border) pb-3 text-sm font-bold">
+            <span>NFTs</span>
+            <span>Subtotal</span>
+          </div>
+          <div className="space-y-3">
+            {cart.items.map((item) => (
+              <CartItemRow key={item.id} variant="summary" item={item} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <form
         className={isMobile ? 'hidden' : 'flex items-center gap-2'}

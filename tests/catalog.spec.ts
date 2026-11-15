@@ -38,6 +38,49 @@ test('catalog has no horizontal overflow at the configured viewport', async ({ p
   expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport)
 })
 
+test('mobile homepage skips loading content hidden at this viewport', async ({ page }, testInfo) => {
+  test.skip(!testInfo.project.name.includes('mobile'))
+  const hiddenModulesRequested: string[] = []
+  page.on('request', (request) => {
+    const url = request.url()
+    if (
+      url.includes('home-editorial') ||
+      url.includes('site-footer') ||
+      url.includes('catalog-filters') ||
+      url.includes('desktop-catalog-sort') ||
+      url.includes('/components/ui/select') ||
+      /\/select-[^/]+\.js/.test(url)
+    ) {
+      hiddenModulesRequested.push(url)
+    }
+  })
+
+  await page.goto('/')
+  await expect(page.getByTestId('nft-card')).toHaveCount(9)
+  await expect(page.getByTestId('promo-card')).toHaveCount(0)
+  await expect(page.getByTestId('journal-card')).toHaveCount(0)
+  await expect(page.getByRole('contentinfo')).toHaveCount(0)
+  expect(hiddenModulesRequested).toEqual([])
+
+  await page.getByRole('button', { name: 'Abrir filtros' }).click()
+  await expect(
+    page.locator('#mobile-filters').getByRole('heading', { name: 'Filtrar por coleção' }),
+  ).toBeVisible()
+  await expect.poll(() => hiddenModulesRequested.some((url) => url.includes('catalog-filters'))).toBe(true)
+  expect(hiddenModulesRequested.some((url) => url.includes('desktop-catalog-sort'))).toBe(false)
+  expect(
+    hiddenModulesRequested.some(
+      (url) => url.includes('/components/ui/select') || /\/select-[^/]+\.js/.test(url),
+    ),
+  ).toBe(true)
+})
+
+test('desktop footer remains available', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name.includes('mobile'))
+  await page.goto('/')
+  await expect(page.getByRole('contentinfo')).toBeVisible()
+})
+
 test('mobile catalog cards align within each grid row', async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.includes('mobile'))
   await page.goto('/')

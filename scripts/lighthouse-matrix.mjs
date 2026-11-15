@@ -104,7 +104,7 @@ try {
   const markdown = [
     '# Lighthouse — matriz da Fase 6',
     '',
-    `Execução concluída em ${reportInfo.fetchTime}. Cada combinação de rota/perfil foi medida ${config.runsPerTarget} vezes; os resultados abaixo são medianas. Relatórios HTML e JSON por execução estão em [reports/lighthouse/phase-6](../../reports/lighthouse/phase-6/).`,
+    `Execução concluída em ${reportInfo.fetchTime}. Cada combinação de rota/perfil foi medida ${config.runsPerTarget} vezes; os resultados abaixo são medianas. Os relatórios HTML e JSON são artefatos locais ignorados pelo Git e ficam em \`${config.outputDirectory}/\`.`,
     '',
     `- Lighthouse: ${reportInfo.lighthouseVersion}`,
     `- Navegador: ${reportInfo.environment.hostUserAgent}`,
@@ -118,9 +118,15 @@ try {
         `| ${row.name === 'home' ? 'Início' : 'Detalhe'} ${row.profile} | ${formatScore(row.performance)} | ${formatScore(row.accessibility)} | ${formatScore(row.bestPractices)} | ${formatScore(row.seo)} | ${formatMs(row.lcp)} | ${row.cls.toFixed(4)} | ${formatMs(row.tbt)} |`,
     ),
     '',
+    '## Leitura dos resultados',
+    '',
+    '- A tabela registra medições locais reproduzíveis, não uma garantia da pontuação do ambiente publicado.',
+    '- Mudanças de performance devem ser comparadas pelas medianas, usando a mesma configuração e três execuções por alvo.',
+    '- Os relatórios detalhados podem ser regenerados com `npm run audit:lighthouse:matrix`.',
+    '',
   ].join('\n')
-  await writeFile(path.join(root, 'docs', 'performance', 'LIGHTHOUSE-PHASE-6.md'), markdown)
-  console.log('\nSaved docs/performance/LIGHTHOUSE-PHASE-6.md')
+  await writeFile(path.join(outputDirectory, 'summary.md'), markdown)
+  console.log(`\nSaved ${path.join(config.outputDirectory, 'summary.md')}`)
 } finally {
   await stopPreview()
 }

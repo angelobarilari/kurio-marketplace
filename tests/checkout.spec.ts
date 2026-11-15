@@ -30,6 +30,9 @@ const prepareCheckout = async (page: Page) => {
   await expect(page.getByRole('button', { name: 'Conectar carteira' })).toHaveCount(0)
   if (!isMobile) {
     await expect(page.getByRole('button', { name: 'Voltar ao carrinho' })).toHaveCount(0)
+  } else {
+    await expect(page.getByRole('heading', { name: 'Carteira e rede' })).toHaveCount(0)
+    await expect(page.locator('aside[aria-label="Resumo e pagamento"] img')).toHaveCount(0)
   }
   for (const text of [
     'Finalizar compra',
@@ -42,7 +45,11 @@ const prepareCheckout = async (page: Page) => {
     await expect(page.getByText(text, { exact: false })).toHaveCount(0)
   }
   await page.getByLabel('Código de indicação').fill('TESTE10')
-  if (isMobile) await page.getByRole('button', { name: 'Continuar para pagamento' }).click()
+  if (isMobile) {
+    await page.getByRole('button', { name: 'Continuar para pagamento' }).click()
+    await expect(page.getByRole('heading', { name: 'Carteira e rede' })).toBeVisible()
+    await expect(page.locator('aside[aria-label="Resumo e pagamento"] img')).toHaveCount(0)
+  }
 }
 
 test.beforeEach(async ({ page }) => resetMocks(page))
@@ -102,6 +109,11 @@ test('completes checkout and presents the immutable confirmed receipt', async ({
   })
   await expect(page.getByRole('heading', { name: 'Seus NFTs agora estão na sua carteira' })).toBeVisible()
   await expect(page.getByText('Emerald Ape #042')).toBeVisible()
+  if (testInfo.project.name.includes('mobile')) {
+    const receiptImage = page.getByRole('main').locator('img').first()
+    await expect(receiptImage).toHaveAttribute('srcset', /320w/)
+    await expect(receiptImage).toHaveAttribute('fetchpriority', 'high')
+  }
   const envelope = page.getByTestId('receipt-envelope')
   const envelopeLabel = page.getByTestId('receipt-envelope-label')
   const envelopeBox = await envelope.boundingBox()
@@ -333,6 +345,9 @@ test('recovers a pending order after refresh and ignores duplicated or older upd
   await page.getByRole('button', { name: 'Confirmar compra' }).click()
   await expect(page).toHaveURL(/\/orders\/order-/)
   await expect(page.getByRole('heading', { name: 'Aguardando confirmação' })).toBeVisible()
+  const orderImage = page.getByRole('main').locator('img').first()
+  await expect(orderImage).toHaveAttribute('srcset', /320w/)
+  await expect(orderImage).toHaveAttribute('fetchpriority', 'high')
 
   const orderId = new URL(page.url()).pathname.split('/').pop()
   expect(orderId).toBeTruthy()

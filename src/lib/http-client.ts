@@ -19,6 +19,12 @@ httpClient.interceptors.request.use(async (config) => {
 })
 
 httpClient.interceptors.response.use((response) => {
+  const contentType = response.headers['content-type']
+  const expectsBody = response.status !== 204 && response.config.method !== 'head'
+  if (expectsBody && typeof contentType === 'string' && contentType.includes('text/html')) {
+    throw new Error('A API retornou uma resposta inv\u00e1lida. Recarregue a p\u00e1gina e tente novamente.')
+  }
+
   if (response.config.url?.startsWith('/cart') && Array.isArray(response.data?.items)) {
     const isMutation = response.config.method !== 'get'
     const hasSnapshot = globalThis.localStorage?.getItem('kurio:visitor-cart') !== null

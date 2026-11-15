@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { NftImage } from '@/components/media/nft-image'
 import { Badge } from '@/components/ui/badge'
 import { FavoriteButton } from '@/features/favorites/components/favorite-button'
 import type { Nft } from '@/types/nft'
@@ -17,12 +18,13 @@ export const NftCard = ({ nft, priority = false }: NftCardProps) => (
         params={{ nftId: nft.id }}
         aria-label={`Ver detalhes de ${nft.name} ${nft.tokenId}`}
       >
-        <img
+        <NftImage
           className="aspect-square w-full rounded-[10px] object-cover max-[760px]:rounded-2xl"
           src={nft.image}
           alt={`Arte de ${nft.name}`}
           loading={priority ? 'eager' : 'lazy'}
           fetchPriority={priority ? 'high' : 'auto'}
+          sizes="(max-width: 760px) calc(50vw - 30px), (max-width: 1100px) calc((100vw - 310px) / 3), 280px"
         />
       </Link>
 

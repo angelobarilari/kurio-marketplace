@@ -27,8 +27,8 @@ export const FavoritesContent = ({ sessionId }: { sessionId: string }) => {
       <p className="mb-7 text-sm text-(--color-muted)">NFTs salvos para consultar novamente quando quiser.</p>
       {favorites.data.items.length ? (
         <div className="grid grid-cols-3 gap-x-5 gap-y-9 max-[1100px]:grid-cols-2 max-[540px]:grid-cols-1">
-          {favorites.data.items.map((nft) => (
-            <NftCard key={nft.id} nft={nft} />
+          {favorites.data.items.map((nft, index) => (
+            <NftCard key={nft.id} nft={nft} priority={index === 0} />
           ))}
         </div>
       ) : (

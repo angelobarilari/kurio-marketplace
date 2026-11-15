@@ -3,7 +3,6 @@ dist
 playwright-report
 test-results
 reports
-docs/performance/lighthouse/*.json
 .github/agents
 public/mockServiceWorker.js
 package-lock.json

@@ -9,9 +9,11 @@ import { CartSkeleton } from '@/features/cart/components/cart-skeleton'
 import { CartSummary } from '@/features/cart/components/cart-summary'
 import { cartDesktopGridClass, cartTableColumns } from '@/features/cart/components/cart-table-layout'
 import { useCartPageController } from '@/features/cart/hooks/use-cart-page-controller'
+import { useMediaQuery } from '@/hooks/use-media-query'
 import { cn } from '@/lib/utils'
 
 export const CartPage = () => {
+  const isMobile = useMediaQuery('(max-width: 760px)')
   const page = useCartPageController()
   const { cart } = page
 
@@ -93,10 +95,11 @@ export const CartPage = () => {
                 </div>
                 <Separator className="mb-4 max-[900px]:hidden" />
                 <div className="space-y-4 max-[760px]:space-y-3">
-                  {cart.data.items.map((item) => (
+                  {cart.data.items.map((item, index) => (
                     <CartItemRow
                       key={item.id}
                       item={item}
+                      priority={index === 0}
                       pending={page.mutationPending}
                       onQuantityChange={page.changeQuantity}
                       onRemove={page.remove}
@@ -106,9 +109,7 @@ export const CartPage = () => {
               </section>
               <CartSummary hasItems hasConflict={hasConflict} />
             </div>
-            <div className="max-[760px]:hidden">
-              <CartRecommendations />
-            </div>
+            {!isMobile && <CartRecommendations />}
           </>
         )}
       </MarketplaceCommercePage>

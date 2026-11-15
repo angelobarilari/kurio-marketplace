@@ -135,7 +135,7 @@ npx playwright install chromium
 
 O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile (390 × 844). A suíte inclui testes funcionais e regressões por screenshots. A execução completa mais recente registrou 179 casos aprovados, 91 ignorados por viewport e nove diferenças visuais conhecidas. Essas diferenças foram aceitas pelo responsável por inconsistências nos frames do Figma; isso não significa equivalência pixel a pixel nem autorização para atualizar baselines em lote.
 
-A matriz Lighthouse inicia um Vite Preview local e salva relatórios HTML/JSON em `reports/lighthouse/phase-6/`. Essa pasta é um artefato local ignorado pelo Git; as medianas versionadas ficam em `docs/performance/LIGHTHOUSE-PHASE-6.md`. Não mantenha outro servidor usando a porta `4173` durante essas execuções.
+A matriz Lighthouse inicia um Vite Preview local e salva relatórios HTML/JSON em `reports/lighthouse/phase-6/`. Essa pasta é um artefato local ignorado pelo Git; o resumo versionado fica em `docs/performance/LIGHTHOUSE.md`. Não mantenha outro servidor usando a porta `4173` durante essas execuções.
 
 ## Documentação
 
@@ -144,10 +144,10 @@ A matriz Lighthouse inicia um Vite Preview local e salva relatórios HTML/JSON e
 - [Roadmap e auditoria de requisitos](./IMPLEMENTATION-ROADMAP.md)
 - [Guia de implementação e convenções](./AI-PROJECT-GUIDE.md)
 - [Inventário dos frames do Figma](./docs/references/figma/README.md)
-- [Resultados Lighthouse](./docs/performance/LIGHTHOUSE.md) e [matriz da Fase 6](./docs/performance/LIGHTHOUSE-PHASE-6.md)
+- [Resultados e próximos passos Lighthouse](./docs/performance/LIGHTHOUSE.md)
 
 ## Estado da entrega
 
 O código-fonte está publicado no repositório público [angelobarilari/kurio-marketplace](https://github.com/angelobarilari/kurio-marketplace), e a aplicação está disponível em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app).
 
-As diferenças visuais conhecidas e a decisão de manter o Lighthouse mobile atual estão registradas no roadmap. A rodada manual completa de teclado foi validada pelo responsável; foco, semântica, reflow e cenários automatizáveis também possuem cobertura Playwright.
+As diferenças visuais conhecidas estão registradas no roadmap; os resultados e próximos passos Lighthouse estão consolidados em [um único documento](./docs/performance/LIGHTHOUSE.md). A rodada manual completa de teclado foi validada pelo responsável; foco, semântica, reflow e cenários automatizáveis também possuem cobertura Playwright.

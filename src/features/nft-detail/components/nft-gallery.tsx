@@ -1,5 +1,6 @@
 import { ArrowLeft, Search } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
+import { NftImage } from '@/components/media/nft-image'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { FavoriteButton } from '@/features/favorites/components/favorite-button'
@@ -48,19 +49,26 @@ export const NftGallery = ({ nft, gallery, activeId, onSelect }: NftGalleryProps
               aria-label={`Selecionar imagem ${index + 1}: ${media.alt}`}
               onClick={() => onSelect(media.id)}
             >
-              <img className="size-full object-cover" src={media.src} alt="" aria-hidden="true" />
+              <NftImage
+                className="size-full object-cover"
+                src={media.src}
+                sizes="108px"
+                alt=""
+                aria-hidden="true"
+              />
             </Button>
           </div>
         ))}
       </div>
 
       <div className="relative rounded-lg bg-(--color-panel) p-5 max-[1100px]:p-4 max-[760px]:-mx-5.5 max-[760px]:rounded-none max-[760px]:bg-[radial-gradient(circle_at_50%_0%,var(--color-hero-mid),var(--color-panel))] max-[760px]:px-5.5 max-[760px]:pt-16 max-[760px]:pb-0 max-[390px]:-mx-4 max-[390px]:px-4">
-        <img
+        <NftImage
           className="aspect-square w-full rounded-2xl object-cover max-[760px]:rounded-[28px]"
           src={activeMedia.src}
           alt={activeMedia.alt}
           loading="eager"
           fetchPriority="high"
+          sizes="(max-width: 760px) calc(100vw - 44px), (max-width: 1100px) calc(100vw - 152px), 620px"
         />
         <Dialog>
           <DialogTrigger asChild>
@@ -79,10 +87,11 @@ export const NftGallery = ({ nft, gallery, activeId, onSelect }: NftGalleryProps
             <DialogDescription className="sr-only">
               Visualização ampliada de {activeMedia.alt}
             </DialogDescription>
-            <img
+            <NftImage
               className="max-h-[85vh] max-w-[86vw] rounded-lg object-contain"
               src={activeMedia.src}
               alt={activeMedia.alt}
+              sizes="86vw"
             />
           </DialogContent>
         </Dialog>
