@@ -4,7 +4,7 @@
 
 ## Resumo executivo
 
-**Estado atual:** as Fases 1 a 6 estão implementadas e publicadas, com otimizações posteriores de carregamento mobile e pré-renderização estática. Na matriz Lighthouse obrigatória mais recente, Performance marcou 84 na homepage mobile e 88 no detalhe (meta ≥90); consulte [LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md). A suíte Playwright completa também não está verde: 192 passaram, 109 foram ignorados por viewport e 20 falharam. Os 12 diffs de screenshot da execução atual não foram todos revisados/aceitos como artefatos do Figma, e as 8 falhas funcionais/assertivas ainda precisam ser isoladas. A aplicação está publicada no Vercel e a rodada manual completa de teclado foi validada pelo responsável.
+**Estado atual:** as Fases 1 a 6 estão implementadas e publicadas, com otimizações posteriores de carregamento mobile e pré-renderização estática. Na matriz Lighthouse obrigatória mais recente, Performance marcou 84 na homepage mobile e 88 no detalhe (meta ≥90); consulte [LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md). A suíte Playwright completa também não está verde: 192 passaram, 109 foram ignorados por viewport e 20 falharam. Os 11 diffs de screenshot da execução atual não foram todos revisados/aceitos como artefatos do Figma, e as 9 falhas funcionais/assertivas ainda precisam ser isoladas. A aplicação está publicada no Vercel e a rodada manual completa de teclado foi validada pelo responsável.
 
 ### Evidência atual
 
@@ -19,8 +19,8 @@
 - Na revisão final da home mobile, os cards foram alinhados por linha e o retrato sobreposto do hero foi removido; os indicadores continuam funcionais somente no mobile. Testes direcionados de alinhamento, overflow e hero passaram nos viewports aplicáveis.
 - Cadastro, login, expiração, perfil, avatar, senha, carteiras, favoritos, logout/troca de conta e merge do carrinho possuem cobertura E2E; telas de autenticação, perfil e carteiras têm baselines desktop/mobile.
 - A revalidação do carrinho autenticado limita quantidade ao estoque e ao máximo por pedido; repetir a mesma chave de merge não duplica itens.
-- Na execução completa de 15/11/2026, Playwright executou 321 casos: 192 aprovados, 109 ignorados por viewport e 20 falhas. Foram 12 diffs de screenshots (home, detalhe, carrinho e checkout/recibo desktop/mobile; login/cadastro e perfil/carteiras desktop/mobile) e 8 falhas funcionais/assertivas. Não foram aceitos em bloco nem houve atualização automática de baselines.
-- As 8 falhas funcionais/assertivas observadas: seletor ambíguo no teste de merge do carrinho; estado vazio do catálogo ausente; guard do checkout sem redirecionamento esperado; favorito não refletido; duas expectativas de loading no catálogo tablet; timeout ao clicar nos filtros mobile; heading de recuperação da carteira ausente após recusa. `InvalidStateError` do MSW/Service Worker também ocorreu com 8 workers, então parte pode ser flakiness concorrente; cada falha precisa ser reproduzida antes de atribuir causa.
+- Na execução completa de 15/11/2026, Playwright executou 321 casos: 192 aprovados, 109 ignorados por viewport e 20 falhas. Foram 11 diffs de screenshots (home, detalhe, carrinho e checkout/recibo desktop/mobile; login/cadastro e perfil/carteiras desktop/mobile) e 9 falhas funcionais/assertivas. Não foram aceitos em bloco nem houve atualização automática de baselines.
+- As 9 falhas funcionais/assertivas observadas: seletor ambíguo no teste de merge do carrinho; estado vazio do catálogo ausente; guard do checkout sem redirecionamento esperado; favorito não refletido; duas expectativas de loading no catálogo tablet; timeout ao clicar nos filtros mobile; heading de recuperação da carteira ausente após recusa; e no carrinho mobile os 9 cards esperados não apareceram. `InvalidStateError` do MSW/Service Worker também ocorreu com 8 workers, então parte pode ser flakiness concorrente; cada falha precisa ser reproduzida antes de atribuir causa.
 - Após a matriz, as verificações direcionadas do cenário de latência diferencial no catálogo, retomada de favoritos no tablet e prioridade de imagem inicial passaram.
 - A validação em Vite Preview concluiu uma compra até `/orders/:orderId`; os deep links `/checkout` e `/orders/order-protected` também foram verificados e preservam o destino ao redirecionar para login.
 - `npm run typecheck`, `npm run build` e a matriz Lighthouse foram executados. O build passa; os resultados, histórico e oportunidades atuais de performance estão consolidados em [docs/performance/LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md).
@@ -39,12 +39,12 @@
 
 | Seção do teste técnico                     | Estado                      | Evidência / pendência                                                                                                                                                                                                                |
 | ------------------------------------------ | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1–3 — Escopo, stack e telas                | Implementado funcionalmente | React/TypeScript, Router, Query, Axios, MSW, Socket.IO, Tailwind/shadcn e as rotas do escopo estão presentes. Aceites visuais históricos são específicos; os 12 diffs da última execução ainda aguardam revisão.                     |
+| 1–3 — Escopo, stack e telas                | Implementado funcionalmente | React/TypeScript, Router, Query, Axios, MSW, Socket.IO, Tailwind/shadcn e as rotas do escopo estão presentes. Aceites visuais históricos são específicos; os 11 diffs da última execução ainda aguardam revisão.                     |
 | 4–5 — Integração, cache e contratos REST   | Implementado                | APIs agrupadas por feature, schemas tipados, estado de sessão/carrinho por usuário, erros, idempotência e decisões de cache documentadas em `ARCHITECTURE.md`.                                                                       |
 | 6 — MSW e falhas                           | Implementado                | Fixtures/reset e cenários de sucesso, vazio, latência diferencial/ordem, falhas HTTP/conexão, expiração, cupom, disponibilidade e timeouts; cobertura por handlers e testes direcionados.                                            |
 | 7 — Socket.IO                              | Implementado e testado      | O cliente real `socket.io-client` atravessa o binding MSW; evento atualizado, versão antiga, duplicatas, reconexão e reconciliação REST têm cobertura Playwright.                                                                    |
-| 8 — Figma, responsividade e acessibilidade | Parcial; revisão pendente   | Acessibilidade Lighthouse foi 100 nos quatro perfis e há testes nos viewports previstos. Os 12 diffs visuais atuais ainda não foram revisados individualmente; inconsistências conhecidas do Figma não justificam aceite automático. |
-| 9 — Playwright                             | Pendente de estabilização   | Execução completa: 192 aprovados, 109 ignorados e 20 falhas (12 screenshots e 8 funcionais/assertivas). Há erros `InvalidStateError` do MSW/Service Worker com 8 workers; investigar causas e repetir os casos afetados.             |
+| 8 — Figma, responsividade e acessibilidade | Parcial; revisão pendente   | Acessibilidade Lighthouse foi 100 nos quatro perfis e há testes nos viewports previstos. Os 11 diffs visuais atuais ainda não foram revisados individualmente; inconsistências conhecidas do Figma não justificam aceite automático. |
+| 9 — Playwright                             | Pendente de estabilização   | Execução completa: 192 aprovados, 109 ignorados e 20 falhas (11 screenshots e 9 funcionais/assertivas). Há erros `InvalidStateError` do MSW/Service Worker com 8 workers; investigar causas e repetir os casos afetados.             |
 | 10 — Lighthouse                            | Medido e otimizado          | Resultados, meta mobile, histórico e pendências estão na fonte única [docs/performance/LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md).                                                                                             |
 | 11 — Critérios de avaliação                | Parcial; não conforme ainda | A Performance mobile da matriz obrigatória ficou em 84 na homepage e 88 no detalhe (meta ≥90); a suíte Playwright completa também permanece com falhas. A rodada manual completa de teclado foi validada.                            |
 | 12 — Entrega e deploy                      | Publicado                   | Repositório público disponível em `angelobarilari/kurio-marketplace` e aplicação publicada em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app).                                                          |
@@ -52,9 +52,9 @@
 
 ### Aceites registrados
 
-1. As inconsistências conhecidas em frames Figma e os aceites visuais históricos aplicam-se apenas aos diffs revisados naquela ocasião. As 12 falhas de screenshot da execução mais recente não foram aceitas em bloco; revisar os pares atual/baseline/frame e não atualizar snapshots em lote.
+1. As inconsistências conhecidas em frames Figma e os aceites visuais históricos aplicam-se apenas aos diffs revisados naquela ocasião. As 11 falhas de screenshot da execução mais recente não foram aceitas em bloco; revisar os pares atual/baseline/frame e não atualizar snapshots em lote.
 2. A meta Lighthouse Performance mobile ≥90 não foi atingida na matriz obrigatória: homepage 84 e detalhe 88. Consulte [docs/performance/LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md) para medições, causas observadas e próximos passos.
-3. A suíte Playwright completa registrou 8 falhas funcionais/assertivas além das visuais. Reproduzir os casos individualmente, investigar a corrida MSW/Service Worker sob concorrência e atualizar este estado quando houver nova execução completa aprovada.
+3. A suíte Playwright completa registrou 9 falhas funcionais/assertivas além das visuais. Reproduzir os casos individualmente, investigar a corrida MSW/Service Worker sob concorrência e atualizar este estado quando houver nova execução completa aprovada.
 
 ## Padrões obrigatórios para próximas páginas
 
@@ -403,9 +403,9 @@ Critério de saída: nenhuma confirmação aparece sem pedido confirmado, nenhum
 
 - [x] Validar Socket.IO através de `socket.io-client`, incluindo reconexão, versões e duplicatas.
 - [x] Completar os cenários MSW determinísticos do teste técnico, incluindo latência variável e respostas fora de ordem.
-- [x] Implementar cobertura para as 12 jornadas funcionais Playwright; a última execução completa ainda registrou oito falhas funcionais/assertivas.
-- [ ] Reproduzir e corrigir/ajustar as oito falhas funcionais/assertivas e estabilizar o MSW/Service Worker sob concorrência.
-- [ ] Revisar individualmente os 12 diffs de screenshot atuais contra baselines e frames Figma; não aceitar em bloco nem atualizar snapshots automaticamente.
+- [x] Implementar cobertura para as 12 jornadas funcionais Playwright; a última execução completa ainda registrou nove falhas funcionais/assertivas.
+- [ ] Reproduzir e corrigir/ajustar as nove falhas funcionais/assertivas e estabilizar o MSW/Service Worker sob concorrência.
+- [ ] Revisar individualmente os 11 diffs de screenshot atuais contra baselines e frames Figma; não aceitar em bloco nem atualizar snapshots automaticamente.
 - [x] Otimizar e medir novamente a performance: imagens responsivas, fonte variável, header desktop fora da árvore mobile, prioridade de LCP e reconciliação realtime sem invalidação no primeiro connect; resultados e pendências estão na fonte única Lighthouse.
 - [x] Documentar setup, variáveis, contas fictícias, cenários/reset, arquitetura e decisões de cache.
 - [x] Validar checkout/pedido em preview de produção e deep links depois das correções.
