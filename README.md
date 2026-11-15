@@ -126,6 +126,8 @@ O reset restaura sessão, contas, favoritos, catálogo, carrinhos e pedidos. O c
 | `npm run test:e2e`                                              | Executa a matriz Playwright completa.                                     |
 | `npm run test:visual`                                           | Executa as regressões visuais.                                            |
 | `npm run audit:lighthouse:matrix`                               | Executa três medições Lighthouse por rota e perfil, após `npm run build`. |
+| `npm run build`                                                 | Gera a build e os documentos HTML pré-renderizados elegíveis.             |
+| `npm run audit:lighthouse:prerendered`                          | Mede as rotas pré-renderizadas; exige build com mocks habilitados.        |
 
 Na primeira execução dos testes, instale o navegador gerenciado pelo Playwright:
 
@@ -135,7 +137,9 @@ npx playwright install chromium
 
 O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile (390 × 844). A suíte inclui testes funcionais e regressões por screenshots. A execução completa mais recente registrou 179 casos aprovados, 91 ignorados por viewport e nove diferenças visuais conhecidas. Essas diferenças foram aceitas pelo responsável por inconsistências nos frames do Figma; isso não significa equivalência pixel a pixel nem autorização para atualizar baselines em lote.
 
-A matriz Lighthouse inicia um Vite Preview local e salva relatórios HTML/JSON em `reports/lighthouse/phase-6/`. Essa pasta é um artefato local ignorado pelo Git; o resumo versionado fica em `docs/performance/LIGHTHOUSE.md`. Não mantenha outro servidor usando a porta `4173` durante essas execuções.
+A matriz Lighthouse inicia um Vite Preview local e salva relatórios HTML/JSON em `reports/lighthouse/phase-6/`. A auditoria de rotas pré-renderizadas usa o servidor local próprio na porta `4175` e aceita seletores como `npm run audit:lighthouse:prerendered -- --target=checkout --runs=1`. Os relatórios HTML/JSON ficam em `reports/lighthouse/` (artefatos locais ignorados pelo Git); resultados e condições estão em `docs/performance/LIGHTHOUSE.md`.
+
+`npm run build` também gera HTML estático para as rotas aplicáveis. Para incluir a homepage e os detalhes dos NFTs de demonstração, configure `VITE_ENABLE_MOCKS=true` no ambiente de build (no setup local, `.env` já vem com esse valor). Páginas privadas recebem apenas sua estrutura inicial; sessão, carrinho, carteira e pedido são carregados no cliente. Isso é pré-renderização estática de build, não SSR dinâmico.
 
 ## Documentação
 

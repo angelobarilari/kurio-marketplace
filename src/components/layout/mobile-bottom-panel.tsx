@@ -1,11 +1,19 @@
-import type { ComponentProps } from 'react'
+import { useSyncExternalStore, type ComponentProps } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/utils'
 
 type MobileBottomPanelProps = ComponentProps<'div'>
 
-export const MobileBottomPanel = ({ className, ...props }: MobileBottomPanelProps) =>
-  createPortal(
+const subscribeToPortalTarget = () => () => {}
+const getPortalTarget = () => document.body
+const getServerPortalTarget = () => null
+
+export const MobileBottomPanel = ({ className, ...props }: MobileBottomPanelProps) => {
+  const portalTarget = useSyncExternalStore(subscribeToPortalTarget, getPortalTarget, getServerPortalTarget)
+
+  if (!portalTarget) return null
+
+  return createPortal(
     <div
       role="region"
       className={cn(
@@ -14,5 +22,6 @@ export const MobileBottomPanel = ({ className, ...props }: MobileBottomPanelProp
       )}
       {...props}
     />,
-    document.body,
+    portalTarget,
   )
+}

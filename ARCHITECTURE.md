@@ -13,6 +13,14 @@
 - Playwright executa Chromium em 1440×900, 768×1024 e 390×844.
 - Lucide fornece ícones funcionais genéricos e `react-icons/fa6` fornece somente ícones de marcas sociais ausentes no Lucide.
 
+### Pré-renderização e roteamento
+
+`npm run build` executa TypeScript, Vite e `scripts/prerender-routes.mjs`. O script renderiza documentos HTML estáticos por meio de `src/entry-server.tsx` e TanStack Router. Com `VITE_ENABLE_MOCKS=true`, a build gera a homepage e as 54 páginas de NFT dos fixtures, além das rotas fixas de conta/checkout e um documento genérico para pedidos dinâmicos. Sem mocks, as rotas privadas e o documento de pedido continuam disponíveis, mas a homepage e os detalhes dos fixtures não são pré-renderizados.
+
+A pré-renderização não usa sessão nem dados de usuário. As páginas privadas contêm somente a estrutura inicial segura; dados de sessão, carrinho, carteiras e pedidos são carregados no cliente. Query strings e rotas sem documento correspondente seguem a inicialização client-side normal. É SSG durante o build, não SSR dinâmico por requisição. No Vercel, `cleanUrls` serve os documentos estáticos e `/orders/:orderId` é reescrito para `orders.html`.
+
+Em `src/router.tsx`, cada rota mantém seu próprio `validateSearch`; parsers de campos compartilhados (`couponCode` e `network`) ficam em `src/router-search.ts`. O preload usa um objeto para caminhos exatos e regras separadas para padrões dinâmicos.
+
 ## Organização vigente
 
 ```text
@@ -253,7 +261,7 @@ Breakpoints mínimos de validação: 390, 768 e 1440 px. Reflow a 320 CSS px, mo
 - Baselines de conta cobrem login/cadastro desktop e mobile, perfil e gerenciamento de carteiras. Testes também verificam sessão/isolamento, erros associados aos campos, validação de upload/endereço/senha, foco do Dialog e zoom/reflow a 200%.
 - A matriz Playwright completa mais recente executou 279 casos: 179 aprovados, 91 ignorados por viewport e nove divergências visuais aceitas pelo responsável. Os testes funcionais adicionados para clique repetido, recuperação de pedido após reconexão e remoção parcial de quantidades também passaram.
 - A cobertura E2E verifica merge idempotente, persistência por usuário, logout sem vazamento, reset determinístico e pedidos/recibos, incluindo duplicatas, eventos antigos e reconexão.
-- A build de produção passou com divisão por rota; os maiores chunks observados ficaram em aproximadamente 476 kB (`browser`) e 276 kB (entrada principal) antes de gzip, sem aviso de chunk acima de 500 kB.
+- A build de produção passou com divisão por rota e pré-renderização. Na build atual, os maiores chunks observados ficaram em aproximadamente 476 kB (`browser`) e 304 kB (entrada principal) antes de gzip; o chunk `browser` permanece abaixo do limite de aviso de 500 kB.
 - Playwright cobre a autenticação desktop como modal, a página dedicada mobile e a retomada do favorito solicitado; os cenários de falha mantêm rollback/feedback em vez de sucesso fictício.
 - A matriz Lighthouse foi executada três vezes por rota e perfil. Os resultados consolidados estão em [LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md); os relatórios HTML/JSON detalhados são artefatos locais em `reports/lighthouse/` e ignorados pelo Git.
 - Imagens NFT conhecidas usam `NftImage`, um componente de mídia compartilhado sobre o elemento nativo `img`, com variantes WebP 320/768/1254, `srcset`, `sizes`, loading e prioridade. shadcn/ui não oferece um primitivo genérico de imagem responsiva; `Avatar` e `AspectRatio` não substituem essa responsabilidade.
@@ -267,4 +275,4 @@ Implementado: homepage e catálogo, detalhe de NFT e carrinho responsivos; contr
 
 O código-fonte está publicado no repositório público [angelobarilari/kurio-marketplace](https://github.com/angelobarilari/kurio-marketplace), e a aplicação está publicada em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app). Os diffs visuais do Playwright foram aceitos devido a problemas conhecidos nos frames Figma; o status de performance mobile e os próximos passos estão no documento Lighthouse único. Integrações reais com blockchain/carteiras/gateway de pagamento permanecem fora do escopo.
 
-Conclusão atual: **as Fases 1 a 6 estão implementadas, validadas e publicadas**. Diffs visuais foram aceitos conforme registrado no roadmap; a performance mobile continua em melhoria.
+Conclusão atual: **as Fases 1 a 6 estão implementadas, validadas e publicadas**, com otimizações Lighthouse posteriores incluindo pré-renderização estática das rotas. Diffs visuais foram aceitos conforme registrado no roadmap; a performance mobile continua em melhoria e as medições mais recentes estão em `docs/performance/LIGHTHOUSE.md`.

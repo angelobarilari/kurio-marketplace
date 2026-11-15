@@ -1,5 +1,9 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/orders/:orderId", "destination": "/orders.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

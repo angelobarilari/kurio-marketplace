@@ -63,11 +63,13 @@ O LCP é a imagem do primeiro card Emerald Ape, não o texto nem a imagem do her
 
 **Status do bundle mobile:** `HomeEditorial` e `SiteFooter` agora são carregados apenas acima de 760 px. Os filtros do catálogo só são carregados quando o painel mobile é aberto; o seletor de ordenação exclusivo de desktop também não entra no caminho mobile inicial. Testes verificam que esses módulos não são requisitados na primeira renderização e que os filtros continuam funcionais quando abertos.
 
+**Status da pré-renderização:** o build gera HTML para as rotas de carrinho, checkout, autenticação e conta, além de uma página inicial genérica para pedidos dinâmicos. Essas páginas privadas recebem apenas sua estrutura inicial segura (skeleton/carregamento), sem sessão, carrinho, carteira ou pedido de usuário no HTML; os dados reais continuam sendo carregados no cliente. Quando `VITE_ENABLE_MOCKS=true`, também são gerados a homepage e os detalhes públicos dos NFTs dos fixtures. O cliente hidrata a marcação correspondente à rota; URLs com query string e NFTs fora dos fixtures continuam na inicialização client-side normal. A mudança não redesenha as páginas: apenas antecipa para o HTML a mesma estrutura/estado inicial que antes aparecia após o JavaScript.
+
 **Próxima opção, da menor para a maior intervenção:**
 
-- Considerar pré-renderização/SSR do conteúdo inicial do catálogo. É uma mudança arquitetural; precisa preservar dados, filtros e hidratação.
-
-Não há evidência de que outra compressão ou preload da mesma imagem resolva o gargalo principal.
+- Repetir a medição no deploy e em aparelho/rede reais. O pré-render estático local usa os fixtures do modo demo, não substitui SSR dinâmico conectado a uma API real.
+- Investigar o atraso de renderização do LCP: nesta rodada, a mediana foi de aproximadamente 2.565 ms (81% do LCP), enquanto a descoberta e o carregamento da imagem somaram cerca de 199 ms.
+- Não há evidência de que outra compressão ou preload da mesma imagem resolva o gargalo principal.
 
 ### 3. Trabalho de recomendações não exibidas no mobile
 
@@ -113,12 +115,12 @@ Os artefatos estão em `reports/lighthouse/phase-7-routes-before/` e `reports/li
 
 Três execuções frias da homepage após adiar os filtros e o seletor de desktop, com a mesma simulação Moto G Power (2022), viewport 390 x 844, DPR 1, RTT 150 ms, 1.638,4 Kbps e CPU 4x. Lighthouse 12.8.2 / HeadlessChrome 157; os resultados são medianas.
 
-| Métrica | Rodada anterior | Atual | Variação |
-| ------- | --------------: | ----: | -------: |
-| Performance | 77 | 78 | +1 |
-| FCP | 3.428 ms | 3.005 ms | -423 ms |
-| LCP | 4.404 ms | 4.419 ms | +15 ms |
-| TBT | 78 ms | 119,5 ms | +41,5 ms |
+| Métrica                |        Rodada anterior |                  Atual |               Variação |
+| ---------------------- | ---------------------: | ---------------------: | ---------------------: |
+| Performance            |                     77 |                     78 |                     +1 |
+| FCP                    |               3.428 ms |               3.005 ms |                -423 ms |
+| LCP                    |               4.404 ms |               4.419 ms |                 +15 ms |
+| TBT                    |                  78 ms |               119,5 ms |               +41,5 ms |
 | JavaScript transferido | 394.381 B / 33 scripts | 373.239 B / 30 scripts | -21.142 B / -3 scripts |
 
 - Os módulos `catalog-filters`, `desktop-catalog-sort` e `select` não aparecem na waterfall mobile inicial; o painel de filtros os requisita quando é aberto.
@@ -126,6 +128,50 @@ Três execuções frias da homepage após adiar os filtros e o seletor de deskto
 - Build e testes direcionados de filtros/ordenação passaram. O teste de screenshot `home` ainda diverge das imagens de referência versionadas em desktop e mobile; elas não foram atualizadas nesta etapa, então a equivalência visual continua pendente de revisão.
 
 Relatórios desta rodada: `reports/lighthouse/phase-10-home-mobile-controls/`.
+
+## Última rodada: pré-renderização da homepage
+
+Três execuções frias da homepage após a pré-renderização estática, comparadas à rodada anterior de bundle mobile. Mesma configuração: Lighthouse 12.8.2 / HeadlessChrome, Moto G Power (2022) simulado, viewport 390 x 844, DPR 1, RTT 150 ms, 1.638,4 Kbps e CPU 4x. Os valores são medianas.
+
+| Métrica     | Bundle mobile anterior | Pré-renderização |      Variação |
+| ----------- | ---------------------: | ---------------: | ------------: |
+| Performance |                     78 |               90 |           +12 |
+| FCP         |               3.005 ms |         2.448 ms |       -557 ms |
+| LCP         |               4.419 ms |         3.160 ms |     -1.259 ms |
+| TBT         |               119,5 ms |           9,5 ms |       -110 ms |
+| CLS         |                      0 |                0 | sem alteração |
+
+- O candidato de LCP continua sendo a imagem do primeiro card Emerald Ape. Agora os nove cards já estão no HTML inicial, e o audit identificou a imagem no markup antes da execução do JavaScript.
+- Build e hidratação de produção passaram em desktop e mobile; a homepage manteve os nove cards e os filtros mobile continuaram funcionais. Testes direcionados também cobrem filtros por URL e acesso direto ao carrinho.
+- Uma das três execuções teve LCP de 4.071 ms, contra aproximadamente 3.160 ms nas outras duas. A mediana melhorou de forma clara, mas a variabilidade continua relevante; não tratar uma execução isolada como garantia.
+- A mudança é pré-renderização estática de build, não SSR dinâmico por requisição. A homepage e os detalhes de NFT usam fixtures do modo demo; rotas com query string e IDs fora dos fixtures continuam na inicialização client-side. Dados privados nunca são gravados no HTML estático.
+
+Relatórios desta rodada: `reports/lighthouse/phase-11-home-ssg-final/`.
+
+## Auditoria das rotas pré-renderizadas
+
+Nova auditoria mobile após a pré-renderização das demais páginas. Cada rota teve três execuções em perfis Chrome isolados; os valores abaixo são medianas. O servidor da auditoria resolve as URLs limpas para os documentos gerados e reproduz o rewrite de `/orders/:orderId` do Vercel. Antes de medir, o harness valida o conteúdo esperado da rota; isso evita contar redirecionamentos para login como checkout ou páginas de conta.
+
+Perfil simulado Moto G Power (2022), viewport 390 x 844, DPR 1, RTT 150 ms, 1.638,4 Kbps, CPU 4x; Lighthouse 12.8.2 / HeadlessChrome 157. Build de produção com MSW habilitado.
+
+| Rota mobile                             | Performance | Acessibilidade |      LCP |    TBT | CLS |
+| --------------------------------------- | ----------: | -------------: | -------: | -----: | --: |
+| Início                                  |          88 |            100 | 1.603 ms | 449 ms |   0 |
+| Detalhe NFT (`emerald-ape-042`)         |          94 |            100 | 1.462 ms | 289 ms |   0 |
+| Login                                   |          92 |            100 | 1.130 ms | 340 ms |   0 |
+| Cadastro                                |          94 |            100 | 1.124 ms | 285 ms |   0 |
+| Carrinho (visitante, 4 itens)           |          93 |             96 | 2.458 ms | 227 ms |   0 |
+| Checkout (sessão, 1 item)               |          91 |            100 | 2.513 ms | 236 ms |   0 |
+| Perfil (fixture Nova)                   |          96 |            100 | 1.782 ms | 232 ms |   0 |
+| Carteiras (fixture Nova)                |          88 |            100 | 2.286 ms | 423 ms |   0 |
+| Favoritos (fixture Nova)                |          97 |             98 | 1.797 ms | 173 ms |   0 |
+| Pedido confirmado (gerado por execução) |          94 |             94 | 2.060 ms | 248 ms |   0 |
+
+- Foi medido um detalhe representativo; os 54 IDs de NFT pré-renderizados usam o mesmo template. Pedidos usam IDs dinâmicos e o documento genérico `orders.html`.
+- As páginas privadas foram medidas após autenticação com o fixture Nova; o pedido foi confirmado antes de cada execução. Os dados privados foram semeados no navegador e não são gravados no HTML estático.
+- Início e carteiras ficaram abaixo de 90 nesta rodada. A pontuação e o TBT variaram entre execuções; por isso, estes resultados comprovam o estado atual das rotas, mas não isolam o ganho causado pela pré-renderização nem garantem o mesmo resultado no deploy ou em aparelho real.
+
+Relatórios HTML/JSON e resumo gerado: `reports/lighthouse/phase-12-prerendered-routes/` (artefatos locais ignorados pelo Git).
 
 ## Otimizações já feitas
 
@@ -143,10 +189,12 @@ Os valores de `resourceSize` das imagens servidas localmente pelo MSW não são 
 1. Concluído: confirmar que a build pública usa MSW; não desligar os mocks sem uma API real.
 2. Concluído: remover a montagem das recomendações no mobile, reservar espaço para a cotação e repetir três medições frias. O CLS do carrinho foi zerado, mas Home e carrinho ainda estão abaixo de 90.
 3. Concluído: adiar módulos que não são necessários no mobile inicial. A transferência de JavaScript caiu 21 KB e três requisições; score e TBT variaram e o LCP não melhorou de forma mensurável.
-4. Próximo: investigar como antecipar a descoberta/renderização do primeiro card da homepage. Pré-renderização/SSR é uma hipótese arquitetural; não fazer preload da imagem já descoberta pelo hero sem nova evidência.
+4. Concluído: pré-renderizar os nove cards iniciais da homepage e hidratar o estado do router. A mediana de LCP caiu 1.259 ms, Performance subiu 12 pontos e CLS permaneceu em 0; confirmar no deploy antes de atribuir o mesmo ganho a usuários reais.
 5. Depois, testar a hipótese de renderização antecipada do carrinho visitante, protegendo a semântica de sessão e merge.
 6. Validar em aparelho/rede reais antes de afirmar Core Web Vitals de usuários.
 
 ## Execução e validação
 
 `npm run audit:lighthouse:matrix` executa a matriz configurada em `scripts/lighthouse-matrix.config.json` após `npm run build`. Os relatórios HTML/JSON e o resumo gerado ficam em `reports/lighthouse/phase-6/` (artefatos locais ignorados pelo Git). A matriz padrão não semeia o estado autenticado do carrinho; para repetir esta auditoria, use o mesmo estado de quatro itens e um perfil frio isolado.
+
+`npm run audit:lighthouse:prerendered` executa três auditorias mobile por rota configuradas em `scripts/lighthouse-prerendered-routes.config.json`, após `VITE_ENABLE_MOCKS=true npm run build`. O harness também aceita `--target=checkout --runs=1` para uma verificação direcionada.

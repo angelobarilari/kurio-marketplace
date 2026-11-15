@@ -4,7 +4,7 @@
 
 ## Resumo executivo
 
-**Estado atual:** as Fases 1 a 6 estão concluídas. Os diffs visuais Playwright foram aceitos porque os frames Figma contêm problemas conhecidos. Uma nova rodada de performance otimizou imagens, fontes, carregamento do header desktop e sincronização realtime; a meta Lighthouse mobile original ainda não foi atingida. O código-fonte está no repositório público `angelobarilari/kurio-marketplace`, a aplicação está publicada no Vercel e a rodada manual completa de teclado foi validada pelo responsável.
+**Estado atual:** as Fases 1 a 6 estão concluídas, e as otimizações de performance continuaram após elas com carregamento mobile sob demanda e pré-renderização estática das rotas. Na auditoria de dez rotas, Início e Carteiras marcaram 88; uma rodada anterior da homepage marcou 90. Como os resultados variam, a meta mobile ≥90 ainda não é consistente em todas as rotas. Os diffs visuais Playwright foram aceitos porque os frames Figma contêm problemas conhecidos. O código-fonte está no repositório público `angelobarilari/kurio-marketplace`, a aplicação está publicada no Vercel e a rodada manual completa de teclado foi validada pelo responsável.
 
 ### Evidência atual
 
@@ -23,6 +23,7 @@
 - Após a matriz, as verificações direcionadas do cenário de latência diferencial no catálogo, retomada de favoritos no tablet e prioridade de imagem inicial passaram.
 - A validação em Vite Preview concluiu uma compra até `/orders/:orderId`; os deep links `/checkout` e `/orders/order-protected` também foram verificados e preservam o destino ao redirecionar para login.
 - `npm run typecheck`, `npm run build` e a matriz Lighthouse foram executados. O build passa; os resultados, histórico e oportunidades atuais de performance estão consolidados em [docs/performance/LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md).
+- O build de produção pré-renderiza documentos estáticos para as rotas elegíveis. Com mocks habilitados, a homepage e os 54 detalhes de NFT dos fixtures também são gerados; dados privados permanecem carregados no cliente. Essa implementação é SSG de build, não SSR dinâmico.
 - Na validação direcionada após as otimizações de renderização inicial e prioridade das imagens visíveis, passaram 60 testes aplicáveis de catálogo e nove verificações de detalhe nos três viewports. A paginação aguarda a revalidação inicial antes de interagir, e mantém latência determinística para exercitar o estado de carregamento.
 - A limpeza de filtros ativos tem saída visível na sidebar, nos filtros mobile e no estado sem resultados; o acesso à conta está disponível no menu desktop e na navegação/área de conta mobile.
 - Favoritar sem sessão preserva o contexto com modal no desktop e página dedicada no mobile; o favorito solicitado é enviado após autenticação confirmada.
@@ -51,7 +52,7 @@
 ### Aceites registrados
 
 1. As divergências visuais conhecidas do Playwright foram aceitas pelo responsável porque os frames Figma têm erros/inconsistências; manter os snapshots atuais e não atualizá-los em lote.
-2. A meta Lighthouse Performance mobile ≥90 ainda não foi atingida. Consulte [docs/performance/LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md) para a baseline atual, o histórico e as opções priorizadas.
+2. A meta Lighthouse Performance mobile ≥90 ainda não é consistente em todas as rotas: Início e Carteiras marcaram 88 na auditoria mais recente. Consulte [docs/performance/LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md) para a baseline atual, o histórico e as opções priorizadas.
 
 ## Padrões obrigatórios para próximas páginas
 

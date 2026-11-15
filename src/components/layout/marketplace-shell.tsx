@@ -31,7 +31,7 @@ export const MarketplaceShell = ({
   return (
     <div className="mx-auto w-[min(var(--content-width),calc(100%-48px))] max-[1100px]:w-[min(100%-40px,var(--content-width))] max-[760px]:w-full max-[760px]:px-5.5 max-[390px]:px-4">
       {!isMobile && (
-        <Suspense fallback={<div className="h-18.25" aria-hidden="true" />}>
+        <Suspense fallback={<div className="h-18.25 max-[760px]:hidden" aria-hidden="true" />}>
           <DesktopMarketplaceHeader searchValue={searchValue} onSearchChange={onSearchChange} />
         </Suspense>
       )}

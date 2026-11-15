@@ -1,0 +1,47 @@
+{
+  "baseUrl": "http://127.0.0.1:4175",
+  "runsPerTarget": 3,
+  "outputDirectory": "reports/lighthouse/phase-12-prerendered-routes",
+  "targets": [
+    { "name": "home", "path": "/", "seed": "anonymous", "expectedText": "Emerald Ape" },
+    {
+      "name": "detail",
+      "path": "/nfts/emerald-ape-042",
+      "seed": "anonymous",
+      "expectedText": "Emerald Ape"
+    },
+    { "name": "login", "path": "/login", "seed": "anonymous", "expectedText": "Entrar" },
+    {
+      "name": "register",
+      "path": "/register",
+      "seed": "anonymous",
+      "expectedText": "Criar perfil de colecionador"
+    },
+    { "name": "cart", "path": "/cart", "seed": "cart", "expectedText": "Emerald Ape" },
+    {
+      "name": "checkout",
+      "path": "/checkout",
+      "seed": "checkout",
+      "expectedText": "Dados do colecionador"
+    },
+    { "name": "profile", "path": "/profile", "seed": "account", "expectedText": "Meu perfil" },
+    {
+      "name": "wallets",
+      "path": "/profile/wallets",
+      "seed": "account",
+      "expectedText": "Carteira principal"
+    },
+    {
+      "name": "favorites",
+      "path": "/profile/favorites",
+      "seed": "account",
+      "expectedText": "Emerald Ape"
+    },
+    {
+      "name": "order-confirmation",
+      "path": "/orders/order-prerender",
+      "seed": "order",
+      "expectedText": "Pagamento confirmado"
+    }
+  ]
+}
