@@ -40,6 +40,7 @@ export const useCheckoutController = () => {
     cart: cart.data,
     requestedNetwork: search.network,
   })
+  const isFormValid = checkoutForm.form.formState.isValid
   const { couponCode, couponInput, quote } = coupon
   const navigateToOrder = useCallback(
     (orderId: string) => void navigate({ to: '/orders/$orderId', params: { orderId }, replace: true }),
@@ -137,6 +138,7 @@ export const useCheckoutController = () => {
     onRemoveCoupon: coupon.removeCoupon,
   } satisfies CheckoutCollectorFormActions
   const paymentModel = {
+    isFormValid,
     values: checkoutForm.values,
     cart: cart.data,
     wallets: wallets.data ?? [],

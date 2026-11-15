@@ -1,16 +1,11 @@
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test } from './helpers/coverage-fixture'
+import type { Page } from '@playwright/test'
+import { resetMockApi } from './helpers/mock-api'
 
 const resetMocks = async (page: Page) => {
   await page.addInitScript(() => localStorage.setItem('kurio:mock-scenario', 'socket-offline'))
-  await page.goto('/')
-  await page.waitForFunction(() => Boolean(document.querySelector('#root')?.childElementCount))
-  await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller))
-  await page.evaluate(async () => {
-    localStorage.setItem('kurio:mock-scenario', 'socket-offline')
-    localStorage.removeItem('kurio:visitor-cart')
-    const response = await fetch('/api/mock/reset', { method: 'POST' })
-    if (!response.ok) throw new Error(`Mock reset failed with status ${response.status}.`)
-  })
+  await resetMockApi(page)
+  await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'socket-offline'))
 }
 
 const signInWithGoogle = async (page: Page, desktop: boolean) => {

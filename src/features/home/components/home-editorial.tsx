@@ -15,11 +15,11 @@ export const HomeEditorial = () => (
 
     <section className="my-24 max-[760px]:hidden" aria-labelledby="journal-title">
       <div className="mb-7 text-center">
-        <h2 id="journal-title" className="mb-2.5 text-[26px] font-bold">
+        <h2 id="journal-title" className="mb-2.5 text-[28px] leading-none font-bold">
           Diário da Cunhagem
         </h2>
 
-        <p className="text-[13px] text-(--color-muted)">
+        <p className="text-sm leading-none text-(--color-muted)">
           Histórias, guias e insights para colecionadores sobre o universo da propriedade digital.
         </p>
       </div>

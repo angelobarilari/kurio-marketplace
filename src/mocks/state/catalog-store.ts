@@ -54,7 +54,11 @@ export const getNftDetailState = (nftId: string): NftDetail | undefined => {
     ),
   }))
 
-  return { ...detail, available: editions.some((edition) => edition.availableQuantity > 0), editions }
+  return {
+    ...detail,
+    available: nft.available && editions.some((edition) => edition.availableQuantity > 0),
+    editions,
+  }
 }
 
 export const reserveNftEdition = (nftId: string, editionId: string, quantity: number): boolean => {

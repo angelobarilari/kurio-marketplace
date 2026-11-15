@@ -27,12 +27,13 @@ export const useCheckoutAttempt = ({ userId, sessionId, onRecovered }: UseChecko
   }, [storageKey, userId])
 
   const getOrCreateKey = useCallback(() => {
-    if (key) return key
+    const existingKey = window.sessionStorage.getItem(storageKey)
+    if (existingKey) return existingKey
     const newKey = globalThis.crypto.randomUUID()
     window.sessionStorage.setItem(storageKey, newKey)
     setAttemptState({ userId, key: newKey })
     return newKey
-  }, [key, storageKey, userId])
+  }, [storageKey, userId])
 
   useEffect(() => {
     if (!order.data) return

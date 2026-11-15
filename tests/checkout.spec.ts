@@ -1,16 +1,13 @@
-import { expect, test, type Page } from '@playwright/test'
-import type { CreateOrderInput } from '@/types/order'
+import { expect, test } from './helpers/coverage-fixture'
+import type { Page } from '@playwright/test'
+import { resetMockApi } from './helpers/mock-api'
+import type { CreateOrderInput, Order } from '@/types/order'
 
 const resetMocks = async (page: Page) => {
-  await page.goto('/')
-  await page.evaluate(() => {
-    localStorage.removeItem('kurio:mock-scenario')
-    localStorage.removeItem('kurio:visitor-cart')
-  })
-  await page.request.post('/api/mock/reset')
+  await resetMockApi(page)
 }
 
-const prepareCheckout = async (page: Page) => {
+const prepareCheckout = async (page: Page, expectConnectionFailure = false) => {
   await page.goto('/nfts/emerald-ape-042')
   await page.getByRole('button', { name: 'Comprar NFT' }).click()
   await expect(page).toHaveURL(/\/cart$/)
@@ -47,6 +44,7 @@ const prepareCheckout = async (page: Page) => {
   await page.getByLabel('Código de indicação').fill('TESTE10')
   if (isMobile) {
     await page.getByRole('button', { name: 'Continuar para pagamento' }).click()
+    if (expectConnectionFailure) return
     await expect(page.getByRole('heading', { name: 'Carteira e rede' })).toBeVisible()
     await expect(page.locator('aside[aria-label="Resumo e pagamento"] img')).toHaveCount(0)
   }
@@ -97,6 +95,31 @@ test('returns to checkout from mobile wallet registration with its search contex
   const search = new URL(page.url()).searchParams
   expect(search.get('network')).toBe('Ethereum')
   expect(search.get('couponCode')).toBe('KURIO10')
+})
+
+test('enables confirmation when collector data is filled before payment controls load', async ({
+  page,
+}, testInfo) => {
+  test.skip(!testInfo.project.name.includes('desktop'))
+  let releasePaymentPanel!: () => void
+  const paymentPanelReady = new Promise<void>((resolve) => {
+    releasePaymentPanel = resolve
+  })
+  await page.context().route('**/checkout-payment-panel.tsx*', async (route) => {
+    await paymentPanelReady
+    await route.continue()
+  })
+  try {
+    await prepareCheckout(page)
+    await expect(page.getByRole('status', { name: 'Carregando pagamento' })).toBeVisible()
+    releasePaymentPanel()
+    await expect(page.getByRole('button', { name: 'Confirmar compra' })).toBeEnabled()
+    await page.getByRole('button', { name: 'Confirmar compra' }).click()
+    await expect(page).toHaveURL(/\/orders\/order-/)
+    await expect(page.getByText('Pagamento confirmado', { exact: true })).toBeVisible()
+  } finally {
+    releasePaymentPanel()
+  }
 })
 
 test('completes checkout and presents the immutable confirmed receipt', async ({ page }, testInfo) => {
@@ -284,7 +307,7 @@ test('recovers a timed-out creation by idempotency key and rejects changed paylo
 })
 
 test('creates a single order when confirmation receives repeated clicks', async ({ page }, testInfo) => {
-  test.skip(!testInfo.project.name.includes('desktop'))
+  test.skip(testInfo.project.name.includes('tablet'))
   await prepareCheckout(page)
 
   let creationRequests = 0
@@ -306,7 +329,7 @@ test('creates a single order when confirmation receives repeated clicks', async 
     }
     return Object.values(state.orders ?? {}).flat().length
   })
-  expect(creationRequests).toBeGreaterThan(0)
+  expect(creationRequests).toBe(1)
   expect(persistedOrders).toBe(1)
 })
 
@@ -339,7 +362,7 @@ test('distinguishes a timeout before creation and retries without losing the car
 test('recovers a pending order after refresh and ignores duplicated or older updates', async ({
   page,
 }, testInfo) => {
-  test.skip(!testInfo.project.name.includes('desktop'))
+  test.skip(testInfo.project.name.includes('tablet'))
   await prepareCheckout(page)
   await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'order-pending'))
   await page.getByRole('button', { name: 'Confirmar compra' }).click()
@@ -368,7 +391,7 @@ test('recovers a pending order after refresh and ignores duplicated or older upd
 })
 
 test('reconciles a pending order after the browser reconnects', async ({ page, context }, testInfo) => {
-  test.skip(!testInfo.project.name.includes('desktop'))
+  test.skip(testInfo.project.name.includes('tablet'))
   await prepareCheckout(page)
   await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'order-pending'))
   await page.getByRole('button', { name: 'Confirmar compra' }).click()
@@ -392,6 +415,70 @@ test('reconciles a pending order after the browser reconnects', async ({ page, c
 
   await expect(page.getByText('Pagamento confirmado', { exact: true })).toBeVisible({ timeout: 10_000 })
 })
+
+test('does not expose another account order after logout and a new login', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name.includes('tablet'))
+  await prepareCheckout(page)
+  await page.getByRole('button', { name: 'Confirmar compra' }).click()
+  await expect(page.getByText('Pagamento confirmado', { exact: true })).toBeVisible({ timeout: 10_000 })
+  const orderPath = new URL(page.url()).pathname
+
+  await page.goto('/profile')
+  await page.getByRole('button', { name: 'Sair', exact: true }).last().click()
+  await expect(page).toHaveURL('/')
+  await page.goto('/login')
+  await page.getByRole('button', { name: 'Continuar com Facebook' }).click()
+  await expect(page).toHaveURL('/')
+
+  const lookup = page.waitForResponse((response) => new URL(response.url()).pathname === `/api${orderPath}`)
+  await page.goto(orderPath)
+  const response = await lookup
+  expect(response.fromServiceWorker()).toBe(true)
+  expect(response.status()).toBe(404)
+  expect(await response.json()).toMatchObject({ code: 'ORDER_NOT_FOUND' })
+  await expect(page.getByRole('heading', { name: 'Pedido não encontrado' })).toBeVisible()
+  await expect(page.getByText('Pagamento confirmado', { exact: true })).toHaveCount(0)
+  await expect(page.getByRole('link', { name: 'Ver no Etherscan' })).toHaveCount(0)
+})
+
+for (const terminalStatus of ['confirmed', 'declined'] as const) {
+  test(`keeps a ${terminalStatus} order terminal after a conflicting transition`, async ({
+    page,
+  }, testInfo) => {
+    test.skip(testInfo.project.name.includes('tablet'))
+    await prepareCheckout(page)
+    await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'order-pending'))
+    await page.getByRole('button', { name: 'Confirmar compra' }).click()
+    await expect(page.getByRole('heading', { name: 'Aguardando confirmação' })).toBeVisible()
+    const orderPath = new URL(page.url()).pathname
+    const transition = (status: 'confirmed' | 'declined') =>
+      page.evaluate(
+        async ({ orderPath, status }) => {
+          const response = await fetch(`/api/mock${orderPath}/transition`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status }),
+          })
+          if (!response.ok) throw new Error(`Order transition failed: ${response.status}`)
+          return response.json() as Promise<Order>
+        },
+        { orderPath, status },
+      )
+    const settled = await transition(terminalStatus)
+    const conflicting = await transition(terminalStatus === 'confirmed' ? 'declined' : 'confirmed')
+    expect(conflicting).toEqual(settled)
+    await page.reload()
+    if (terminalStatus === 'confirmed') {
+      await expect(page.getByText('Pagamento confirmado', { exact: true })).toBeVisible()
+      await expect(page.getByText('1.206 ETH', { exact: true }).last()).toBeVisible()
+    } else {
+      await expect(page.getByRole('heading', { name: 'Não foi possível concluir o pagamento' })).toBeVisible()
+      await expect(page.getByText('Pagamento confirmado', { exact: true })).toHaveCount(0)
+      await page.goto('/cart')
+      await expect(page.getByRole('heading', { level: 2, name: 'Emerald Ape #042' })).toBeVisible()
+    }
+  })
+}
 
 test('removes only the quantity captured by a confirmed order', async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.includes('desktop'))
@@ -536,7 +623,9 @@ test('allows recovery when the checkout coupon expires', async ({ page }, testIn
   await authDialog.getByRole('button', { name: 'Continuar com Google' }).click()
   await expect(page).toHaveURL(/\/checkout/)
   await page.getByLabel('Código de indicação').fill('TESTE10')
+  await page.getByLabel('Código de indicação').press('Tab')
   await expect(page.getByRole('button', { name: 'Remover cupom KURIO10' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Confirmar compra' })).toBeEnabled()
   await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'checkout-coupon-expired'))
   await page.getByRole('button', { name: 'Confirmar compra' }).click()
   await expect(page.getByRole('alert')).toContainText('Este cupom expirou.')
@@ -588,7 +677,7 @@ test('recovers from a rejected wallet connection and keeps the cart after paymen
   if (isMobile) {
     await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'wallet-connect-rejected'))
   }
-  await prepareCheckout(page)
+  await prepareCheckout(page, isMobile)
   if (isMobile) {
     await expect(page.getByRole('alert')).toContainText('A conexão da carteira foi recusada.')
     await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'payment-declined'))

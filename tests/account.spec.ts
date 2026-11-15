@@ -1,4 +1,5 @@
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test } from './helpers/coverage-fixture'
+import type { Page } from '@playwright/test'
 
 const registerAccount = async (
   page: Page,

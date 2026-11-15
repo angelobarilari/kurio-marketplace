@@ -16,10 +16,11 @@ export const catalogRealtimeHandler = socketEndpoint.addEventListener('connectio
   socket.client.on('catalog.subscribe', () => {
     const scenario = globalThis.localStorage?.getItem('kurio:mock-scenario')
     if (scenario === 'socket-offline') return
-    if (scenario !== 'cart-realtime-price' && scenario !== 'cart-realtime-sold-out') return
+    if (!['cart-realtime-price', 'cart-realtime-sold-out', 'detail-realtime-slow'].includes(scenario ?? ''))
+      return
 
     const isSoldOutScenario = scenario === 'cart-realtime-sold-out'
-    const scenarioPrice = scenario === 'cart-realtime-price' ? '1.75' : '1.20'
+    const scenarioPrice = isSoldOutScenario ? '1.20' : '1.75'
     const nft = updateCatalogNft('emerald-ape-042', (current) => ({
       ...current,
       version: current.version + 1,

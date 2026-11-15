@@ -24,6 +24,7 @@ type CheckoutPaymentPanelProps = {
 export const CheckoutPaymentPanel = ({
   form,
   model: {
+    isFormValid,
     values,
     cart,
     wallets,
@@ -62,7 +63,7 @@ export const CheckoutPaymentPanel = ({
   const quoteNeedsApproval =
     mustReviewQuote && Boolean(quote.data?.fingerprint) && reviewedFingerprint !== quote.data?.fingerprint
   const canSubmit =
-    form.formState.isValid &&
+    isFormValid &&
     quote.data?.valid === true &&
     !quote.isFetching &&
     !isCreatingOrder &&

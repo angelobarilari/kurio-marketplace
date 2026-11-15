@@ -4,6 +4,7 @@ playwright-report
 test-results
 reports
 docs/performance/lighthouse/**/*.report.json
+docs/quality/coverage/
 .github/agents
 public/mockServiceWorker.js
 package-lock.json

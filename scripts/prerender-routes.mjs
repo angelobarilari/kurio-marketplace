@@ -11,13 +11,33 @@ const server = await createServer({
   appType: 'custom',
 })
 
+let stopPrerenderMocks
 try {
-  const { getPrerenderRoutes, renderPrerenderRoute } = await server.ssrLoadModule('/src/entry-server.tsx')
+  const { getPrerenderRoutes, renderPrerenderRoute, startPrerenderMocks } =
+    await server.ssrLoadModule('/src/entry-server.tsx')
+  stopPrerenderMocks = startPrerenderMocks()
   const indexPath = path.join(outputDirectory, 'index.html')
-  const indexHtml = await readFile(indexPath, 'utf8')
+  let indexHtml = await readFile(indexPath, 'utf8')
   const routes = await getPrerenderRoutes()
 
   const manifest = JSON.parse(await readFile(path.join(outputDirectory, '.vite', 'manifest.json'), 'utf8'))
+  // Let the static document paint before downloading and executing hydration.
+  // All routes still load the same application, including the mock API.
+  indexHtml = indexHtml.replace(
+    /<script type="module"[^>]*src="([^"]+)"[^>]*><\/script>/,
+    (_script, src) =>
+      `<script type="module">requestAnimationFrame(()=>requestAnimationFrame(()=>import(${JSON.stringify(src)})))</script>`,
+  )
+  indexHtml = indexHtml.replace(/<link rel="modulepreload"[^>]*>/g, '')
+  const latinFont = Object.values(manifest).find((asset) =>
+    asset.src?.endsWith('/roboto-mono-latin-wght-normal.woff2'),
+  )
+  if (latinFont) {
+    indexHtml = indexHtml.replace(
+      '</head>',
+      `<link rel="preload" href="/${latinFont.file}" as="font" type="font/woff2" crossorigin></head>`,
+    )
+  }
   const assetMappings = Object.entries(manifest)
     .filter(([, output]) => typeof output.src === 'string')
     .map(([source, output]) => [`/${source}`, `/${output.file}`])
@@ -67,7 +87,9 @@ try {
     await writeFile(outputPath, html)
   }
 
+  await writeFile(path.join(outputDirectory, '404.html'), indexHtml)
   console.log(`Prerendered ${routes.length} route documents.`)
 } finally {
+  stopPrerenderMocks?.()
   await server.close()
 }

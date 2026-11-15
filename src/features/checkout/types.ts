@@ -43,6 +43,7 @@ export type CheckoutCollectorFormActions = {
 }
 
 export type CheckoutPaymentPanelModel = {
+  isFormValid: boolean
   values: Partial<CheckoutFormValues>
   cart: Cart
   wallets: Wallet[]

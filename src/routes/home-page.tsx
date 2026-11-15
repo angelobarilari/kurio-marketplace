@@ -217,10 +217,10 @@ export const HomePage = () => {
           </div>
 
           <aside className="col-start-1 row-start-2 bg-(--color-panel) px-4.5 py-5.5 max-[760px]:hidden">
-            <p className="mb-2 text-center font-bold text-(--color-primary-bright) uppercase">
+            <p className="mb-2 text-center text-2xl leading-8 font-bold text-(--color-primary-bright) uppercase">
               NFT em destaque
             </p>
-            <h2 className="text-center text-[13px] uppercase">Oferta limitada</h2>
+            <h2 className="mb-4 text-center text-[22px] leading-7 font-bold uppercase">Oferta limitada</h2>
             <NftImage
               className="aspect-[0.82] w-full rounded-[10px] object-cover"
               src={nftImages.sageNomad}

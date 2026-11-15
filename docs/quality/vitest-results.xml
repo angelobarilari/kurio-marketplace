@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="186" failures="0" errors="0" time="9.6382445">
+    <testsuite name="tests/unit/auth/api-errors.test.ts" timestamp="2026-11-15T07:55:36.988Z" hostname="DESKTOP-L6CUKUJ" tests="5" failures="0" errors="0" skipped="0" time="0.0116173">
+        <testcase classname="tests/unit/auth/api-errors.test.ts" name="getApiError &gt; accepts a known API error and keeps only string field messages" time="0.0055143">
+        </testcase>
+        <testcase classname="tests/unit/auth/api-errors.test.ts" name="getApiError &gt; omits field errors when none have a string message" time="0.0003948">
+        </testcase>
+        <testcase classname="tests/unit/auth/api-errors.test.ts" name="getApiError &gt; rejects malformed responses, unsupported codes, and non-string messages" time="0.0004636">
+        </testcase>
+        <testcase classname="tests/unit/auth/api-errors.test.ts" name="applyApiFieldErrors &gt; maps allowed fields and ignores fields not present in the form" time="0.0006735">
+        </testcase>
+        <testcase classname="tests/unit/auth/api-errors.test.ts" name="applyApiFieldErrors &gt; returns the fallback message when the response is not a recognized API error" time="0.0004435">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/auth/auth-api.test.ts" timestamp="2026-11-15T07:55:36.990Z" hostname="DESKTOP-L6CUKUJ" tests="4" failures="0" errors="0" skipped="0" time="0.0183129">
+        <testcase classname="tests/unit/auth/auth-api.test.ts" name="getSession API boundary &gt; returns the session response body on success" time="0.0100334">
+        </testcase>
+        <testcase classname="tests/unit/auth/auth-api.test.ts" name="getSession API boundary &gt; treats an Axios 401 as an unauthenticated session" time="0.0013912">
+        </testcase>
+        <testcase classname="tests/unit/auth/auth-api.test.ts" name="getSession API boundary &gt; propagates errors other than an Axios 401" time="0.0011658">
+        </testcase>
+        <testcase classname="tests/unit/auth/auth-api.test.ts" name="getSession API boundary &gt; propagates errors other than an Axios 401" time="0.0005152">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/auth/schemas.test.ts" timestamp="2026-11-15T07:55:36.991Z" hostname="DESKTOP-L6CUKUJ" tests="19" failures="0" errors="0" skipped="0" time="0.0232906">
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Authentication form schemas &gt; keeps login validation separate from registration requirements" time="0.0063998">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Authentication form schemas &gt; trims registration identifiers and enforces the minimum password length" time="0.0013356">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Authentication form schemas &gt; requires a valid registration username and email" time="0.0019993">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Authentication form schemas &gt; requires matching registration passwords" time="0.0014209">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Authentication form schemas &gt; rejects registration passwords that violate the password policy (short1A)" time="0.0005871">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Authentication form schemas &gt; rejects registration passwords that violate the password policy (lowercase123)" time="0.0004927">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Authentication form schemas &gt; rejects registration passwords that violate the password policy (UPPERCASE123)" time="0.0003606">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Authentication form schemas &gt; rejects registration passwords that violate the password policy (NoNumberHere)" time="0.000372">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Authentication form schemas &gt; validates recovery email and normalizes surrounding whitespace" time="0.00075">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Profile and password schemas &gt; allows an empty optional ENS name and trims profile fields" time="0.0011907">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Profile and password schemas &gt; accepts a valid ENS name and rejects malformed profile values" time="0.0007871">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Profile and password schemas &gt; requires a valid new password and matching password confirmation" time="0.0009498">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Wallet schema network rules &gt; accepts a valid Ethereum wallet with supported provider and priority" time="0.0024553">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Wallet schema network rules &gt; accepts a valid Polygon wallet with supported provider and priority" time="0.0003733">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Wallet schema network rules &gt; accepts a valid Solana wallet with supported provider and priority" time="0.0002987">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Wallet schema network rules &gt; accepts an optional ENS name and rejects malformed ENS names" time="0.0003173">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Wallet schema network rules &gt; rejects an address that does not match the Ethereum network" time="0.0001968">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Wallet schema network rules &gt; rejects an address that does not match the Solana network" time="0.0001489">
+        </testcase>
+        <testcase classname="tests/unit/auth/schemas.test.ts" name="Wallet schema network rules &gt; rejects invalid wallet field values and unsupported network formats" time="0.0004443">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/catalog/sort-nfts.test.ts" timestamp="2026-11-15T07:55:36.995Z" hostname="DESKTOP-L6CUKUJ" tests="6" failures="0" errors="0" skipped="0" time="0.0211435">
+        <testcase classname="tests/unit/catalog/sort-nfts.test.ts" name="Catalog ordering &gt; sorts by price-asc with deterministic ties and no source mutation" time="0.0156683">
+        </testcase>
+        <testcase classname="tests/unit/catalog/sort-nfts.test.ts" name="Catalog ordering &gt; sorts by price-desc with deterministic ties and no source mutation" time="0.0007752">
+        </testcase>
+        <testcase classname="tests/unit/catalog/sort-nfts.test.ts" name="Catalog ordering &gt; sorts by popular with deterministic ties and no source mutation" time="0.0006175">
+        </testcase>
+        <testcase classname="tests/unit/catalog/sort-nfts.test.ts" name="Catalog ordering &gt; sorts by newest with deterministic ties and no source mutation" time="0.0005351">
+        </testcase>
+        <testcase classname="tests/unit/catalog/sort-nfts.test.ts" name="Catalog ordering &gt; sorts by recent with deterministic ties and no source mutation" time="0.0004662">
+        </testcase>
+        <testcase classname="tests/unit/catalog/sort-nfts.test.ts" name="Catalog ordering &gt; supports an empty catalog" time="0.0002928">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/lib/eth.test.ts" timestamp="2026-11-15T07:55:36.996Z" hostname="DESKTOP-L6CUKUJ" tests="13" failures="0" errors="0" skipped="0" time="0.0074992">
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; preserves one wei and the complete 18-decimal precision" time="0.0024143">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; adds 0.1 and 0.2 without floating point drift" time="0.0002761">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; round-trips values beyond Number.MAX_SAFE_INTEGER" time="0.0005438">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; formats zero and removes redundant decimal zeros" time="0.0001623">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; rejects invalid ETH input &quot;-1&quot;" time="0.0003847">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; rejects invalid ETH input &quot;NaN&quot;" time="0.0001309">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; rejects invalid ETH input &quot;Infinity&quot;" time="0.0001308">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; rejects invalid ETH input &quot;1e-18&quot;" time="0.0001324">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; rejects invalid ETH input &quot;.1&quot;" time="0.0003573">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; rejects invalid ETH input &quot;1.&quot;" time="0.000212">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; rejects invalid ETH input &quot; 1&quot;" time="0.0001576">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; rejects invalid ETH input &quot;0x10&quot;" time="0.0000853">
+        </testcase>
+        <testcase classname="tests/unit/lib/eth.test.ts" name="Exact ETH/BigInt values &gt; rejects invalid ETH input &quot;0.0000000000000000001&quot;" time="0.0000804">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/checkout/schemas.test.ts" timestamp="2026-11-15T07:55:36.999Z" hostname="DESKTOP-L6CUKUJ" tests="17" failures="0" errors="0" skipped="0" time="0.0143004">
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; trims collector text fields before validation and returns normalized values" time="0.0060366">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; accepts optional secondary address and the collector note maximum" time="0.000691">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; accepts supported secondary wallet formats independently of the selected network" time="0.0007449">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;displayName&quot;:&quot;A&quot;}" time="0.0003555">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;profileName&quot;:&quot;A&quot;}" time="0.0002596">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;username&quot;:&quot;ab&quot;}" time="0.0001993">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;username&quot;:&quot;aaaaaaaaaaaaaaaaaaaaaaaaa&quot;}" time="0.0001788">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;email&quot;:&quot;invalid&quot;}" time="0.0002339">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;ensName&quot;:&quot;invalid-ens&quot;}" time="0.0003896">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;referralCode&quot;:&quot;has space&quot;}" time="0.0003133">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;referralCode&quot;:&quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;}" time="0.0001704">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;secondaryWalletAddress&quot;:&quot;invalid-address&quot;}" time="0.0003763">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;collectorNote&quot;:&quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;}" time="0.000254">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects invalid checkout field values: {&quot;walletId&quot;:&quot;&quot;}" time="0.0003031">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; enforces the shortest valid username, referral code, and ENS boundaries" time="0.0003501">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; accepts the maximum username and referral lengths and supported enum values" time="0.0005285">
+        </testcase>
+        <testcase classname="tests/unit/checkout/schemas.test.ts" name="Checkout form schema &gt; rejects blank required fields and unsupported network or wallet types" time="0.000778">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/routing/search.test.ts" timestamp="2026-11-15T07:55:37.002Z" hostname="DESKTOP-L6CUKUJ" tests="22" failures="0" errors="0" skipped="0" time="0.00807">
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; normalizes a valid code without losing hyphens or digits" time="0.0022186">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; accepts the maximum length" time="0.0002537">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; ignores invalid coupon parameter undefined" time="0.000206">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; ignores invalid coupon parameter null" time="0.0002316">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; ignores invalid coupon parameter 10" time="0.000232">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; ignores invalid coupon parameter undefined" time="0.0001373">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; ignores invalid coupon parameter {}" time="0.0001108">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; ignores invalid coupon parameter &quot;&quot;" time="0.0001074">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; ignores invalid coupon parameter &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;" time="0.0002818">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; ignores invalid coupon parameter &quot; code &quot;" time="0.0002601">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; ignores invalid coupon parameter &quot;a/b&quot;" time="0.0001981">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Coupon URL state &gt; ignores invalid coupon parameter &quot;&lt;script&gt;&quot;" time="0.000122">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Network URL state &gt; preserves supported network Ethereum" time="0.0002087">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Network URL state &gt; preserves supported network Polygon" time="0.0003335">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Network URL state &gt; preserves supported network Solana" time="0.0002539">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Network URL state &gt; ignores unsupported network undefined" time="0.0002011">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Network URL state &gt; ignores unsupported network null" time="0.0001026">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Network URL state &gt; ignores unsupported network 1" time="0.0000836">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Network URL state &gt; ignores unsupported network undefined" time="0.0000737">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Network URL state &gt; ignores unsupported network &quot;ethereum&quot;" time="0.0001718">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Network URL state &gt; ignores unsupported network &quot;Unknown&quot;" time="0.0000864">
+        </testcase>
+        <testcase classname="tests/unit/routing/search.test.ts" name="Network URL state &gt; ignores unsupported network &quot;&quot;" time="0.0000776">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/integration/auth/account-state.test.ts" timestamp="2026-11-15T07:55:37.007Z" hostname="DESKTOP-L6CUKUJ" tests="5" failures="0" errors="0" skipped="0" time="0.0160407">
+        <testcase classname="tests/integration/auth/account-state.test.ts" name="Account state &gt; updates the signed-in profile and rejects identifiers owned by another user" time="0.005966">
+        </testcase>
+        <testcase classname="tests/integration/auth/account-state.test.ts" name="Account state &gt; changes a password only with the current password and invalidates the old one" time="0.0036036">
+        </testcase>
+        <testcase classname="tests/integration/auth/account-state.test.ts" name="Account state &gt; keeps wallet addresses unique and demotes other wallets when setting a primary" time="0.0020372">
+        </testcase>
+        <testcase classname="tests/integration/auth/account-state.test.ts" name="Account state &gt; keeps the existing primary wallet when adding or updating a secondary wallet" time="0.0015998">
+        </testcase>
+        <testcase classname="tests/integration/auth/account-state.test.ts" name="Account state &gt; denies private account changes without an authenticated session" time="0.0009746">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/integration/auth/session.test.ts" timestamp="2026-11-15T07:55:37.008Z" hostname="DESKTOP-L6CUKUJ" tests="5" failures="0" errors="0" skipped="0" time="0.0428185">
+        <testcase classname="tests/integration/auth/session.test.ts" name="Session and ownership &gt; keeps profile and favorites isolated when switching accounts" time="0.0055568">
+        </testcase>
+        <testcase classname="tests/integration/auth/session.test.ts" name="Session and ownership &gt; normalizes registration credentials and rejects duplicate email or username" time="0.0031539">
+        </testcase>
+        <testcase classname="tests/integration/auth/session.test.ts" name="Session and ownership &gt; hides another account order, attempt and wallet connection" time="0.014309">
+        </testcase>
+        <testcase classname="tests/integration/auth/session.test.ts" name="Session and ownership &gt; binds wallet connections to the current session and refuses stale disconnects" time="0.0056328">
+        </testcase>
+        <testcase classname="tests/integration/auth/session.test.ts" name="Session and ownership &gt; expires the session and denies private resources" time="0.0125094">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/integration/cart/cart-state.test.ts" timestamp="2026-11-15T07:55:37.009Z" hostname="DESKTOP-L6CUKUJ" tests="24" failures="0" errors="0" skipped="0" time="0.1198529">
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects invalid quantity 0 without changing the cart" time="0.0074328">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects invalid quantity -1 without changing the cart" time="0.0028197">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects invalid quantity 1.5 without changing the cart" time="0.0037587">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects invalid quantity NaN without changing the cart" time="0.0038764">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects invalid quantity Infinity without changing the cart" time="0.002949">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects invalid quantity 9007199254740992 without changing the cart" time="0.0040113">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; combines identical NFT/edition pairs and calculates exact line totals" time="0.0061062">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects quantities above the edition limit atomically" time="0.0053282">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects invalid cart updates without changing quantity (0)" time="0.0048672">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects invalid cart updates without changing quantity (-1)" time="0.0048051">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects invalid cart updates without changing quantity (1.5)" time="0.0047413">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; rejects invalid cart updates without changing quantity (NaN)" time="0.0042804">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; distinguishes missing NFTs and unavailable editions when adding" time="0.0046018">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; reports missing items without deleting existing ones" time="0.0036104">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; reconciles a new price and changes the quote fingerprint" time="0.0077349">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Cart quantities and reconciliation &gt; marks unavailable inventory as an invalid quote" time="0.0049837">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Quote totals and cart ownership &gt; charges no fee for an empty cart" time="0.00158">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Quote totals and cart ownership &gt; normalizes the coupon and calculates discount and total with integer wei" time="0.0033638">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Quote totals and cart ownership &gt; quotes only the requested network and marks an empty network quote invalid" time="0.0106322">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Quote totals and cart ownership &gt; merges a visitor cart once and keeps accounts isolated" time="0.0119997">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Quote totals and cart ownership &gt; reports unavailable and quantity-adjusted visitor merge conflicts" time="0.0078686">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Quote totals and cart ownership &gt; does not merge a visitor cart without an authenticated owner" time="0.0007281">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Quote totals and cart ownership &gt; ignores visitor hydration while signed in" time="0.0031453">
+        </testcase>
+        <testcase classname="tests/integration/cart/cart-state.test.ts" name="Quote totals and cart ownership &gt; resets a malformed visitor snapshot safely" time="0.0023864">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/integration/catalog/inventory-state.test.ts" timestamp="2026-11-15T07:55:37.016Z" hostname="DESKTOP-L6CUKUJ" tests="1" failures="0" errors="0" skipped="0" time="0.0121626">
+        <testcase classname="tests/integration/catalog/inventory-state.test.ts" name="Edition inventory reservations &gt; reserves only available quantities and releases stock without underflow" time="0.0106225">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/integration/catalog/realtime-cache.test.ts" timestamp="2026-11-15T07:55:37.016Z" hostname="DESKTOP-L6CUKUJ" tests="4" failures="0" errors="0" skipped="0" time="0.0287662">
+        <testcase classname="tests/integration/catalog/realtime-cache.test.ts" name="Versioned events and cache isolation &gt; does not create cache entries for unknown NFTs" time="0.0053075">
+        </testcase>
+        <testcase classname="tests/integration/catalog/realtime-cache.test.ts" name="Versioned events and cache isolation &gt; updates availability across cached filter variants without touching other NFTs" time="0.0053359">
+        </testcase>
+        <testcase classname="tests/integration/catalog/realtime-cache.test.ts" name="Versioned events and cache isolation &gt; does not regress list/detail prices after duplicates and out-of-order NFT events" time="0.0023337">
+        </testcase>
+        <testcase classname="tests/integration/catalog/realtime-cache.test.ts" name="Versioned events and cache isolation &gt; updates only the session owning an order and ignores older versions" time="0.0129437">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/integration/mocks/catalog-http.test.ts" timestamp="2026-11-15T07:55:37.018Z" hostname="DESKTOP-L6CUKUJ" tests="12" failures="0" errors="0" skipped="0" time="1.6743051">
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; returns distinct pages with consistent totals" time="0.2933657">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; normalizes invalid page 0" time="0.0142823">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; normalizes invalid page -1" time="0.0171806">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; normalizes invalid page 1.5" time="0.2534702">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; normalizes invalid page NaN" time="0.0151191">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; returns an empty page beyond the last page without losing metadata" time="0.253517">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; handles exact ETH price bounds inclusively" time="0.2541958">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; recovers after a deterministic transient error" time="0.0137301">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; returns a deterministic empty scenario" time="0.017364">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; combines filters and returns coherent pagination" time="0.2522595">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; rejects inverted price bounds" time="0.2531847">
+        </testcase>
+        <testcase classname="tests/integration/mocks/catalog-http.test.ts" name="Real MSW HTTP handlers &gt; distinguishes a nonexistent NFT from a transient failure" time="0.0298888">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/integration/mocks/http-contracts.test.ts" timestamp="2026-11-15T07:55:37.021Z" hostname="DESKTOP-L6CUKUJ" tests="23" failures="0" errors="0" skipped="0" time="7.352332">
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Auth HTTP contracts &gt; returns an unauthenticated session and the active session through GET /api/session" time="0.2980856">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Auth HTTP contracts &gt; returns field errors for invalid login requests" time="0.1914668">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Auth HTTP contracts &gt; rejects registration passwords that violate the API policy (short)" time="0.2351368">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Auth HTTP contracts &gt; rejects registration passwords that violate the API policy (missing uppercase)" time="0.2387528">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Auth HTTP contracts &gt; rejects registration passwords that violate the API policy (missing lowercase)" time="0.2380918">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Auth HTTP contracts &gt; rejects registration passwords that violate the API policy (missing number)" time="0.2354405">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Auth HTTP contracts &gt; maps duplicate registration email and username to distinct conflict contracts" time="0.4763594">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Auth HTTP contracts &gt; distinguishes an unavailable social provider from an unsupported provider" time="0.5053848">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Auth HTTP contracts &gt; rejects malformed password-recovery requests without revealing account existence" time="0.3804574">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Auth HTTP contracts &gt; returns 204 on logout and clears the active session" time="0.2367752">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Account HTTP contracts &gt; protects profile and wallet reads when no session exists" time="0.2998087">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Account HTTP contracts &gt; returns field-level profile validation and identifier conflicts" time="0.3807772">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Account HTTP contracts &gt; rejects unsupported and oversized avatar payloads at the HTTP boundary" time="0.3853745">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Account HTTP contracts &gt; returns the password error contract for an incorrect current password" time="0.2199318">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Account HTTP contracts &gt; maps duplicate and missing wallets to conflict and not-found responses" time="0.379212">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Favorites HTTP contracts &gt; protects favorite reads and writes without a session" time="0.3027395">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Favorites HTTP contracts &gt; distinguishes a missing NFT from a favorite service failure" time="0.3495188">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Cart HTTP contracts &gt; rejects malformed merges and requires authentication for a valid merge" time="0.3800705">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Cart HTTP contracts &gt; maps cart quantity limits and missing items to their HTTP statuses" time="0.6076024">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Order HTTP contracts &gt; protects wallet-connection reads and rejects invalid connection payloads" time="0.3081667">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Order HTTP contracts &gt; returns not-found for an unknown wallet connection and order" time="0.3949098">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Order HTTP contracts &gt; rejects a mismatched idempotency header before creating an order" time="0.2896628">
+        </testcase>
+        <testcase classname="tests/integration/mocks/http-contracts.test.ts" name="Order HTTP contracts &gt; rejects unsupported terminal transitions at the HTTP boundary" time="0.0082639">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/integration/order/order-state.test.ts" timestamp="2026-11-15T07:55:37.026Z" hostname="DESKTOP-L6CUKUJ" tests="26" failures="0" errors="0" skipped="0" time="0.2877326">
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects invalid displayName without reserving inventory or registering an attempt" time="0.0234882">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects invalid profileName without reserving inventory or registering an attempt" time="0.014467">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects invalid username without reserving inventory or registering an attempt" time="0.0111378">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects invalid email without reserving inventory or registering an attempt" time="0.012525">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects invalid walletId without reserving inventory or registering an attempt" time="0.0100146">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects invalid walletAddress without reserving inventory or registering an attempt" time="0.0106903">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects invalid ensName without reserving inventory or registering an attempt" time="0.0095048">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects invalid secondaryWalletAddress without reserving inventory or registering an attempt" time="0.0109279">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects invalid referralCode without reserving inventory or registering an attempt" time="0.0107735">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects invalid collectorNote without reserving inventory or registering an attempt" time="0.0110354">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; requires an active wallet connection" time="0.0045048">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects a wallet whose saved address changed without reserving inventory" time="0.0049995">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects an emptied cart" time="0.0055783">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects coupon EXPIRADO" time="0.0055268">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; rejects coupon UNKNOWN" time="0.0048487">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; releases reserved stock once when payment is declined" time="0.0118458">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Checkout rejection and recovery &gt; preserves the confirmed receipt when replaying the same attempt" time="0.0104885">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Order idempotency and terminal states &gt; replays the same order without reserving inventory twice" time="0.0086142">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Order idempotency and terminal states &gt; rejects the same idempotency key with a changed payload" time="0.009108">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Order idempotency and terminal states &gt; rejects a stale quote without creating an attempt" time="0.0084264">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Order idempotency and terminal states &gt; rejects an unavailable cart against its current invalid quote without creating an attempt" time="0.0102413">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Order idempotency and terminal states &gt; rolls back earlier reservations when a competing reservation consumes later stock" time="0.031223">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Order idempotency and terminal states &gt; removes only the quantity captured by a confirmed order" time="0.0120581">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Order idempotency and terminal states &gt; preserves unrelated cart items added after order creation" time="0.0128682">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Order idempotency and terminal states &gt; keeps confirmed terminal and notifies once" time="0.0113061">
+        </testcase>
+        <testcase classname="tests/integration/order/order-state.test.ts" name="Order idempotency and terminal states &gt; keeps declined terminal and notifies once" time="0.0090733">
+        </testcase>
+    </testsuite>
+</testsuites>

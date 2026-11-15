@@ -1,4 +1,18 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './helpers/coverage-fixture'
+
+test('loads initial NFT details through MSW instead of displaying fixture data', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('kurio:mock-scenario', 'detail-slow'))
+  const detailResponse = page.waitForResponse(
+    (response) => new URL(response.url()).pathname === '/api/nfts/emerald-ape-042',
+  )
+  await page.goto('/nfts/emerald-ape-042')
+  await expect(page.getByRole('main', { name: 'Carregando detalhes do NFT' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: 'Emerald Ape #042' })).toHaveCount(0)
+  const response = await detailResponse
+  expect(response.fromServiceWorker()).toBe(true)
+  expect(response.ok()).toBe(true)
+  await expect(page.getByRole('heading', { level: 1, name: 'Emerald Ape #042' })).toBeVisible()
+})
 
 const useMockScenario = async (page: import('@playwright/test').Page, scenario: string) => {
   await page.goto('/')
@@ -186,8 +200,33 @@ test('applies the current Socket.IO update and ignores the stale version on the 
   await useMockScenario(page, 'cart-realtime-price')
   await page.goto('/nfts/emerald-ape-042')
   await expect(page.getByText('1.75 ETH').filter({ visible: true }).first()).toBeVisible({ timeout: 10_000 })
+  await expect(page.getByText('1.75 ETH').filter({ visible: true }).first()).toHaveAttribute(
+    'aria-live',
+    'polite',
+  )
   await expect(page.getByText('9.99 ETH')).toHaveCount(0)
   await expect(page.getByText('Preço atualizado. Revise a cotação.')).toHaveCount(0)
+})
+
+test('retains the Socket.IO price when the initial REST snapshot is delayed', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('kurio:mock-scenario', 'detail-realtime-slow'))
+  await page.goto('/nfts/emerald-ape-042')
+  await expect(page.getByRole('main', { name: 'Carregando detalhes do NFT' })).toBeVisible()
+  await expect(page.getByText('1.75 ETH', { exact: true }).filter({ visible: true }).first()).toBeVisible()
+  await expect(page.getByText('9.99 ETH')).toHaveCount(0)
+})
+
+test('keeps realtime unavailability consistent between the detail and its REST response', async ({
+  page,
+}) => {
+  await page.addInitScript(() => localStorage.setItem('kurio:mock-scenario', 'cart-realtime-sold-out'))
+  await page.goto('/nfts/emerald-ape-042')
+  await expect(page.getByRole('button', { name: 'Indisponível' })).toBeDisabled()
+  const available = await page.evaluate(async () => {
+    const response = await fetch('/api/nfts/emerald-ape-042')
+    return (await response.json()).available
+  })
+  expect(available).toBe(false)
 })
 
 test('respects reduced motion preferences', async ({ page }, testInfo) => {

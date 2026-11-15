@@ -5,14 +5,11 @@ import {
   createRouter,
   lazyRouteComponent,
   Link,
-  Outlet,
   stripSearchParams,
 } from '@tanstack/react-router'
-import { CatalogRealtimeSync } from '@/features/catalog/components/catalog-realtime-sync'
+import { RootLayout } from '@/components/layout/root-layout'
 import type { AuthReturnTo } from '@/features/auth/types'
 import type { CatalogSearch } from '@/features/catalog/types'
-import { TooltipProvider } from '@/components/ui/tooltip'
-import { AuthFlowProvider } from '@/features/auth/components/auth-flow-provider'
 import { parseCouponCodeSearch, parseNetworkSearch } from '@/router-search'
 
 const HomePage = lazyRouteComponent(() => import('@/routes/home-page'), 'HomePage')
@@ -53,14 +50,7 @@ export const preloadAppRoute = (pathname: string) => {
 }
 
 const rootRoute = createRootRoute({
-  component: () => (
-    <TooltipProvider>
-      <AuthFlowProvider>
-        <CatalogRealtimeSync />
-        <Outlet />
-      </AuthFlowProvider>
-    </TooltipProvider>
-  ),
+  component: RootLayout,
   notFoundComponent: () => (
     <main className="mx-auto grid min-h-[70vh] w-[min(var(--content-width),calc(100%-48px))] place-content-center justify-items-center">
       <p className="mb-4.5 text-[13px] tracking-wider text-(--color-foreground)">

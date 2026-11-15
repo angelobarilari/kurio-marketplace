@@ -1,60 +1,32 @@
 # Roadmap de implementação — Kurio
 
-> Backlog executável; os requisitos originais estão em [TECHNICAL-CHALLENGE.md](./TECHNICAL-CHALLENGE.md), a execução do projeto em [README.md](./README.md) e as decisões arquiteturais em [ARCHITECTURE.md](./ARCHITECTURE.md).
+Este roadmap mantém o planejamento do produto por fases e o estado dos itens implementados. Os requisitos obrigatórios estão em [TECHNICAL-CHALLENGE.md](./TECHNICAL-CHALLENGE.md), os comandos no [README](./README.md), as decisões na [arquitetura](./ARCHITECTURE.md) e as evidências em [RESULTS.md](./docs/quality/RESULTS.md). A evolução específica de testes está no [roadmap de testes](./docs/quality/TESTING-ROADMAP.md).
 
 ## Resumo executivo
 
-**Estado atual:** as Fases 1 a 6 estão implementadas e publicadas, com otimizações posteriores de carregamento mobile e pré-renderização estática. Na matriz Lighthouse obrigatória mais recente, Performance marcou 84 na homepage mobile e 88 no detalhe (meta ≥90); consulte [LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md). A suíte Playwright completa também não está verde: 192 passaram, 109 foram ignorados por viewport e 20 falharam. Os 12 diffs de screenshot da execução atual não foram todos revisados/aceitos como artefatos do Figma, e as 8 falhas funcionais/assertivas ainda precisam ser isoladas. A aplicação está publicada no Vercel e a rodada manual completa de teclado foi validada pelo responsável.
+Os fluxos das Fases 1 a 5 estão implementados. A Fase 6 reúne correções, validações e fechamento da entrega. Os itens marcados descrevem capacidades implementadas ou verificações realizadas; não substituem os resultados consolidados nem significam que toda a entrega está concluída.
 
-### Evidência atual
+A suíte Playwright possui cobertura das 12 jornadas, regressões visuais e evidência HTML. A build usa Axios/MSW também na pré-renderização e mantém dados privados apenas no cliente. O guia de implementação documenta a estrutura e os padrões atuais para continuidade por outras IAs.
 
-- 54 fixtures, nove itens por página e seis páginas.
-- Busca, categoria, rede, preço, ordenação e página persistem na URL.
-- Facetas contextuais, respostas obsoletas e paginação durante loading possuem cobertura.
-- `GET /api/nfts/:id` e `getNft(id)` já existem com 404.
-- Playwright está configurado para 390, 768 e 1440 px.
-- Catálogo e detalhe possuem testes comportamentais nos três viewports, cenários MSW determinísticos e baselines desktop/mobile.
-- Na validação direcionada mais recente, os fluxos de adicionar ao carrinho, preço/disponibilidade realtime, checkout/recibo, guards de rota, foco por teclado no carrinho e foco do diálogo passaram; as baselines de carrinho e checkout/recibo também passaram.
-- Os frames Figma têm problemas conhecidos (por exemplo, grade mobile desalinhada e retrato sobreposto indevido no hero); divergências históricas específicas foram aceitas pelo responsável. Esse aceite não se estende automaticamente a novos diffs de screenshots; comparar cada captura atual com sua baseline e com o frame antes de classificá-la.
-- Na revisão final da home mobile, os cards foram alinhados por linha e o retrato sobreposto do hero foi removido; os indicadores continuam funcionais somente no mobile. Testes direcionados de alinhamento, overflow e hero passaram nos viewports aplicáveis.
-- Cadastro, login, expiração, perfil, avatar, senha, carteiras, favoritos, logout/troca de conta e merge do carrinho possuem cobertura E2E; telas de autenticação, perfil e carteiras têm baselines desktop/mobile.
-- A revalidação do carrinho autenticado limita quantidade ao estoque e ao máximo por pedido; repetir a mesma chave de merge não duplica itens.
-- Na execução completa de 15/11/2026, Playwright executou 321 casos: 192 aprovados, 109 ignorados por viewport e 20 falhas. Foram 12 diffs de screenshots (home, detalhe, carrinho e checkout/recibo desktop/mobile; login/cadastro e perfil/carteiras desktop/mobile) e 8 falhas funcionais/assertivas. Não foram aceitos em bloco nem houve atualização automática de baselines.
-- As 8 falhas funcionais/assertivas observadas: seletor ambíguo no teste de merge do carrinho; estado vazio do catálogo ausente; guard do checkout sem redirecionamento esperado; favorito não refletido; duas expectativas de loading no catálogo tablet; timeout ao clicar nos filtros mobile; heading de recuperação da carteira ausente após recusa. `InvalidStateError` do MSW/Service Worker também ocorreu com 8 workers, então parte pode ser flakiness concorrente; cada falha precisa ser reproduzida antes de atribuir causa.
-- Após a matriz, as verificações direcionadas do cenário de latência diferencial no catálogo, retomada de favoritos no tablet e prioridade de imagem inicial passaram.
-- A validação em Vite Preview concluiu uma compra até `/orders/:orderId`; os deep links `/checkout` e `/orders/order-protected` também foram verificados e preservam o destino ao redirecionar para login.
-- `npm run typecheck`, `npm run build` e a matriz Lighthouse foram executados. O build passa; os resultados, histórico e oportunidades atuais de performance estão consolidados em [docs/performance/LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md).
-- O build de produção pré-renderiza documentos estáticos para as rotas elegíveis. Com mocks habilitados, a homepage e os 54 detalhes de NFT dos fixtures também são gerados; dados privados permanecem carregados no cliente. Essa implementação é SSG de build, não SSR dinâmico.
-- Na validação direcionada após as otimizações de renderização inicial e prioridade das imagens visíveis, passaram 60 testes aplicáveis de catálogo e nove verificações de detalhe nos três viewports. A paginação aguarda a revalidação inicial antes de interagir, e mantém latência determinística para exercitar o estado de carregamento.
-- A limpeza de filtros ativos tem saída visível na sidebar, nos filtros mobile e no estado sem resultados; o acesso à conta está disponível no menu desktop e na navegação/área de conta mobile.
-- Favoritar sem sessão preserva o contexto com modal no desktop e página dedicada no mobile; o favorito solicitado é enviado após autenticação confirmada.
-- O cenário `catalog-out-of-order` produz respostas determinísticas em ordem inversa à sequência de filtros e possui teste pelo service worker MSW.
+As medianas Lighthouse da build auditada atingiram as metas. A conformidade integral ainda depende de conferir a versão publicada. Nenhum deploy será feito nesta execução, por orientação do responsável; a obrigatoriedade de publicação do enunciado continua registrada.
 
-### Limites intencionais após a Fase 5
+## Coverage combinada — concluída
 
-- APIs, autenticação, carteira e pagamento são simulados; integração real com blockchain e gateway não faz parte do escopo.
-- Foco de diálogo, erros associados, zoom e reflow possuem cobertura automatizada. A navegação manual completa por teclado foi validada pelo responsável.
+`npm run test:coverage` combina Vitest e a matriz Playwright instrumentada, inclui todos os 161 arquivos TypeScript/TSX de `src/` e exige pelo menos 80% em linhas, statements, funções e branches **somente no resultado combinado**. Esse percentual não é 80% para Vitest e 80% para Playwright separadamente; os relatórios por camada são diagnósticos. O mapa atual, atualizado com `test:coverage:refresh-vitest` a partir do último Playwright completo válido, registra **91,26% linhas, 88,17% statements, 84,78% funções e 85,83% branches**. Consulte [RESULTS.md](./docs/quality/RESULTS.md), [AUDIT.md](./docs/quality/AUDIT.md) e o [roadmap de testes](./docs/quality/TESTING-ROADMAP.md). Coverage agregado não prova qualidade das assertions nem cobertura mínima por arquivo.
 
-## Auditoria do `TECHNICAL-CHALLENGE.md`
+## Auditoria do TECHNICAL-CHALLENGE.md
 
-| Seção do teste técnico                     | Estado                      | Evidência / pendência                                                                                                                                                                                                                |
-| ------------------------------------------ | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1–3 — Escopo, stack e telas                | Implementado funcionalmente | React/TypeScript, Router, Query, Axios, MSW, Socket.IO, Tailwind/shadcn e as rotas do escopo estão presentes. Aceites visuais históricos são específicos; os 12 diffs da última execução ainda aguardam revisão.                     |
-| 4–5 — Integração, cache e contratos REST   | Implementado                | APIs agrupadas por feature, schemas tipados, estado de sessão/carrinho por usuário, erros, idempotência e decisões de cache documentadas em `ARCHITECTURE.md`.                                                                       |
-| 6 — MSW e falhas                           | Implementado                | Fixtures/reset e cenários de sucesso, vazio, latência diferencial/ordem, falhas HTTP/conexão, expiração, cupom, disponibilidade e timeouts; cobertura por handlers e testes direcionados.                                            |
-| 7 — Socket.IO                              | Implementado e testado      | O cliente real `socket.io-client` atravessa o binding MSW; evento atualizado, versão antiga, duplicatas, reconexão e reconciliação REST têm cobertura Playwright.                                                                    |
-| 8 — Figma, responsividade e acessibilidade | Parcial; revisão pendente   | Acessibilidade Lighthouse foi 100 nos quatro perfis e há testes nos viewports previstos. Os 12 diffs visuais atuais ainda não foram revisados individualmente; inconsistências conhecidas do Figma não justificam aceite automático. |
-| 9 — Playwright                             | Pendente de estabilização   | Execução completa: 192 aprovados, 109 ignorados e 20 falhas (12 screenshots e 8 funcionais/assertivas). Há erros `InvalidStateError` do MSW/Service Worker com 8 workers; investigar causas e repetir os casos afetados.             |
-| 10 — Lighthouse                            | Medido e otimizado          | Resultados, meta mobile, histórico e pendências estão na fonte única [docs/performance/LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md).                                                                                             |
-| 11 — Critérios de avaliação                | Parcial; não conforme ainda | A Performance mobile da matriz obrigatória ficou em 84 na homepage e 88 no detalhe (meta ≥90); a suíte Playwright completa também permanece com falhas. A rodada manual completa de teclado foi validada.                            |
-| 12 — Entrega e deploy                      | Publicado                   | Repositório público disponível em `angelobarilari/kurio-marketplace` e aplicação publicada em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app).                                                          |
-| 13–14 — Comandos e documentação            | Atualizado                  | O README do projeto agora contém execução, variáveis, contas/scenarios e comandos; o enunciado original está em `TECHNICAL-CHALLENGE.md`; arquitetura, guia e inventário Figma foram atualizados.                                    |
-
-### Aceites registrados
-
-1. As inconsistências conhecidas em frames Figma e os aceites visuais históricos aplicam-se apenas aos diffs revisados naquela ocasião. As 12 falhas de screenshot da execução mais recente não foram aceitas em bloco; revisar os pares atual/baseline/frame e não atualizar snapshots em lote.
-2. A meta Lighthouse Performance mobile ≥90 não foi atingida na matriz obrigatória: homepage 84 e detalhe 88. Consulte [docs/performance/LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md) para medições, causas observadas e próximos passos.
-3. A suíte Playwright completa registrou 8 falhas funcionais/assertivas além das visuais. Reproduzir os casos individualmente, investigar a corrida MSW/Service Worker sob concorrência e atualizar este estado quando houver nova execução completa aprovada.
+| Seção                           | Implementação / evidência                                                                                                            |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| 1–3 — Escopo, stack e telas     | Catálogo, detalhe, carrinho, compra, autenticação, perfil e carteiras implementados com a stack exigida.                             |
+| 4–5 — Estado e REST             | Contratos, erros, cancelamento, cache por identidade, rollback, merge e idempotência documentados na arquitetura.                    |
+| 6 — MSW                         | Handlers HTTP/Socket.IO, fixtures, estado persistido, dois usuários, cenários determinísticos e reset.                               |
+| 7 — Tempo real                  | Cliente Socket.IO, versões, duplicatas, respostas atrasadas, reconexão e reconciliação REST cobertos.                                |
+| 8–9 — Interface e testes        | Desktop/tablet/mobile, foco, reflow, skeletons, formulários e baselines. Totais e HTML em RESULTS.md.                                |
+| 10 — Lighthouse                 | Matriz de quatro alvos com três medições, HTML/JSON, medianas, métricas e condições em LIGHTHOUSE.md; conferir fechamento da Fase 6. |
+| 11 — Avaliação                  | Evidências locais disponíveis; pontuação final pertence à avaliação do teste.                                                        |
+| 12 — Entrega                    | Setup limpo, lockfile, assets, mocks e build verificados. Correspondência da URL pública com as correções locais pendente.           |
+| 13–14 — Comandos e documentação | README, arquitetura, guia de implementação, referências e evidências atualizados em suas responsabilidades.                          |
 
 ## Padrões obrigatórios para próximas páginas
 
@@ -135,8 +107,8 @@ O inventário dos frames recebidos está em [docs/references/figma/README.md](./
 
 ### 2.3 — Limite funcional desta fase
 
-- [x] “Comprar” permanece claramente indisponível até a Fase 3.
-- [x] “Favoritar” permanece indisponível até sessão e API de favoritos.
+- [x] Integrar “Comprar” ao carrinho pela API, respeitando edição, estoque e quantidade (Fase 3).
+- [x] Integrar favoritos à sessão e API privada, com intenção após login e rollback (Fase 4).
 - [x] Compartilhar usa destinos reais para LinkedIn, e-mail e X.
 - [x] Avaliações permanecem somente leitura com dados do mock, sem simular envio.
 
@@ -401,32 +373,93 @@ Critério de saída: nenhuma confirmação aparece sem pedido confirmado, nenhum
 
 ## Fase 6 — Resiliência, entrega e qualidade
 
-- [x] Validar Socket.IO através de `socket.io-client`, incluindo reconexão, versões e duplicatas.
-- [x] Completar os cenários MSW determinísticos do teste técnico, incluindo latência variável e respostas fora de ordem.
-- [x] Implementar cobertura para as 12 jornadas funcionais Playwright; a última execução completa ainda registrou oito falhas funcionais/assertivas.
-- [ ] Reproduzir e corrigir/ajustar as oito falhas funcionais/assertivas e estabilizar o MSW/Service Worker sob concorrência.
-- [ ] Revisar individualmente os 12 diffs de screenshot atuais contra baselines e frames Figma; não aceitar em bloco nem atualizar snapshots automaticamente.
-- [x] Otimizar e medir novamente a performance: imagens responsivas, fonte variável, header desktop fora da árvore mobile, prioridade de LCP e reconciliação realtime sem invalidação no primeiro connect; resultados e pendências estão na fonte única Lighthouse.
-- [x] Documentar setup, variáveis, contas fictícias, cenários/reset, arquitetura e decisões de cache.
-- [x] Validar checkout/pedido em preview de produção e deep links depois das correções.
-- [x] Executar e registrar a rodada manual completa de navegação por teclado.
-- [x] Publicar a aplicação no Vercel e verificar a URL pública e o carregamento de rotas.
+### 6.0 — Contratos, mocks e concorrência
 
-## Riscos e decisões em aberto
+- [x] Exercitar Socket.IO através de `socket.io-client` e do binding MSW, sem eventos chamados diretamente pela UI.
+- [x] Manter cenários de latência, falha de conexão, 4xx/5xx e respostas fora de ordem.
+- [x] Preservar o último evento por NFT quando uma resposta REST antiga chega depois, inclusive na primeira leitura.
+- [x] Ignorar eventos antigos/duplicados e reconciliar os recursos ativos após reconexão.
+- [x] Manter disponibilidade consistente entre catálogo, detalhe, estoque e cotação.
+- [x] Isolar sessão, favoritos, carrinho, carteiras e pedidos por proprietário.
+- [x] Fazer reset dos testes pelo navegador, aguardando HTTP 204 do service worker.
 
-| Tema                    | Estado/decisão necessária                                                                                                                                                                                        |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Frame mobile do detalhe | Fornecido e aplicado; manter como referência das próximas revisões.                                                                                                                                              |
-| Galeria                 | Só quatro assets distintos existem hoje; definir se thumbnails podem repetir ou se novos assets serão exportados.                                                                                                |
-| Avaliações              | Frame mostra total 19, mas contrato/lista ainda não existem. Definir somente leitura vs. endpoint paginado.                                                                                                      |
-| Edições                 | Frame mostra múltiplas opções; definir preços/estoques e qual é a edição padrão de cada NFT.                                                                                                                     |
-| Token/contrato          | Dados são simulados; usar valores claramente fictícios, mas estruturalmente válidos.                                                                                                                             |
-| Shell mobile            | Footer desktop está oculto no mobile; detalhe precisa seguir a navegação mobile já existente ou uma decisão de Figma.                                                                                            |
-| Referências visuais     | Inventário em docs/references/figma; binários originais precisam manter nomes canônicos e não podem ser recomprimidos.                                                                                           |
-| Identidade visitante    | Precisa ser estável o bastante para refresh e merge, sem expor carrinhos entre usuários.                                                                                                                         |
-| Cotação                 | API simulada é a única fonte de subtotal, desconto, taxa e total; a UI não recalcula valores oficiais.                                                                                                           |
-| Bundle de mocks         | Chunk do navegador com ~476 KiB bruto/~173 KiB transferido no ambiente simulado. Continua sendo o maior custo local; em integração real, `VITE_ENABLE_MOCKS=false` remove esse bootstrap do caminho de execução. |
+### 6.1 — Playwright e regressão visual
+
+- [x] Implementar as 12 jornadas funcionais obrigatórias.
+- [x] Ampliar cliques repetidos, recuperação de pedido e reconexão para mobile, além do desktop.
+- [x] Validar por interface e REST/MSW que uma segunda conta não acessa o pedido da primeira.
+- [x] Provar que pedidos confirmados/recusados não mudam após transição conflitante nem perdem o snapshot após refresh.
+- [x] Bloquear submissões concorrentes no mesmo ciclo e reutilizar a chave idempotente persistida; exigir uma requisição e um pedido no teste de cliques repetidos.
+- [x] Corrigir seletores ambíguos, reset fora do MSW e expectativas de loading/viewport.
+- [x] Assinar a validade do checkout antes do painel lazy e cobrir seu carregamento atrasado.
+- [x] Cobrir preço atualizado com snapshot REST atrasado, descarte de versão antiga e indisponibilidade consistente.
+- [x] Anunciar atualizações de preço do detalhe com `aria-live`.
+- [x] Validar as baselines versionadas de comércio e conta; não regenerar imagens automaticamente.
+- [x] Manter dois workers, zero retry local e tolerância visual absoluta de 50 pixels.
+- [x] Executar a suíte completa e registrar HTML, totais e escopo em [RESULTS.md](./docs/quality/RESULTS.md).
+- [x] Preservar configuração de captura e trace para falhas.
+
+### 6.2 — Build e inicialização em produção
+
+- [x] Pré-renderizar catálogo/detalhe por Axios/MSW, reutilizando os handlers do navegador.
+- [x] Descobrir as 54 rotas de NFT pela API paginada e gerar 63 documentos.
+- [x] Serializar/hidratar somente queries públicas, com escape de HTML.
+- [x] Manter sessão, carrinho, carteiras e pedidos fora do cache estático.
+- [x] Priorizar fonte e pintura do HTML antes da hidratação, mantendo as funcionalidades e os mocks.
+- [x] Impedir interação com controles estáticos antes do commit React, usando `inert`, `aria-busy` e status acessível.
+- [x] Reproduzir login com módulo inicial atrasado em desktop/mobile pelo comando `test:preview`.
+- [x] Conferir acesso direto, refresh, filtros, 404, proteção de perfil e ausência de erros de JavaScript no preview.
+- [x] Validar screenshots em preview de produção com três repetições.
+- [x] Disponibilizar favicon e robots.txt válidos.
+
+### 6.3 — Lighthouse
+
+- [x] Versionar a configuração dos quatro alvos: início/detalhe, desktop/mobile, três medições cada.
+- [x] Entregar HTML/JSON, versões, condições, medianas e LCP/CLS/TBT.
+- [x] Manter as funcionalidades, imagens, fonte e MSW da entrega durante a medição.
+- [x] Confirmar as medianas da build final contra Performance ≥90, Accessibility ≥95, Best Practices ≥95 e SEO ≥90.
+- [x] Registrar o resultado final e eventuais causas de valores abaixo das metas em [LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md).
+
+### 6.4 — Documentação e referências
+
+- [x] Atualizar setup, variáveis, contas fictícias, cenários/reset e comandos no README.
+- [x] Documentar contratos REST/eventos, sessão, cache, cotação, idempotência e limites na arquitetura.
+- [x] Atualizar o AI-PROJECT-GUIDE para a estrutura, padrões, bootstrap, testes e manutenção atuais.
+- [x] Manter o roadmap por fases, com os novos itens dentro de sua etapa.
+- [x] Conferir os links das evidências e remover relatórios/relatos de execuções antigas.
+- [x] Consolidar apenas o HTML Playwright e a matriz Lighthouse final.
+
+### 6.5 — Fechamento da entrega
+
+- [x] Organizar os testes Vitest por domínio, separando regras unitárias, integração local e infraestrutura compartilhada.
+- [x] Ampliar a validação de ETH/BigInt, URL, catálogo, carrinho, idempotência, estados terminais, propriedade de dados e handlers MSW reais.
+- [x] Executar a suíte Vitest e a tipagem estrita dos testes; manter o JUnit consolidado e os limites em [RESULTS.md](./docs/quality/RESULTS.md).
+- [x] Instrumentar Vitest e Playwright, combinar os mapas de execução e exigir pelo menos 80% nos quatro indicadores.
+- [x] Separar relatórios diagnósticos de Vitest e Playwright do indicador combinado, sem thresholds genéricos por ferramenta.
+- [x] Criar roadmap de testes por camada e por risco, registrar a baseline e iniciar a cobertura de utilitários de erro de API.
+- [x] Executar a matriz Playwright completa junto da coverage combinada e preservar relatórios nativos e resultados.
+- [x] Documentar escopo, reprodução, resultados, limites e evidências versionadas em RESULTS.md e AUDIT.md.
+
+- [x] Instalar dependências em pasta isolada sem `node_modules`, usando lockfile e `.env.example`.
+- [x] Executar tipos/build e validar rotas em preview sem backend ou credenciais privadas.
+- [x] Concluir a verificação final de formatação e ESLint.
+- [ ] Revalidar instalação limpa e build usando o lockfile atual, incluindo os testes e a configuração de coverage.
+- [ ] Publicar a versão corrigida e validar correspondência do código, deep links, refresh e fluxos na URL entregue. Esta ação não está autorizada nesta execução.
+
+## Limites e decisões consolidadas
+
+| Tema                 | Estado / decisão                                                                                                |
+| -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Galeria e assets     | Quatro artes locais reutilizadas nos fixtures; variantes responsivas e alt text mantidos.                       |
+| Avaliações           | Resumo/contagem em modo somente leitura; envio e paginação não fazem parte do fluxo exigido.                    |
+| Edições              | Contrato com identidade, estoque, preço, disponibilidade e limite por pedido; edição padrão coerente com o NFT. |
+| Valores              | ETH em strings decimais; wei inteiro nos cálculos e cotação da API como referência oficial.                     |
+| Dados privados       | Persistência somente para a simulação, com isolamento entre contas e cache privado removido ao logout.          |
+| Carteira e pagamento | Conexão, recusa, transação e explorer simulados; não há blockchain ou gateway real.                             |
+| Mocks no build       | Habilitados por configuração; o custo da demonstração faz parte das medições.                                   |
+| Dependências         | Auditoria adicional e limitações da cadeia de ferramentas registradas em RESULTS.md.                            |
+| Publicação           | Obrigatória pelo enunciado; os resultados locais não certificam a URL pública. Nenhum deploy nesta execução.    |
 
 ## Entrega
 
-O código-fonte está público em [angelobarilari/kurio-marketplace](https://github.com/angelobarilari/kurio-marketplace), e a aplicação está publicada em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app). Os resultados Lighthouse consolidados estão em `docs/performance/LIGHTHOUSE.md`; a matriz E2E atual ainda tem falhas e os diffs visuais recentes aguardam revisão individual. A rodada manual completa de teclado foi validada.
+Os endereços do repositório e da aplicação constam no README. Os resultados de execução ficam em RESULTS.md e LIGHTHOUSE.md, sem duplicar contagens neste roadmap. A entrega só pode ser declarada integralmente conforme depois que as pendências obrigatórias da Fase 6 forem encerradas.

@@ -64,7 +64,13 @@ export const NftPurchasePanel = ({
         </div>
 
         <div className="flex items-center justify-between gap-5 pb-4 max-[760px]:hidden">
-          <p className="mb-0 text-2xl font-bold text-(--color-primary-bright)">{edition.priceEth} ETH</p>
+          <p
+            className="mb-0 text-2xl font-bold text-(--color-primary-bright)"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {edition.priceEth} ETH
+          </p>
           <div
             className="flex items-center gap-2 text-[13px] text-(--color-foreground)"
             aria-label={`Avaliação ${nft.rating.average} de 5, ${nft.rating.count} avaliações de colecionadores`}
@@ -255,7 +261,11 @@ export const NftPurchasePanel = ({
               <Plus />
             </Button>
           </div>
-          <p className="mb-0 shrink-0 text-xl font-bold text-(--color-primary-bright)">
+          <p
+            className="mb-0 shrink-0 text-xl font-bold text-(--color-primary-bright)"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {edition.priceEth} ETH
           </p>
         </div>

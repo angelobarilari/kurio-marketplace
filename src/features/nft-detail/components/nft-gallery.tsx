@@ -53,6 +53,7 @@ export const NftGallery = ({ nft, gallery, activeId, onSelect }: NftGalleryProps
                 className="size-full object-cover"
                 src={media.src}
                 sizes="108px"
+                loading="lazy"
                 alt=""
                 aria-hidden="true"
               />

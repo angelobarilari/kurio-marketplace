@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": { "types": ["vite/client", "node"], "strict": true },
+  "include": ["tests/unit", "tests/integration", "tests/support", "vitest.config.ts"]
+}

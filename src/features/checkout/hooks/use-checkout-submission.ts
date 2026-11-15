@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { isAxiosError } from 'axios'
 import { useQueryClient } from '@tanstack/react-query'
 import type { UseFormReturn } from 'react-hook-form'
@@ -61,6 +61,7 @@ export const useCheckoutSubmission = ({
   const connectWallet = useConnectCheckoutWallet(sessionId)
   const disconnectWallet = useDisconnectCheckoutWallet(sessionId)
   const createOrder = useCreateOrder(sessionId)
+  const submissionState = useRef<'idle' | 'submitting' | 'completed'>('idle')
   const [checkoutError, setCheckoutError] = useState('')
   const [connectionError, setConnectionError] = useState('')
   const [mustReviewQuote, setMustReviewQuote] = useState(false)
@@ -93,71 +94,79 @@ export const useCheckoutSubmission = ({
   }
 
   const submit = async (formValues: CheckoutFormValues) => {
-    setCheckoutError('')
-    const wallet = wallets.find((candidate) => candidate.id === formValues.walletId)
-    if (!wallet || !quote.data) {
-      setCheckoutError('Selecione uma carteira e atualize a cotação antes de continuar.')
-      return
-    }
-
-    const walletConnection = await connectSelectedWallet(formValues)
-    if (!walletConnection) return
-    const activeAttemptKey = getAttemptKey()
-    const checkout: CheckoutDraft = {
-      displayName: formValues.displayName,
-      profileName: formValues.profileName,
-      username: formValues.username,
-      email: formValues.email,
-      network: formValues.network,
-      walletId: wallet.id,
-      walletAddress: wallet.address,
-      secondaryWalletAddress: formValues.secondaryWalletAddress || null,
-      walletType: formValues.walletType,
-      ensName: formValues.ensName,
-      referralCode: formValues.referralCode,
-      collectorNote: formValues.collectorNote || null,
-    }
-
+    if (submissionState.current !== 'idle') return
+    submissionState.current = 'submitting'
     try {
-      const order = await createOrder.mutateAsync({
-        idempotencyKey: activeAttemptKey,
-        checkout,
-        quoteRevision: quote.data,
-        connectionId: walletConnection.id,
-      })
-      onOpenOrder(order.id)
-    } catch (error) {
-      if (isAxiosError<CheckoutApiError>(error) && error.response?.status === 401) {
-        queryClient.removeQueries({ queryKey: sessionQueryKey })
-        queryClient.removeQueries({ predicate: (query) => query.meta?.private === true })
-        await onLoginRequired()
+      setCheckoutError('')
+      const wallet = wallets.find((candidate) => candidate.id === formValues.walletId)
+      if (!wallet || !quote.data) {
+        setCheckoutError('Selecione uma carteira e atualize a cotação antes de continuar.')
         return
       }
 
-      const apiError = isAxiosError<CheckoutApiError>(error) ? error.response?.data : undefined
-      if (apiError?.code === 'QUOTE_STALE' || apiError?.code === 'EDITION_UNAVAILABLE') {
-        setMustReviewQuote(true)
-        setReviewedFingerprint(null)
-        void quote.refetch()
+      const walletConnection = await connectSelectedWallet(formValues)
+      if (!walletConnection) return
+      const activeAttemptKey = getAttemptKey()
+      const checkout: CheckoutDraft = {
+        displayName: formValues.displayName,
+        profileName: formValues.profileName,
+        username: formValues.username,
+        email: formValues.email,
+        network: formValues.network,
+        walletId: wallet.id,
+        walletAddress: wallet.address,
+        secondaryWalletAddress: formValues.secondaryWalletAddress || null,
+        walletType: formValues.walletType,
+        ensName: formValues.ensName,
+        referralCode: formValues.referralCode,
+        collectorNote: formValues.collectorNote || null,
       }
-      const fallbackMessage = applyApiFieldErrors(error, form.setError, {
-        fields: checkoutFields,
-        fieldNames: { walletAddress: 'walletId' },
-        fallbackMessage:
-          apiError?.message ??
-          'Não foi possível confirmar o pedido. A tentativa pode ser recuperada sem duplicar a compra.',
-      })
 
       try {
-        const recoveredOrder = await getOrderByAttempt(activeAttemptKey)
-        onOpenOrder(recoveredOrder.id)
-      } catch (recoveryError) {
-        setCheckoutError(
-          isAxiosError(recoveryError) && recoveryError.response?.status !== 404
-            ? 'A confirmação foi interrompida e não foi possível consultar a tentativa. Tente novamente com segurança.'
-            : fallbackMessage,
-        )
+        const order = await createOrder.mutateAsync({
+          idempotencyKey: activeAttemptKey,
+          checkout,
+          quoteRevision: quote.data,
+          connectionId: walletConnection.id,
+        })
+        submissionState.current = 'completed'
+        onOpenOrder(order.id)
+      } catch (error) {
+        if (isAxiosError<CheckoutApiError>(error) && error.response?.status === 401) {
+          queryClient.removeQueries({ queryKey: sessionQueryKey })
+          queryClient.removeQueries({ predicate: (query) => query.meta?.private === true })
+          await onLoginRequired()
+          return
+        }
+
+        const apiError = isAxiosError<CheckoutApiError>(error) ? error.response?.data : undefined
+        if (apiError?.code === 'QUOTE_STALE' || apiError?.code === 'EDITION_UNAVAILABLE') {
+          setMustReviewQuote(true)
+          setReviewedFingerprint(null)
+          void quote.refetch()
+        }
+        const fallbackMessage = applyApiFieldErrors(error, form.setError, {
+          fields: checkoutFields,
+          fieldNames: { walletAddress: 'walletId' },
+          fallbackMessage:
+            apiError?.message ??
+            'Não foi possível confirmar o pedido. A tentativa pode ser recuperada sem duplicar a compra.',
+        })
+
+        try {
+          const recoveredOrder = await getOrderByAttempt(activeAttemptKey)
+          submissionState.current = 'completed'
+          onOpenOrder(recoveredOrder.id)
+        } catch (recoveryError) {
+          setCheckoutError(
+            isAxiosError(recoveryError) && recoveryError.response?.status !== 404
+              ? 'A confirmação foi interrompida e não foi possível consultar a tentativa. Tente novamente com segurança.'
+              : fallbackMessage,
+          )
+        }
       }
+    } finally {
+      if (submissionState.current !== 'completed') submissionState.current = 'idle'
     }
   }
 

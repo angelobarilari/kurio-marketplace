@@ -20,7 +20,7 @@
 }
 
 :root {
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'Roboto Mono Variable', monospace;
   color: var(--color-foreground);
   background: var(--color-ink);
   font-synthesis: none;

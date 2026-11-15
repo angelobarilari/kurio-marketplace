@@ -43,15 +43,27 @@ Há 15 PNGs, todos conferidos visualmente e armazenados nesta pasta.
 - Desvios intencionais por acessibilidade ou requisito funcional devem ser registrados.
 - Referências do Figma ficam aqui; snapshots produzidos por testes visuais ficam junto da suíte de testes.
 
-## Situação da revisão visual
+## Referências e snapshots
 
-Playwright automatiza jornadas funcionais e screenshots de regressão; não compara automaticamente a aplicação com o arquivo Figma. Há inconsistências conhecidas em alguns frames — por exemplo, a grade mobile aparentemente desalinhada e o pequeno retrato sobreposto indevido no hero — e divergências anteriores foram aceitas pelo responsável após revisão. Isso não classifica automaticamente novos diffs como artefatos do Figma.
+Os PNGs desta pasta são os frames canônicos de consulta. A validação automatizada compara a aplicação com as snapshots versionadas junto aos testes:
 
-A execução completa de 15/11/2026 encontrou 12 falhas de screenshot contra as baselines Playwright: home, detalhe, carrinho e checkout/recibo em desktop/mobile, além de login/cadastro e perfil/carteiras em desktop/mobile. Essas 12 diferenças ainda não foram revisadas individualmente nem aceitas em bloco. Como exemplo da dimensão, na home mobile a baseline mede 390 × 2158 px e a captura atual 390 × 1870 px (38% de pixels diferentes); é necessário comparar a imagem atual e o diff antes de chamar isso de um pequeno artefato. Não regenerar snapshots em lote.
+- [Comércio](../../../tests/visual.spec.ts-snapshots): home, detalhe, carrinho, checkout e recibo.
+- [Conta](../../../tests/account-visual.spec.ts-snapshots): login, cadastro, perfil e carteiras.
 
-Os cenários visuais também precisam reproduzir a densidade do frame antes de uma eventual revisão futura: os frames de carrinho e checkout mostram vários itens/quantidades, enquanto o fluxo visual automatizado atual usa um único NFT. Essa diferença de fixture pode explicar parte dos diffs, mas não classifica todos como não-regressão. Revisar cada par baseline/captura/frame antes de aceitar; não atualizar as baselines em lote.
+As duas pastas pertencem a suítes diferentes. Execute ambas com `npm run test:visual`; a suíte completa também as inclui. O resultado da execução e o HTML estão em [RESULTS.md](../../quality/RESULTS.md).
 
-Na home mobile, conferir a composição do hero, a grade alinhada por linha e a navegação inferior. Há artefatos conhecidos no frame de referência que não devem ser reproduzidos: a grade aparenta alternar verticalmente as colunas, mas os cards do produto devem ficar alinhados; o pequeno retrato sobreposto no hero deve ser omitido. Os indicadores funcionais do hero permanecem no mobile e ficam ocultos no desktop. No detalhe e checkout, comparar altura/ordem dos blocos e resumo do pedido; no carrinho, comparar cards, quantidade, cupom e painel de totais.
+A tolerância é de 50 pixels diferentes por imagem, em valor absoluto. Animações/caret são ocultados e campos variáveis do recibo são mascarados. Capturas aguardam a decodificação das imagens. Não atualizar baselines em lote nem aceitar diferenças sem inspeção.
+
+### Decisões da composição atual
+
+- Home mobile: hero compacto com indicadores, sem retrato sobreposto, e grade alinhada por linha.
+- Conteúdo editorial e footer desktop não são montados no mobile. Recomendações ocultas do carrinho também não são consultadas nesse viewport.
+- “Oferta limitada” mantém margem inferior de 16 px.
+- A fonte local é `Roboto Mono Variable`, coerente com o pacote instalado.
+- Carrinho/checkout usam dados determinísticos: três NFTs com quantidade 2 no desktop e quatro NFTs com quantidades variadas no mobile.
+- O detalhe usa preço/edição do contrato; o recibo apresenta o snapshot imutável do pedido, com valores fornecidos pela API.
+
+Os frames orientam composição e adaptações; as snapshots detectam regressões da interface aprovada. Dados de demonstração e estados funcionais precisam continuar coerentes com o enunciado e os contratos.
 
 ## Leitura funcional dos frames
 
@@ -66,7 +78,7 @@ Na home mobile, conferir a composição do hero, a grade alinhada por linha e a 
 
 - A rota combina galeria, dados comerciais, edição, quantidade, metadados, avaliação e recomendações.
 - O NFT exibido deve ser resolvido pelo identificador da rota, sem duplicar um objeto específico na página.
-- Preço e símbolo dependem da rede/moeda do NFT; não devem ser fixados em ETH.
+- O preço vem do contrato do NFT; os valores são strings decimais em ETH conforme o enunciado, inclusive nos cenários com redes distintas.
 - A ação de compra alimenta o carrinho com NFT, edição e quantidade selecionadas.
 
 ### Carrinho

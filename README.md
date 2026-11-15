@@ -12,7 +12,7 @@ O enunciado original está preservado em [TECHNICAL-CHALLENGE.md](./TECHNICAL-CH
 | Rotas e estado remoto | TanStack Router e TanStack Query                          |
 | REST e eventos        | Axios, MSW, Socket.IO Client e `@mswjs/socket.io-binding` |
 | Formulários           | React Hook Form e Zod                                     |
-| Testes e qualidade    | Playwright e Lighthouse                                   |
+| Testes e qualidade    | Vitest, Playwright e Lighthouse                           |
 | Build                 | Vite                                                      |
 
 ## Pré-requisitos
@@ -80,9 +80,11 @@ O preview normalmente fica disponível em `http://localhost:4173`. A build é ge
 2. Abra um NFT para testar galeria, edição, quantidade, favorito e inclusão no carrinho.
 3. Acesse `/cart`, altere quantidades e use o cupom `KURIO10`.
 4. Crie uma conta pelo fluxo de cadastro ou use o login social simulado.
-5. Cadastre uma carteira no perfil e prossiga por `/checkout` até o pedido e o recibo simulados.
+5. Cadastre uma carteira no perfil e prossiga por `/checkout`. Preencha os campos obrigatórios, incluindo o código de indicação (por exemplo, `TESTE10`), e confirme até o pedido e o recibo simulados.
 
 Os dados ficam no backend MSW simulado e podem persistir no armazenamento do navegador para permitir refresh e retomada dos fluxos. Nenhuma compra ou conexão blockchain real é executada.
+
+Para uma conta nova, exemplos válidos de demonstração são: rede `Ethereum`, endereço `0x1111111111111111111111111111111111111111`, provedor `MetaMask`, nome ENS `teste.eth` e indicação `TESTE10`. Esses valores servem apenas ao ambiente simulado.
 
 ## Contas e cenários simulados
 
@@ -97,7 +99,7 @@ location.assign('/checkout')
 
 | Grupo               | Cenários                                                                                                                                                                                     |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Catálogo e detalhe  | `catalog-empty`, `catalog-error`, `catalog-out-of-order`, `detail-error`, `nft-unavailable`, `editions-sold-out`                                                                             |
+| Catálogo e detalhe  | `catalog-empty`, `catalog-error`, `catalog-slow`, `catalog-out-of-order`, `detail-error`, `detail-slow`, `detail-realtime-slow`, `nft-unavailable`, `editions-sold-out`                      |
 | Carrinho e cotação  | `cart-slow`, `cart-offline`, `cart-error`, `cart-server-error`, `cart-client-error`, `cart-out-of-order`, `cart-mutation-error`, `quote-slow`, `quote-error`                                 |
 | Conta e favoritos   | `favorite-error`, `social-auth-error`, `session-expired`                                                                                                                                     |
 | Carteira e checkout | `wallet-connect-offline`, `wallet-connect-rejected`, `session-expired-during-checkout`, `checkout-coupon-expired`, `checkout-price-changed`, `checkout-edition-sold-out`, `payment-declined` |
@@ -117,16 +119,36 @@ O reset restaura sessão, contas, favoritos, catálogo, carrinhos e pedidos. O c
 
 ## Comandos
 
-| Comando                                                         | Uso                                                                       |
-| --------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| `npm run typecheck`                                             | Verifica os tipos TypeScript.                                             |
-| `npm run lint:check`                                            | Verifica Prettier e ESLint sem alterar arquivos.                          |
-| `npm run build`                                                 | Gera a build e os documentos HTML pré-renderizados elegíveis.             |
-| `npm run test:e2e -- --project=chromium-desktop --grep "termo"` | Executa um recorte Playwright direcionado.                                |
-| `npm run test:e2e`                                              | Executa a matriz Playwright completa.                                     |
-| `npm run test:visual`                                           | Executa as regressões visuais.                                            |
-| `npm run audit:lighthouse:matrix`                               | Executa três medições Lighthouse por rota e perfil, após `npm run build`. |
-| `npm run audit:lighthouse:prerendered`                          | Mede as rotas pré-renderizadas; exige build com mocks habilitados.        |
+Os testes de regras e de integração usam Vitest com TypeScript. `tests/unit/` reúne conversão ETH/wei, ordenação e parsers da URL; `tests/integration/` separa carrinho, pedidos, conta/sessão, cache e handlers MSW por domínio. Fixtures e isolamento de estado ficam em `tests/support/`. A configuração executa cada arquivo isoladamente e reinicia armazenamento e estado antes de cada teste de integração. Não exige navegador ou servidor de desenvolvimento.
+
+| Comando                                | Uso                                                                                                                         |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `npm run test:unit`                    | Regras isoladas, sem gerar ou substituir o relatório consolidado.                                                           |
+| `npm run test:integration`             | Estado dos domínios e contratos HTTP/MSW, sem substituir o consolidado.                                                     |
+| `npm run test:checks`                  | Executa ambos os projetos e gera `docs/quality/vitest-results.xml` em JUnit.                                                |
+| `npm run test:coverage`                | Executa Vitest e Playwright; exige 80% nos quatro indicadores combinados.                                                   |
+| `npm run test:coverage:vitest`         | Executa os projetos unit e integration; diagnóstico Vitest-only, sem threshold próprio.                                     |
+| `npm run test:coverage:refresh-vitest` | Atualiza Vitest + combinado reutilizando o último mapa Playwright; use só se código, dependências e inputs E2E não mudaram. |
+| `npm run test:coverage:report`         | Regera os relatórios por camada e combinado a partir dos mapas JSON versionados.                                            |
+| `npm run test:watch`                   | Reexecuta os testes Vitest relacionados às alterações durante o desenvolvimento.                                            |
+| `npm run typecheck:tests`              | Verifica a tipagem estrita dos testes, helpers e configuração.                                                              |
+
+Para filtrar um arquivo, use `npm run test:unit -- tests/unit/lib/eth.test.ts`; para filtrar pelo nome do caso, acrescente `-t "nome"`. Vitest e Playwright têm responsabilidades diferentes: Vitest cobre regras e integrações locais; Playwright cobre jornadas no browser. O percentual de 80% pertence à união dos mapas, não a cada ferramenta. Coverage prova execução, não suficiência das assertions. O comando `test:coverage:refresh-vitest` não executa E2E e só é válido quando `src/`, dependências, testes e configurações de browser/build permanecem iguais à última execução completa. Consulte [resultados](./docs/quality/RESULTS.md), [auditoria](./docs/quality/AUDIT.md) e o [roadmap de testes](./docs/quality/TESTING-ROADMAP.md).
+
+`npm run test:core` executa o recorte complementar de resiliência do checkout em desktop/mobile: cliques repetidos, idempotência, isolamento de pedidos, estados terminais, refresh/reconexão e recuperação de falhas. O comando não substitui a suíte completa. Resultados e evidências estão em [RESULTS.md](./docs/quality/RESULTS.md).
+
+| Comando                                                         | Uso                                                                                   |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `npm run typecheck`                                             | Verifica os tipos TypeScript.                                                         |
+| `npm run lint:check`                                            | Verifica Prettier e ESLint sem alterar arquivos.                                      |
+| `npm run build`                                                 | Gera a build e os documentos HTML pré-renderizados elegíveis.                         |
+| `npm run test:e2e -- --project=chromium-desktop --grep "termo"` | Executa um recorte Playwright direcionado.                                            |
+| `npm run test:e2e`                                              | Executa a matriz Playwright completa.                                                 |
+| `npm run test:visual`                                           | Executa todas as comparações visuais, incluindo conta.                                |
+| `npm run test:report`                                           | Abre o relatório HTML da última execução local.                                       |
+| `npm run test:preview`                                          | Valida a build em produção, incluindo login com bootstrap atrasado; usa a porta 4176. |
+| `npm run audit:lighthouse:matrix`                               | Executa três medições Lighthouse por rota e perfil, após `npm run build`.             |
+| `npm run audit:lighthouse:prerendered`                          | Mede as rotas pré-renderizadas; exige build com mocks habilitados.                    |
 
 Na primeira execução dos testes, instale o navegador gerenciado pelo Playwright:
 
@@ -134,9 +156,9 @@ Na primeira execução dos testes, instale o navegador gerenciado pelo Playwrigh
 npx playwright install chromium
 ```
 
-O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile (390 × 844). A suíte inclui testes funcionais e regressões por screenshots. A execução completa local mais recente (15/11/2026, 8 workers) registrou 192 testes aprovados, 109 ignorados por viewport e 20 falhas (12 visuais e 8 funcionais); portanto, a suíte não está verde. As 12 falhas visuais são comparações com baselines Playwright — não uma comparação automática com o Figma — e ainda não foram todas revisadas/aceitas como artefatos da referência. As 8 falhas funcionais incluem expectativas de estado vazio/rota/favorito e timeouts; durante a execução também ocorreram erros `InvalidStateError` do MSW/Service Worker, então há suspeita de flakiness sob concorrência, não uma classificação definitiva de defeito do produto. O [roadmap](./IMPLEMENTATION-ROADMAP.md) e o [inventário Figma](./docs/references/figma/README.md) detalham o resultado. O relatório HTML e os traces foram gerados localmente em `playwright-report/` e `test-results/`, ignorados pelo Git; não atualizar baselines em lote.
+O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile (390 × 844). Os resultados, a cobertura das 12 jornadas e o relatório de entrega estão em [Resultados e evidências](./docs/quality/RESULTS.md). A suíte completa inclui os testes visuais. Capturas de falha e traces são preservados automaticamente quando um teste falha.
 
-A matriz Lighthouse inicia um Vite Preview local e versiona os relatórios HTML/JSON e o resumo em `docs/performance/lighthouse/phase-13-final-2026-11-15/`. A auditoria complementar das rotas pré-renderizadas usa o servidor local próprio na porta `4175` e aceita seletores como `npm run audit:lighthouse:prerendered -- --target=checkout --runs=1`; seus relatórios adicionais ficam em `reports/lighthouse/` (artefatos locais ignorados pelo Git). Resultados e condições estão em `docs/performance/LIGHTHOUSE.md`.
+A matriz Lighthouse inicia o Vite Preview, grava os 12 relatórios HTML e 12 JSON em `docs/performance/lighthouse/current/` e atualiza as medianas e condições em `docs/performance/LIGHTHOUSE.md`. Execute depois do build, com a porta `4173` livre e sem testes ou outras auditorias simultâneas. Consulte [Lighthouse](./docs/performance/LIGHTHOUSE.md) para metas, condições e leitura dos resultados. A auditoria adicional `audit:lighthouse:prerendered` cobre outras rotas na porta `4175` e salva experimentos locais em `reports/lighthouse/`; ela não substitui a matriz exigida.
 
 `npm run build` também gera HTML estático para as rotas aplicáveis. Para incluir a homepage e os detalhes dos NFTs de demonstração, configure `VITE_ENABLE_MOCKS=true` no ambiente de build (no setup local, `.env` já vem com esse valor). Páginas privadas recebem apenas sua estrutura inicial; sessão, carrinho, carteira e pedido são carregados no cliente. Isso é pré-renderização estática de build, não SSR dinâmico.
 
@@ -147,10 +169,13 @@ A matriz Lighthouse inicia um Vite Preview local e versiona os relatórios HTML/
 - [Roadmap e auditoria de requisitos](./IMPLEMENTATION-ROADMAP.md)
 - [Guia de implementação e convenções](./AI-PROJECT-GUIDE.md)
 - [Inventário dos frames do Figma](./docs/references/figma/README.md)
+- [Resultados de qualidade, cobertura E2E e evidências de entrega](./docs/quality/RESULTS.md)
+- [Procedimento de auditoria, escopo e reprodução](./docs/quality/AUDIT.md)
+- [Roadmap de testes, metas por camada e fases de expansão](./docs/quality/TESTING-ROADMAP.md)
 - [Resultados e próximos passos Lighthouse](./docs/performance/LIGHTHOUSE.md)
 
 ## Estado da entrega
 
-O código-fonte está publicado no repositório público [angelobarilari/kurio-marketplace](https://github.com/angelobarilari/kurio-marketplace), e a aplicação está disponível em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app).
+Endereços de referência da entrega: [repositório](https://github.com/angelobarilari/kurio-marketplace) e [aplicação](https://kurio-marketplace-two.vercel.app). A publicação está ativa; o hash da fonte e os fluxos públicos verificados estão registrados em [RESULTS.md](./docs/quality/RESULTS.md), junto às limitações ainda abertas.
 
-As diferenças visuais conhecidas estão registradas no roadmap; os resultados e próximos passos Lighthouse estão consolidados em [um único documento](./docs/performance/LIGHTHOUSE.md). A rodada manual completa de teclado foi validada pelo responsável; foco, semântica, reflow e cenários automatizáveis também possuem cobertura Playwright.
+Os resultados e limites da validação local e da URL publicada estão em [RESULTS.md](./docs/quality/RESULTS.md), as métricas e metas Lighthouse em [LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md) e a correspondência com os requisitos no [checklist de entrega](./IMPLEMENTATION-ROADMAP.md).

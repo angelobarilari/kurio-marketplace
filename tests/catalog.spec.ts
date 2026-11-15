@@ -1,7 +1,8 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './helpers/coverage-fixture'
 
 const useMockScenario = async (page: import('@playwright/test').Page, scenario: string) => {
   await page.goto('/')
+  await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller))
   await page.evaluate((value) => localStorage.setItem('kurio:mock-scenario', value), scenario)
 }
 import type { Page } from '@playwright/test'
@@ -36,6 +37,17 @@ test('catalog has no horizontal overflow at the configured viewport', async ({ p
     content: document.documentElement.scrollWidth,
   }))
   expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport)
+})
+
+test('loads the bundled Roboto Mono font used by the interface', async ({ page }) => {
+  await page.goto('/')
+  const font = await page.evaluate(async () => {
+    await document.fonts.ready
+    const faces = await document.fonts.load('16px "Roboto Mono Variable"', 'Coleções')
+    return faces.length
+  })
+  await expect(page.locator('html')).toHaveCSS('font-family', /Roboto Mono Variable/)
+  expect(font).toBeGreaterThan(0)
 })
 
 test('mobile homepage skips loading content hidden at this viewport', async ({ page }, testInfo) => {
@@ -95,15 +107,19 @@ test('mobile catalog cards align within each grid row', async ({ page }, testInf
   expect(cardTops[2]).toBe(cardTops[3])
 })
 
-test('renders cached mock catalog data while its initial API request is pending', async ({ page }) => {
-  await page.goto('/')
-  await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'catalog-slow'))
+test('loads the initial catalog through MSW and shows skeletons while the API is pending', async ({
+  page,
+}) => {
+  await page.addInitScript(() => localStorage.setItem('kurio:mock-scenario', 'catalog-slow'))
   const catalogResponse = page.waitForResponse((response) => new URL(response.url()).pathname === '/api/nfts')
-
-  await page.reload()
+  await page.goto('/')
+  await expect(page.getByRole('status', { name: 'Carregando NFTs' })).toBeVisible()
+  await expect(page.getByTestId('nft-card')).toHaveCount(0)
+  const response = await catalogResponse
+  expect(response.fromServiceWorker()).toBe(true)
+  expect(response.ok()).toBe(true)
   await expect(page.getByTestId('nft-card')).toHaveCount(9)
   await expect(page.getByRole('status', { name: 'Carregando NFTs' })).toHaveCount(0)
-  expect((await catalogResponse).ok()).toBe(true)
 })
 
 test('desktop navigation links use Tailwind utility styles', async ({ page }, testInfo) => {
@@ -217,7 +233,11 @@ test('active URL filters survive refresh and can be cleared together', async ({ 
     await page.getByRole('button', { name: 'Abrir filtros' }).click()
   }
 
-  const clearFilters = page.getByRole('button', { name: 'Limpar filtros' })
+  const clearFilters = testInfo.project.name.includes('mobile')
+    ? page.getByRole('dialog').getByRole('button', { name: 'Limpar filtros' })
+    : page
+        .getByRole('complementary', { name: 'Filtros do catálogo' })
+        .getByRole('button', { name: 'Limpar filtros' })
   await expect(clearFilters).toBeVisible()
   await clearFilters.click()
 
@@ -249,7 +269,6 @@ test('catalog cards and facet counts follow each selected network', async ({ pag
     await filter.scrollIntoViewIfNeeded()
     await filter.click()
     await expect(page).toHaveURL(new RegExp('network=' + network.name))
-    await expect(page.getByRole('status', { name: 'Carregando NFTs' })).toBeVisible()
     await expect
       .poll(async () =>
         page
@@ -311,7 +330,6 @@ test('network filters update the cards and preserve the full fixture totals', as
     await filter.scrollIntoViewIfNeeded()
     await filter.click()
     await expect(page).toHaveURL(new RegExp('network=' + network.name))
-    await expect(page.getByRole('status', { name: 'Carregando NFTs' })).toBeVisible()
     await expect
       .poll(async () =>
         page
@@ -334,6 +352,9 @@ test('network filter keeps the latest selection when earlier responses arrive ou
   await useMockScenario(page, 'catalog-out-of-order')
   await page.goto('/')
   await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller))
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready
+  })
 
   const responseOrder = await page.evaluate(async () => {
     const completionOrder: string[] = []
@@ -407,6 +428,8 @@ test('hero keeps mobile highlight controls without an overlapping preview image'
 
 test('pagination remains visible while another page is loading', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByTestId('nft-card')).toHaveCount(9)
+  await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'catalog-slow'))
 
   const pagination = page.getByRole('navigation', { name: 'Paginação do catálogo' })
   await pagination.getByRole('button', { name: 'Página 2', exact: true }).click()
@@ -420,6 +443,7 @@ test('pagination remains visible while another page is loading', async ({ page }
 
 test('promo and journal cards follow the Figma layout', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name.includes('mobile') || testInfo.project.name.includes('tablet'))
+  await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/')
 
   const cards = page.getByTestId('promo-card')
@@ -457,6 +481,20 @@ test('promo and journal cards follow the Figma layout', async ({ page }, testInf
   expect(layout.imageSizes.map(({ left }, index) => left - layout.cardLefts[index])).toEqual([-5, -5])
   expect(layout.textAlignments).toEqual(['right', 'right'])
   await expect(page.getByTestId('journal-card')).toHaveCount(4)
+  const journalCard = page.getByTestId('journal-card').first()
+  await expect(
+    journalCard.getByText('Aprenda a colecionar, negociar e verificar ativos digitais.'),
+  ).toBeVisible()
+  await expect(journalCard.getByRole('button', { name: 'Ler mais' })).toBeDisabled()
+  await page.evaluate(() => document.fonts.ready.then(() => undefined))
+  await journalCard.locator('[tabindex="0"]').scrollIntoViewIfNeeded()
+  await journalCard.locator('[tabindex="0"]').evaluate(async (element: HTMLElement) => {
+    // Let the scroll event close any prior tooltip before opening it with focus.
+    await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))
+    element.focus({ preventScroll: true })
+  })
+  await expect(journalCard.locator('[tabindex="0"]')).toBeFocused()
+  await expect(page.getByRole('tooltip')).toHaveText('Conteúdo editorial em breve')
 })
 
 test('promo cards remain spacious at tablet width', async ({ page }, testInfo) => {

@@ -1,20 +1,9 @@
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test } from './helpers/coverage-fixture'
+import type { Page } from '@playwright/test'
+import { resetMockApi } from './helpers/mock-api'
 
 const resetMocks = async (page: Page) => {
-  await page.goto('/')
-  await page.waitForFunction(() => Boolean(document.querySelector('#root')?.childElementCount))
-  await page.getByTestId('nft-card').first().waitFor()
-  await page.evaluate(async () => {
-    localStorage.removeItem('kurio:mock-scenario')
-    localStorage.removeItem('kurio:visitor-cart')
-    let response: Response
-    for (let attempt = 0; ; attempt += 1) {
-      response = await fetch('/api/mock/reset', { method: 'POST' })
-      if (response.status !== 404 || attempt === 4) break
-      await new Promise((resolve) => setTimeout(resolve, 100))
-    }
-    if (!response.ok) throw new Error(`Mock reset failed with status ${response.status}.`)
-  })
+  await resetMockApi(page)
 }
 
 const waitForImages = async (page: Page) =>
@@ -120,6 +109,7 @@ test.describe('versioned visual baselines', () => {
     test.skip(testInfo.project.name.includes('tablet'))
     await page.goto('/nfts/emerald-ape-042')
     await expect(page.getByRole('heading', { level: 1, name: 'Emerald Ape #042' })).toBeVisible()
+    await waitForImages(page)
     await expect(page).toHaveScreenshot('nft-detail.png', {
       animations: 'disabled',
       fullPage: true,
@@ -141,7 +131,7 @@ test.describe('versioned visual baselines', () => {
     await expect(
       page.getByRole('region', { name: 'NFTs', exact: true }).getByRole('heading', { level: 2 }),
     ).toHaveCount((page.viewportSize()?.width ?? 0) <= 760 ? 4 : 3)
-    await expect(page.getByTestId('nft-card')).toHaveCount(9)
+    await expect(page.getByTestId('nft-card')).toHaveCount((page.viewportSize()?.width ?? 0) <= 760 ? 0 : 9)
     await waitForImages(page)
     await expect(page).toHaveScreenshot('cart.png', {
       animations: 'disabled',
@@ -163,12 +153,23 @@ test.describe('versioned visual baselines', () => {
       caret: 'hide',
     })
 
-    await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'socket-offline'))
+    await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'order-pending'))
     await page.getByRole('button', { name: 'Confirmar compra' }).click()
     await expect(page).toHaveURL(/\/orders\/order-/)
     await expect(page.getByRole('button', { name: 'Verificar status' })).toBeVisible()
-    await page.waitForTimeout(700)
     await page.getByRole('button', { name: 'Verificar status' }).click()
+    await expect(page.getByRole('heading', { name: 'Aguardando confirmação' })).toBeVisible()
+
+    const orderId = new URL(page.url()).pathname.split('/').pop()
+    if (!orderId) throw new Error('The confirmed receipt route did not contain an order ID.')
+    await page.evaluate(async (id) => {
+      const response = await fetch(`/api/mock/orders/${id}/transition`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ status: 'confirmed' }),
+      })
+      if (!response.ok) throw new Error(`Could not confirm the visual test order (${response.status}).`)
+    }, orderId)
     await expect(page.getByText('Pagamento confirmado', { exact: true })).toBeVisible()
     await expect(page).toHaveScreenshot('order-confirmation.png', {
       animations: 'disabled',

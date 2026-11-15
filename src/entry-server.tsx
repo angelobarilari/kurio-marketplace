@@ -1,10 +1,16 @@
 import { StrictMode } from 'react'
 import { renderToReadableStream } from 'react-dom/server'
-import { QueryClientProvider } from '@tanstack/react-query'
+import { dehydrate, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider } from '@tanstack/react-router'
 import { attachRouterServerSsrUtils, transformHtmlStringWithRouter } from '@tanstack/react-router/ssr/server'
 import { createQueryClient } from '@/lib/query-client'
 import { createAppRouter, preloadAppRoute } from '@/router'
+import { getNfts } from '@/features/catalog/api/nfts'
+import { nftCatalogQueryOptions } from '@/features/catalog/hooks/use-nft-catalog'
+import { nftDetailQueryOptions } from '@/features/nft-detail/hooks/use-nft-detail'
+import { httpClient } from '@/lib/http-client'
+import { mockServer } from '@/mocks/server'
+import { prerenderApiOrigin } from '@/mocks/api-url'
 
 export type PrerenderRoute = {
   path: string
@@ -14,10 +20,30 @@ export type PrerenderRoute = {
 
 const isMockCatalogEnabled = import.meta.env.VITE_ENABLE_MOCKS === 'true'
 
+export const startPrerenderMocks = () => {
+  if (!isMockCatalogEnabled) return () => undefined
+  const previousBaseUrl = httpClient.defaults.baseURL
+  httpClient.defaults.baseURL = `${prerenderApiOrigin}/api`
+  mockServer.listen({ onUnhandledRequest: 'error' })
+  return () => {
+    mockServer.close()
+    httpClient.defaults.baseURL = previousBaseUrl
+  }
+}
+
 export const getPrerenderRoutes = async (): Promise<PrerenderRoute[]> => {
-  const nftRoutes = isMockCatalogEnabled
-    ? (await import('@/mocks/fixtures/catalog')).createNfts().map(({ id }) => ({ path: `/nfts/${id}` }))
-    : []
+  const nftRoutes: PrerenderRoute[] = []
+  if (isMockCatalogEnabled) {
+    const firstPage = await getNfts({ sort: 'recent', page: 1 })
+    const remainingPages = await Promise.all(
+      Array.from({ length: firstPage.totalPages - 1 }, (_, index) =>
+        getNfts({ sort: 'recent', page: index + 2 }),
+      ),
+    )
+    for (const nft of [firstPage, ...remainingPages].flatMap((page) => page.items)) {
+      nftRoutes.push({ path: `/nfts/${nft.id}` })
+    }
+  }
   const fixedRoutes = [
     '/cart',
     '/checkout',
@@ -51,11 +77,16 @@ const preloadRouteDependencies = (path: string) => {
 }
 
 export const renderPrerenderRoute = async (indexHtml: string, route: PrerenderRoute): Promise<string> => {
+  const queryClient = createQueryClient()
+  if (isMockCatalogEnabled && route.path === '/') {
+    await queryClient.fetchQuery(nftCatalogQueryOptions({ sort: 'recent', page: 1 }))
+  } else if (isMockCatalogEnabled && route.path.startsWith('/nfts/')) {
+    await queryClient.fetchQuery(nftDetailQueryOptions(route.path.slice('/nfts/'.length)))
+  }
   const router = createAppRouter(route.path)
   attachRouterServerSsrUtils({ router, manifest: undefined })
   await Promise.all([router.load(), preloadRouteDependencies(route.path)])
   await router.serverSsr?.dehydrate()
-  const queryClient = createQueryClient()
   const errors: unknown[] = []
   const stream = await renderToReadableStream(
     <StrictMode>
@@ -72,6 +103,12 @@ export const renderPrerenderRoute = async (indexHtml: string, route: PrerenderRo
   await stream.allReady
   if (errors.length > 0) throw errors[0]
   const markup = await new Response(stream).text()
+  const queryState = JSON.stringify(
+    dehydrate(queryClient, {
+      shouldDehydrateQuery: (query) => query.state.status === 'success' && query.queryKey[0] === 'nfts',
+    }),
+  ).replace(/</g, '\\u003c')
+  queryClient.clear()
 
   const emptyRoot = '<div id="root"></div>'
   if (!indexHtml.includes(emptyRoot)) {
@@ -81,13 +118,15 @@ export const renderPrerenderRoute = async (indexHtml: string, route: PrerenderRo
   const pattern = JSON.stringify(route.pattern ?? null)
   const guard = `<script>(()=>{const path=${expectedPath};const pattern=${pattern};const matches=pattern==="order"?/^\\/orders\\/[^/]+$/.test(location.pathname):location.pathname===path;if(!matches||location.search!==""){const root=document.getElementById("root");root.replaceChildren();root.removeAttribute("data-prerendered");root.removeAttribute("data-prerender-path");root.removeAttribute("data-prerender-pattern")}})()</script>`
   const rootAttributes = [
+    'inert',
+    'aria-busy="true"',
     'data-prerendered="true"',
     `data-prerender-path="${route.path}"`,
     ...(route.pattern ? [`data-prerender-pattern="${route.pattern}"`] : []),
   ].join(' ')
   const documentHtml = indexHtml.replace(
     emptyRoot,
-    `<div id="root" ${rootAttributes}>${markup}</div>${guard}`,
+    `<div id="root" ${rootAttributes}>${markup}</div><p id="kurio-boot-status" class="sr-only" role="status">Carregando aplicação…</p><script id="kurio-query-state" type="application/json">${queryState}</script>${guard}`,
   )
   return transformHtmlStringWithRouter(router, documentHtml.replace(/^<!doctype html>\s*/i, ''))
 }

@@ -11,7 +11,12 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { applyApiFieldErrors } from '@/features/auth/utils/form-errors'
 import { getApiError } from '@/features/auth/utils/get-api-error'
-import { useLogin, usePasswordRecovery, useRegister, useSocialLogin } from '@/features/auth/hooks/use-session'
+import {
+  useLogin,
+  usePasswordRecovery,
+  useRegister,
+  useSocialLogin,
+} from '@/features/auth/hooks/use-auth-mutations'
 import { PasswordInput } from '@/features/auth/components/password-input'
 import { createAuthFormSchema, passwordRecoverySchema, type AuthFormValues } from '@/features/auth/schemas'
 import type { Session } from '@/features/auth/types'

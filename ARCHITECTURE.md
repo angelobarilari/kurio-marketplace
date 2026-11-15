@@ -1,278 +1,199 @@
 # Arquitetura — Kurio
 
-> O [TECHNICAL-CHALLENGE.md](./TECHNICAL-CHALLENGE.md) preserva os requisitos do teste técnico; o [README.md](./README.md) documenta a solução e sua execução. Este documento registra as decisões de implementação e os contratos vigentes.
+O [teste técnico](./TECHNICAL-CHALLENGE.md) define os requisitos; o [README](./README.md) descreve a execução. Aqui estão os contratos, as regras de estado e os limites da implementação.
 
-## Stack e fluxo de execução
+## Organização e stack
 
-- Vite entrega React 19 com TypeScript em modo estrito.
-- TanStack Router é responsável por rotas, parâmetros e acesso direto.
-- TanStack Query controla cache e estado remoto; Axios é o único cliente REST da aplicação.
-- Tailwind CSS 4 e primitivas shadcn/ui formam a camada visual. `src/index.css` contém somente fontes, tokens, reset/base, acessibilidade e animações globais.
-- MSW fornece o backend simulado. `VITE_ENABLE_MOCKS=true` habilita os handlers no navegador e no build de demonstração.
-- Socket.IO Client é o transporte de eventos da aplicação. `VITE_SOCKET_URL=same-origin` mantém o ambiente portátil; o MSW intercepta o WebSocket e usa `@mswjs/socket.io-binding`. A conexão, proteção de versão e reconciliação REST ao conectar/reconectar possuem cobertura ponta a ponta.
-- Playwright executa Chromium em 1440×900, 768×1024 e 390×844.
-- Lucide fornece ícones funcionais genéricos e `react-icons/fa6` fornece somente ícones de marcas sociais ausentes no Lucide.
+- `src/routes`: rotas TanStack Router, parâmetros validados e composição das telas.
+- `src/features`: catálogo, detalhe, carrinho, autenticação/conta, favoritos, checkout e pedidos; cada domínio reúne API, hooks, schemas e componentes.
+- `src/components/ui`: primitivas shadcn/ui adaptadas; `layout` e `media` concentram elementos compartilhados.
+- `src/lib`: Axios, QueryClient e utilitários transversais; `src/types`: contratos compartilhados.
+- `src/mocks`: fixtures, estado simulado e handlers MSW HTTP/Socket.IO.
+- `tests`: regras unitárias e integrações Vitest por domínio, além de jornadas e baselines Playwright.
+- `docs/quality`: roadmap, auditoria, resultados observados e mapas de coverage por camada.
 
-### Pré-renderização e roteamento
+React e TypeScript estrito compõem a UI; Tailwind CSS 4 aplica o sistema visual. TanStack Router mantém navegação e parâmetros; TanStack Query mantém o estado remoto; chamadas REST passam por Axios. A UI não importa fixtures ou estado de mocks.
 
-`npm run build` executa TypeScript, Vite e `scripts/prerender-routes.mjs`. O script renderiza documentos HTML estáticos por meio de `src/entry-server.tsx` e TanStack Router. Com `VITE_ENABLE_MOCKS=true`, a build gera a homepage e as 54 páginas de NFT dos fixtures, além das rotas fixas de conta/checkout e um documento genérico para pedidos dinâmicos. Sem mocks, as rotas privadas e o documento de pedido continuam disponíveis, mas a homepage e os detalhes dos fixtures não são pré-renderizados.
+## Rotas e limites de domínio
 
-A pré-renderização não usa sessão nem dados de usuário. As páginas privadas contêm somente a estrutura inicial segura; dados de sessão, carrinho, carteiras e pedidos são carregados no cliente. Query strings e rotas sem documento correspondente seguem a inicialização client-side normal. É SSG durante o build, não SSR dinâmico por requisição. No Vercel, `cleanUrls` serve os documentos estáticos e `/orders/:orderId` é reescrito para `orders.html`.
+| Rota                  | Composição / responsabilidade                                                           |
+| --------------------- | --------------------------------------------------------------------------------------- |
+| `/`                   | Hero, catálogo, busca/filtros, ordenação e paginação. Estado navegável fica na URL.     |
+| `/nfts/$nftId`        | Galeria, contrato detalhado, edições, quantidade, favorito e inclusão no carrinho.      |
+| `/cart`               | Itens por proprietário, mutations, cupom, cotação e avanço para autenticação/checkout.  |
+| `/login`, `/register` | Autenticação com retorno validado; diálogo no desktop e experiência dedicada no mobile. |
+| `/profile`            | Dados, avatar e senha em formulários/mutations independentes.                           |
+| `/profile/wallets`    | Carteiras com rede, endereço, provedor, ENS e prioridade.                               |
+| `/profile/favorites`  | Lista privada e mutations otimistas de favoritos.                                       |
+| `/checkout`           | Formulário, carteira/conexão, revisão de cotação e tentativa idempotente.               |
+| `/orders/$orderId`    | Consulta, estados, eventos/reconciliação e recibo pertencente ao usuário autenticado.   |
 
-Em `src/router.tsx`, cada rota mantém seu próprio `validateSearch`; parsers de campos compartilhados (`couponCode` e `network`) ficam em `src/router-search.ts`. O preload usa um objeto para caminhos exatos e regras separadas para padrões dinâmicos.
+Rotas compõem a experiência; clientes `api` descrevem transporte; hooks de Query mantêm dados remotos. Controllers coordenam regras e estados de página. Componentes de domínio permanecem na feature, enquanto shells, mídia e primitivas compartilhadas ficam em `components`. O [guia de implementação](./AI-PROJECT-GUIDE.md) detalha as dependências permitidas e os padrões de manutenção.
 
-## Organização vigente
+## Contratos de domínio
 
-```text
-src/
-  assets/                 # imagens locais e índice tipado
-  components/
-    layout/               # layout compartilhado entre páginas
-    ui/                   # primitivas shadcn/ui adaptadas
-  features/
-    cart/                 # carrinho anônimo, cotação, mutations e interface responsiva
-    catalog/              # listagem, filtros, busca, query e cards de NFT
-    home/                 # hero, conteúdo editorial e navegação mobile exclusivos da home
-    checkout/             # revisão do checkout, carteira, conexão e criação de pedido
-    order/                # leitura/atualização de pedidos, itens e recibo
-    nft-detail/           # galeria, compra, conteúdo e query da rota de detalhe
-  lib/                    # infraestrutura transversal, sem regra de feature
-  mocks/
-    fixtures/             # dados determinísticos
-    handlers/             # contratos HTTP e realtime simulados
-    state/                # estado mutável encapsulado dos mocks
-  routes/                 # composição de páginas e integração com Router
-  types/                  # entidades/eventos compartilhados entre features
-tests/                    # jornadas E2E por comportamento observável
-```
+- `NftSummary` contém identidade, coleção, categoria, rede, preço decimal, edição resumida, disponibilidade, imagem, datas, popularidade e versão. `Nft` é um alias desse contrato.
+- `NftDetail` acrescenta galeria com mídia/alt text, descrições, criador, atributos, edições, avaliação resumida, proveniência e NFTs relacionados. A listagem não carrega indiscriminadamente esses campos.
+- `NftEdition` identifica edição, rótulo, preço, estoque e limite por pedido. A quantidade válida depende de estoque, disponibilidade e itens já presentes no carrinho.
+- `Session` contém ID, usuário e expiração; não inclui senha. Perfil, carteiras, favoritos e pedidos são recursos privados separados.
+- `Cart` identifica proprietário e itens. Cada item representa NFT + edição, com quantidade e valores canônicos reconciliados pela API.
+- `QuoteRevision` contém fingerprint, cupom, rede, validade, emissão e totais. O pedido revalida essa revisão, evitando confirmar valores obsoletos.
+- `Order` mantém identidade, proprietário, versão e estado da tentativa; o recibo conserva os dados e valores comprados, sem depender de consultas posteriores ao catálogo.
 
-### Regras de dependência
+Os arquivos de tipos vinculados na referência REST definem os payloads completos. A tipagem do cliente não substitui a validação feita pelos handlers.
 
-1. Rotas compõem features; não concentram componentes reutilizáveis nem dados fictícios.
-2. Features podem consumir `components/ui`, `components/layout`, `lib` e tipos compartilhados.
-   Features nunca importam `routes`; contratos usados pelo Router e por uma feature pertencem ao domínio da feature ou a `types` compartilhado.
-3. `lib` não importa features e não contém regra de catálogo, compra ou conta.
-4. A UI nunca importa fixtures ou estado de `mocks`; todo dado simulado atravessa Axios/MSW.
-5. APIs são agrupadas por recurso, não por verbo HTTP. Leituras simples podem ser chamadas por hooks de Query sem uma camada de use case artificial.
-6. Use cases são reservados para ações com orquestração/regra de negócio, como compra, merge de carrinho e confirmação idempotente.
+## Build e pré-renderização
 
-## Padrão para páginas e componentes
+`npm run build` executa TypeScript, Vite e `scripts/prerender-routes.mjs`. Com `VITE_ENABLE_MOCKS=true`, MSW no Node atende às consultas Axios pelos mesmos handlers públicos do navegador. A API paginada fornece os identificadores das 54 páginas de NFT; a build gera 63 documentos, incluindo home, conta/checkout e o documento de pedidos.
 
-- Cada rota possui um arquivo em `src/routes` responsável por parâmetros, composição e boundary de página.
-- A rota mantém a orquestração de sessão, parâmetros e navegação, e compõe blocos de domínio em `features/<feature>/components`. Extraia formulários e blocos coesos; não transfira a página inteira para um componente genérico da feature.
-- Blocos coesos e exclusivos ficam em `src/features/<feature>/components`; primitivas realmente compartilhadas ficam em `src/components`.
-- O shell público, `SiteHeader`, `SiteFooter` e seus conteúdos ficam em `components/layout`. Não duplicar esses elementos em features ou rotas.
-- Um componente só sobe para `components` quando possui uso transversal real. Componentes exclusivos, como `PromoCard`, `JournalCard` e `MobileBottomNav`, permanecem na feature `home` mesmo que sejam internamente reutilizáveis.
-- Configuração + `map` é indicada para coleções homogêneas. Blocos curtos com elementos semanticamente diferentes devem permanecer explícitos para preservar tipagem e leitura.
-- Elementos devem seguir a semântica da ação: `Link` para navegação interna, `<a>` para URL/e-mail/telefone real, `<button>` para ação e texto não interativo para funcionalidades futuras. Não usar `href="#"`.
-- Não usar `<br />` para controlar composição. Limite largura e permita quebra natural, salvo conteúdo em que a quebra faça parte do significado.
-- Valores exatos do Figma podem ser tokens/utilities ou constantes nomeadas. Evitar números soltos repetidos e estilos globais que sobrescrevam utilities.
-- Funções e componentes authored pela aplicação usam arrow functions por convenção, sem alegação de ganho de performance.
+O HTML público inclui o cache de catálogo/detalhe serializado com escape de HTML, restaurado antes da hidratação React. O cache privado é vazio: sessão, carrinho, carteiras e pedidos são consultados no cliente. A separação evita serializar dados associados a uma sessão em um documento estático compartilhável. É geração estática durante o build, sem servidor de renderização por requisição. URLs com filtros ou sem documento correspondente iniciam pelo cliente.
 
-## Sistema visual
+Os documentos gerados fazem preload da fonte latina local e iniciam o download/execução da aplicação após a primeira oportunidade de pintura, usando dois `requestAnimationFrame`. Os preloads de módulos são removidos do HTML inicial para priorizar CSS, fonte e imagens; o grafo de módulos é carregado pelo import da aplicação. O stylesheet permanece externo e reutilizável em cache. O mesmo código e os mocks são carregados em todas as visitas; a interatividade aguarda essa inicialização.
 
-- Cores recorrentes são tokens em `src/index.css`; `--color-on-primary` representa conteúdo sobre o fundo primário.
-- Primitivas shadcn/ui adaptadas vivem em `components/ui` (`Button`, `Input`, `Slider`, `Skeleton` e controles equivalentes). Features não devem montar novamente uma primitiva Radix ou um campo base quando já existir wrapper compartilhado.
-- Variantes compartilhadas de controles vivem em CVA quando possuem variantes (`components/ui/button.tsx`). Estado visual específico da página permanece no componente.
-- Primitivas Radix expõem seleção por `data-state="on"`; no Tailwind 4, os estilos locais usam a variante explícita `data-[state=on]:...`. Esse padrão vale para abas de ordenação, filtros, rede e edições.
-- Cards, galerias, filtros e sidebars de negócio continuam sendo componentes próprios compostos por primitivas shadcn; shadcn/ui não substitui componentes específicos do domínio.
-- Tailwind é o padrão para estilo local. CSS global não deve conhecer `.nft-card`, `.hero`, footer ou outra composição de componente.
-- Imagens ficam em WebP sob `src/assets` e são importadas por `src/assets/index.ts`.
-- A fonte Roboto Mono é empacotada localmente.
-- Ícones de interface vêm de `lucide-react`. Marcas Facebook, Instagram, X, LinkedIn e YouTube vêm de imports individuais de `react-icons/fa6`; não substituir marcas por caracteres tipográficos improvisados.
-- Skeletons devem preservar a geometria final, usar shimmer e respeitar `prefers-reduced-motion`.
-- Prettier é a fonte de verdade da formatação e ordena utilities Tailwind. `npm run lint` é corretivo; `npm run lint:check` é a verificação não mutável para CI.
+O root pré-renderizado fica `inert` e `aria-busy`, com um status acessível, até o commit React. `RootLayout` libera os controles e remove o status após a hidratação. Isso impede que cliques em formulários estáticos sejam perdidos antes de os handlers estarem disponíveis. `npm run test:preview` verifica essa condição atrasando o módulo inicial e realizando login em desktop/mobile, além de conferir rotas, refresh, cache privado, favicon e robots.txt. A decisão de não adicionar uma segunda suite unitária ao entrypoint é baseada nessa validação da build renderizada e hidratada, não no coverage zero do arquivo; o escopo e essa limitação estão registrados no [roadmap de testes](./docs/quality/TESTING-ROADMAP.md).
 
-## Catálogo implementado
+A configuração Vercel serve documentos com `cleanUrls`, reescreve `/orders/:orderId` para `orders.html` e mantém o fallback de rotas. Nenhuma publicação é executada pelos comandos de qualidade.
 
-`GET /api/nfts` aceita `q`, `category`, `network`, `minPriceEth`, `maxPriceEth`, `sort` e `page`. A resposta contém itens, paginação e facetas contextuais. Busca, filtros, ordenação e página vivem na URL; alterações de critério reiniciam a página sem deslocar a rolagem.
+## Cache, concorrência e tempo real
 
-- “Limpar filtros” aparece quando há critérios ativos (inclusive no estado sem resultados) e remove esses critérios da URL; ele existe porque filtros persistidos na navegação podem restringir o catálogo indefinidamente sem uma saída clara para o usuário.
+| Recurso              | Política                                                                                                                                                       |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Padrão de consultas  | `staleTime` de 30 segundos, um retry e sem refetch ao focar a janela. Mutations não têm retry automático.                                                      |
+| Catálogo             | Chave `['nfts', search]`; busca, filtros, ordenação e página são validados na URL. Mudança de filtro reinicia a página; consultas recebem `AbortSignal`.       |
+| Detalhe              | Chave `['nfts', 'detail', nftId]`, com 404 separado de falhas recuperáveis.                                                                                    |
+| Sessão               | Chave `['session']`, stale de 15 segundos e sem retry. Expiração preserva o destino para autenticação e retomada.                                              |
+| Dados privados       | Chaves com identidade da sessão e `meta.private`; logout remove dados privados e carrinho. Leituras de carrinho são canceladas antes da troca de proprietário. |
+| Favoritos/quantidade | Atualização otimista com snapshot e rollback quando a API rejeita a mutation.                                                                                  |
+| Pedidos              | Chave com sessão e pedido, sem retry; pedidos pendentes têm polling de recuperação a cada dois segundos.                                                       |
 
-O mock possui 54 NFTs determinísticos, nove por página e seis páginas no cenário completo. A paginação mostra até quatro números em janela móvel, mantendo uma página seguinte visível quando houver.
+`nft.updated` só aplica versões mais novas. O sincronizador guarda o último evento por NFT enquanto está montado e reaplica essa versão depois de uma consulta REST: assim, uma resposta antiga não sobrescreve o preço/disponibilidade já recebidos, mesmo durante a primeira leitura. Eventos antigos/duplicados são descartados sem reaplicar efeitos. A indisponibilidade é consistente entre catálogo, detalhe e cotação.
 
-Preços em ETH são strings decimais. Comparação e ordenação convertem para wei inteiro por `ethToWei`, sem usar ponto flutuante para regra monetária.
+A primeira conexão assina o catálogo; a leitura inicial vem da API ou do cache público hidratado. Reconexões invalidam as consultas ativas para reconciliar via REST. O cliente Socket.IO é importado depois da inicialização do worker MSW, garantindo a interceptação do handshake Engine.IO. O cleanup libera a observação do cache, os eventos guardados, os listeners e o socket.
 
-`GET /api/nfts/:id` e `features/nft-detail/api/getNftDetail` retornam `NftDetail` ou `404 { code: "NFT_NOT_FOUND" }`. A listagem permanece em `features/catalog/api` e continua devolvendo apenas summaries. A coincidência do recurso HTTP `/nfts` não transfere a propriedade da operação de detalhe para a feature de catálogo.
+Eventos de pedidos conferem pedido, usuário e versão. O componente é associado à sessão/pedido atual e encerra sua assinatura no cleanup. Reconexão e polling recuperam o pedido pela API sem criar outra compra.
 
-## Contrato de NFT: estado atual
+## Contratos REST e eventos
 
-`NftSummary` atende cards/lista; `Nft` permanece somente como alias temporário de compatibilidade:
+### Referência dos contratos REST
 
-- identidade: `id`, `name`, `tokenId`;
-- classificação: `collection`, `category`, `network`;
-- venda resumida: `priceEth`, `edition`, `available`;
-- apresentação: `image`, `featured`, `rare`;
-- catálogo/realtime: `createdAt`, `popularity`, `version`.
+As rotas abaixo usam o prefixo `/api` e corpos JSON. Os clientes estão nas pastas `api` de cada feature e os handlers em `src/mocks/handlers`. ETH trafega como string decimal; quantidades são inteiras. Os tipos vinculados depois da tabela definem os campos completos.
 
-Os campos de detalhe não são adicionados indiscriminadamente à listagem. O contrato vigente está separado assim:
+| Método e recurso                                    | Entrada                                                                        | Resposta                                                                        |
+| --------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| `GET /session`                                      | Sem corpo                                                                      | `Session`; `401` quando não há sessão válida, convertido em `null` pelo cliente |
+| `POST /session/register`                            | `username`, `email`, `password`, `passwordConfirmation`                        | `Session`; conflito de e-mail/usuário ou validação por campo                    |
+| `POST /session/login`                               | `email`, `password`                                                            | `Session`; credenciais inválidas retornam `401`                                 |
+| `POST /session/social/:provider`                    | `google` ou `facebook`, sem credenciais externas                               | `Session` simulada                                                              |
+| `POST /session/logout`                              | Sem corpo                                                                      | `204`, com sessão encerrada                                                     |
+| `POST /session/recover-password`                    | `email`                                                                        | `PasswordRecoveryResult`, confirmação simulada sem envio real de e-mail         |
+| `GET /nfts`                                         | Query `q`, `category`, `network`, `minPriceEth`, `maxPriceEth`, `sort`, `page` | `NftListResponse`, com itens, paginação e facetas                               |
+| `GET /nfts/:id`                                     | Identificador na rota                                                          | `NftDetail` ou `404`                                                            |
+| `GET /favorites`                                    | Sessão autenticada                                                             | `Favorites` do usuário                                                          |
+| `PUT /favorites/:nftId`, `DELETE /favorites/:nftId` | Identificador na rota                                                          | `Favorites` atualizado                                                          |
+| `GET /cart`                                         | Proprietário resolvido pela sessão ou estado do visitante                      | `Cart`                                                                          |
+| `POST /cart/items`                                  | `nftId`, `editionId`, `quantity`                                               | `Cart` atualizado                                                               |
+| `PATCH /cart/items/:itemId`                         | `quantity`                                                                     | `Cart` atualizado                                                               |
+| `DELETE /cart/items/:itemId`                        | Identificador na rota                                                          | `Cart` atualizado                                                               |
+| `POST /cart/merge`                                  | `idempotencyKey` e itens do visitante                                          | Carrinho da conta, cotação, conflitos e indicação de merge já aplicado          |
+| `POST /cart/quote`                                  | `couponCode` e rede opcional                                                   | `CartQuote`, com fingerprint, validade, subtotal, desconto, taxa e total        |
+| `GET /profile`, `PATCH /profile`                    | PATCH com `ProfileUpdateInput`                                                 | `Profile` autenticado                                                           |
+| `PUT /profile/avatar`                               | `avatarUrl`, inclusive `null` para remover                                     | `Profile` atualizado                                                            |
+| `PUT /profile/password`                             | `currentPassword`, `newPassword`, `passwordConfirmation`                       | `204` após validação                                                            |
+| `GET /wallets`                                      | Sessão autenticada                                                             | `Wallet[]`                                                                      |
+| `POST /wallets`, `PUT /wallets/:walletId`           | `WalletInput`                                                                  | `Wallet` cadastrada/atualizada; endereço duplicado gera conflito                |
+| `GET /checkout/wallet-connection`                   | Sessão autenticada                                                             | `WalletConnection` ou `null`                                                    |
+| `POST /checkout/wallet-connection`                  | `walletId`, `network`, `provider`                                              | `WalletConnection`, ou erro simulado de recusa/conexão                          |
+| `DELETE /checkout/wallet-connection/:connectionId`  | Identificador na rota                                                          | `204`                                                                           |
+| `POST /orders`                                      | `CreateOrderInput` e header `Idempotency-Key` com a mesma chave do corpo       | `Order`; a mesma tentativa recupera o pedido e payload diferente gera conflito  |
+| `GET /orders/:orderId`                              | Identificador na rota                                                          | `Order` pertencente ao usuário, ou `404`                                        |
+| `GET /orders/by-idempotency/:idempotencyKey`        | Chave da tentativa na rota                                                     | `Order` recuperado ou `404`                                                     |
 
-```ts
-type NftSummary = {
-  // campos necessários a cards, filtros e realtime do catálogo
-}
+Contratos completos: [conta e sessão](./src/features/auth/types.ts), [carteiras](./src/types/account.ts), [NFT](./src/types/nft.ts), [catálogo](./src/features/catalog/types.ts), [favoritos](./src/features/favorites/types.ts), [carrinho e cotação](./src/features/cart/types.ts) e [pedido/recibo/conexão](./src/types/order.ts).
 
-type NftDetail = NftSummary & {
-  gallery: NftMedia[]
-  shortDescription: string
-  description: string[]
-  creator: { id: string; name: string }
-  attributes: NftAttribute[]
-  editions: NftEdition[]
-  rating: NftRating
-  provenance: NftProvenance
-  relatedNfts: NftSummary[]
-}
-```
+Erros usam `code` e, conforme o recurso, `message`, `fieldErrors` ou uma nova `quoteRevision`. Os handlers representam entrada inválida (`400`/`422`), falta de sessão (`401`), recurso inexistente ou pedido fora do escopo do usuário (`404`), conflito (`409`), cupom expirado (`410`) e indisponibilidade (`503`); cenários de rede também podem falhar sem resposta HTTP. Ocultar um pedido de outro usuário como `404` evita expor sua existência. A UI associa erros de campo e oferece recuperação quando a operação é recuperável.
 
-Campos implementados a partir do frame de detalhe:
+`x-kurio-mock-scenario` seleciona falhas determinísticas; `x-kurio-cart-state` transporta os itens do visitante ao backend simulado. Esses headers pertencem à demonstração. `POST /api/mock/reset` restaura o estado e retorna `204`; `POST /api/mock/orders/:orderId/transition` permite controlar a evolução de pedidos nos cenários. Essas rotas auxiliares não substituem as operações reais de interface.
 
-| Área         | Dados necessários                                                                                       |
-| ------------ | ------------------------------------------------------------------------------------------------------- |
-| Galeria      | imagem principal, thumbnails, `alt`, ordem e mídia ativa                                                |
-| Cabeçalho    | nome, token ID, preço em ETH, avaliação média e quantidade de avaliações                                |
-| Apresentação | resumo, descrição longa em parágrafos, criador e coleção                                                |
-| Edição       | ID estável, rótulo (`1/1`, `1/10`, `1/50`, aberta), preço, estoque, limite por pedido e disponibilidade |
-| Compra       | quantidade inteira; máximo = menor valor entre estoque e limite por pedido                              |
-| Metadados    | atributos tipados, rede, padrão do token, contrato/endereço e royalties                                 |
-| Relacionados | `NftSummary[]` da mesma coleção, resolvidos pelo mock de detalhe                                        |
+### Contrato de eventos
 
-Decisões de contrato:
+O transporte usa `socket.io-client`, path `/socket.io/` e WebSocket, interceptado por MSW com `@mswjs/socket.io-binding`. A URL `same-origin` acompanha a origem da aplicação. Não há servidor Socket.IO remoto nem blockchain real nessa demonstração.
 
-- `priceEth` continua string decimal; nunca `number` para cálculo.
-- `tokenId` deve ter representação canônica sem depender do `#` para lógica; a formatação pertence à UI. A migração deve preservar os testes/URLs existentes.
-- Edição não é apenas texto: compra e quantidade dependem de uma entidade `NftEdition` com estoque.
-- `available` deve ser coerente com a edição padrão; eventos futuros podem carregar `editionId` quando a disponibilidade for por edição.
-- Fixtures detalhadas devem ser canônicas no mock. A listagem deve derivar summaries delas ou combinar defaults determinísticos com overrides, evitando duas fontes divergentes.
-- Não é necessário escrever manualmente uma descrição exclusiva para os 54 NFTs antes da rota existir. O cenário Emerald Ape deve ser completo; os demais podem usar defaults determinísticos coerentes até seus fluxos serem exercitados.
+| Evento              | Payload                                  | Reconciliação                                                         |
+| ------------------- | ---------------------------------------- | --------------------------------------------------------------------- |
+| `catalog.subscribe` | Sem payload obrigatório                  | Solicita a assinatura do catálogo público                             |
+| `nft.updated`       | `id`, `version`, `priceEth`, `available` | Atualiza somente versões mais novas e invalida o carrinho/cotação     |
+| `order.subscribe`   | `{ orderId }`                            | O mock confere sessão e propriedade antes da assinatura               |
+| `order.updated`     | `orderId`, `userId`, `version`, `order`  | Confere identidade e versão; dados privados ficam isolados por sessão |
 
-## Padrão aprovado para a rota de detalhe
+Na reconexão, os recursos ativos são reconsultados via REST. Pedidos pendentes também possuem polling de recuperação a cada dois segundos; o polling termina ao alcançar um estado terminal. Cleanup remove listeners e encerra a conexão. A cobertura e os resultados estão em [RESULTS.md](./docs/quality/RESULTS.md).
 
-- Caminho: `/nfts/$nftId`, usando o `id` estável (`emerald-ape-042`), não nome ou índice.
-- Query key: `['nfts', 'detail', nftId]`; a listagem mantém sua chave parametrizada própria.
-- Arquivo de rota: `src/routes/nft-detail-page.tsx`.
-- Componentes coesos: `features/nft-detail/components` para galeria, resumo/compra, abas de informação e relacionados.
-- Hook de leitura: `useNftDetail(nftId)` com `AbortSignal`, utilizando `getNft`/contrato de recurso e sem fixtures na UI.
-- Estados obrigatórios: skeleton dimensionalmente estável, erro com retry, 404 próprio, NFT/edição indisponível e atualização em segundo plano.
-- Cards navegam por `Link` na imagem/título. Não envolver botão de favorito dentro de um link interativo.
-- Breadcrumbs devem usar links reais e refletir `Início / Mercado / <NFT>` quando necessário.
-- Seleção de edição e quantidade é estado local até entrar no carrinho. Quantidade deve ser revalidada pela API na mutation.
-- Comprar e favoritar só aparentam sucesso quando os respectivos mocks/mutations existirem. Até lá, devem permanecer claramente indisponíveis.
-- Compartilhamento só vira link/botão funcional com destino/ação real; ícones decorativos não simulam sucesso.
-- Ícones de compartilhamento presentes no frame permanecem informativos enquanto não houver destinos ou integração real; e-mail usa Lucide e marcas usam `react-icons/fa6`.
-- “Mais desta coleção” reutiliza summary/card do catálogo, sem duplicar um segundo modelo visual incompatível.
+## Sessão, conta e persistência
 
-## Layout e responsividade da rota de detalhe
+As APIs de cadastro, credenciais e login social simulado retornam uma sessão com duração padrão de uma hora. Google e Facebook selecionam usuários fictícios separados. As contas e a sessão persistem no backend simulado via `localStorage`; senhas usam somente digest SHA-256, sem retorno no contrato público. Isso é suporte à demonstração, não um serviço de autenticação de produção.
 
-Os frames desktop e mobile fornecidos são as referências da rota. A implementação contém galeria, imagem principal, painel de compra, abas, relacionados e footer desktop.
+Perfil, avatar, senha e carteiras têm contratos e mutations separados. React Hook Form e Zod validam os formulários; MSW revalida no limite da API e devolve erros por campo. Avatares aceitam PNG/JPEG/WebP de até 1 MB. Carteiras têm identidade própria, rede, provedor e prioridade; endereços duplicados são rejeitados por usuário.
 
-No desktop, a rota usa uma área útil própria limitada a `1280px`, sem alterar o limite global do shell. A galeria reserva uma coluna estável para quatro miniaturas; quantidade e ações compartilham a mesma faixa, seguidas por metadados e compartilhamento, conforme o frame.
+Checkout, perfil, carteiras, favoritos e pedidos exigem autenticação. O login mantém o retorno ao fluxo anterior; desktop usa diálogo e mobile usa tela dedicada. Expiração de sessão no checkout preserva o contexto e exige reconexão de carteira. Pedidos de outro usuário são tratados como inexistentes.
 
-No mobile:
+`POST /api/mock/reset` restaura contas, sessão, favoritos, catálogo, carrinhos, inventário e pedidos. A seleção de cenário é removida separadamente, conforme o README.
 
-1. galeria principal antes das informações;
-2. thumbnails ficam ocultas, conforme o frame mobile;
-3. compra/edição/quantidade sem controles fora da viewport;
-4. abas com rolagem horizontal acessível;
-5. relacionados em grid responsivo ou carrossel apenas se houver controles reais;
-6. footer/navegação conforme o shell público, sem duplicação.
+## Carrinho e cotação
 
-Breakpoints mínimos de validação: 390, 768 e 1440 px. Reflow a 320 CSS px, movimento reduzido, foco e overflow possuem cobertura automatizada; a rodada manual completa de navegação por teclado também foi validada pelo responsável.
+- Cada item é identificado por NFT + edição. Quantidade é inteira e limitada pelo estoque e por `maxPerOrder`.
+- ETH trafega como string decimal; cálculos usam wei inteiro (`BigInt`), sem ponto flutuante para dinheiro.
+- Carrinhos de visitante e usuários são separados. No mock, um snapshot visitante é transportado pelo cliente HTTP para sustentar refresh; o backend simulado revalida os itens. Uma API de produção deve manter o carrinho no servidor.
+- Após login, `/cart/merge` combina os itens com a conta, revalida estoque/limites e devolve conflitos. Uma chave idempotente impede somar novamente o mesmo merge. O snapshot visitante só é removido depois da confirmação.
+- `/cart/quote` é a fonte de subtotal, desconto, taxa e total. `KURIO10` concede 10%; `EXPIRADO` retorna expiração; outros códigos não vazios são inválidos.
+- Eventos invalidam carrinho/cotação. Conflitos e recotação bloqueiam o avanço; dados anteriores no cache não autorizam uma compra.
 
-## Carrinho anônimo e cotação
+## Checkout, pedido e recibo
 
-- Rota pública: `/cart`; composição em `routes/cart-page.tsx` e blocos em `features/cart`. `useCartPageController` concentra mutations, feedback acessível e navegação, enquanto a rota preserva somente os estados e a composição visual.
-- Query keys: `cartKeys.detail(ownerId)` e `cartKeys.quote(ownerId, couponCode, network)` em `features/cart/query-keys.ts`. O proprietário é o ID do usuário ou `visitor`; carrinho e cotação não compartilham cache entre contas.
-- `CartItem.id` é `${nftId}:${editionId}`. Repetir essa combinação soma quantidades; estoque e `maxPerOrder` são revalidados pelo handler.
-- O estado canônico fica em `mocks/state/cart-store.ts`. No cenário local simulado, um snapshot do carrinho visitante em `localStorage` é transportado pela infraestrutura Axios até o MSW para sobreviver ao refresh, sem importar mocks na UI; ele é um adaptador de teste, não estado autoritativo de produção. Uma API real deve persistir o carrinho no servidor associado a uma identidade de visitante/sessão.
-- Mutations persistem snapshots; respostas GET antigas não sobrescrevem uma mutation mais nova. A alteração de quantidade é otimista e restaura o cache anterior em falha.
-- `POST /api/cart/quote` é a única fonte de subtotal, desconto, taxa e total. O mock converte strings ETH para wei inteiro e devolve strings decimais.
-- Cupons determinísticos: `KURIO10` aplica 10%, `EXPIRADO` retorna expiração e qualquer outro código não vazio retorna inválido.
-- `nft.updated` invalida carrinho e cotação. A leitura REST reconcilia preço, disponibilidade, edição, limite e versão; eventos antigos continuam bloqueados pelo controle monotônico do catálogo.
-- O header deriva a contagem de `GET /api/cart`; o detalhe só navega ao carrinho após a mutation de inclusão confirmar.
-- Após autenticação, `POST /api/cart/merge` associa o snapshot visitante ao carrinho da conta. A chave determinística torna repetições idempotentes; o handler busca novamente catálogo/edição, aplica estoque e `maxPerOrder`, e devolve conflitos explícitos. O snapshot visitante só é removido após confirmação.
-- Carrinhos autenticados e chaves de merge são persistidos por identidade no backend simulado. Logout remove o cache remoto do carrinho; uma sessão seguinte lê somente o carrinho do próprio usuário.
-- “Colecionadores também viram” reutiliza `Carousel` e `NftCard`; recomendações continuam sendo uma query de catálogo independente do estado do carrinho.
-- Cenários nomeados e sem contadores globais cobrem latência, 4xx, 5xx, falha de conexão, resposta fora de ordem, preço alterado e indisponibilidade via Socket.IO.
-- Checkout permanece indisponível até sessão/conta existirem. O botão é desabilitado diante de item conflitante, cotação inválida ou recotação em andamento, evitando avanço com valores anteriores ainda presentes no cache.
+O checkout separa formulário, tentativa idempotente e submissão em hooks da feature; `useCheckoutController` os compõe e a rota seleciona os estados e componentes. A validade do formulário é acompanhada antes de montar o painel de pagamento carregado sob demanda.
 
-## Cache e tempo real
+A revisão inclui todos os itens e quantidades do carrinho, usando a mesma cotação sem filtro de rede. Carteira cadastrada, rede e provedor são conceitos distintos. O seletor oferece todas as carteiras do usuário; cada NFT conserva sua rede no snapshot. No mobile, dados obrigatórios e pagamento ocupam etapas separadas. Nome ENS e código de indicação são obrigatórios; o código não é inventado automaticamente.
 
-- `nft.updated` atualiza summaries nas listas e o detalhe em cache somente se a versão recebida for mais nova.
-- Preço/disponibilidade não devem regredir com eventos duplicados ou antigos.
-- Ao conectar ou reconectar, queries `nfts` ativas são invalidadas para reconciliação por REST antes da nova assinatura.
-- O cliente é importado dinamicamente depois da inicialização do worker para que o interceptor WebSocket do MSW capture o Engine.IO. O mock aceita a URL WebSocket completa porque o handshake acrescenta query parameters antes de o binding Socket.IO assumir o protocolo.
-- O teste ponta a ponta confirma atualização para `1.75 ETH` via Socket.IO e rejeita uma atualização posterior com versão antiga e preço `9.99 ETH`.
-- Favoritos usam `['account', sessionId, 'favorites']`, marcada como query privada. Inclusão e remoção são mutations otimistas com snapshot e rollback; card, detalhe e `/profile/favorites` consomem o mesmo cache.
+Conectar uma carteira é uma chamada simulada com estados de sucesso, recusa e falha. Criar pedido exige sessão, conexão, formulário e cotação válidos. Mudança de preço, cupom, disponibilidade ou fingerprint exige revisão explícita antes de confirmar novamente.
 
-## Conta e sessão
+A chave de idempotência identifica uma tentativa: reenvio após timeout recupera o mesmo pedido; usar a chave com payload diferente retorna conflito. Pedido é `pending`, `confirmed` ou `declined`; os dois últimos estados são terminais. Recarga e reconexão recuperam o pedido existente.
 
-- A sessão é consultada por `GET /api/session`, dura uma hora no cenário padrão e não possui retry automático, evitando loops em respostas `401`.
-- `POST /api/mock/reset` restaura catálogo, contas/credenciais de fixture, sessão, carrinhos e pedidos de forma determinística.
-- Cadastro, login por credenciais, login social simulado, recuperação e logout atravessam Axios, MSW e TanStack Query. Google e Facebook selecionam usuários fictícios isolados por handlers reais.
-- O backend simulado persiste contas e sessão sob uma única chave versionada. Senhas são mantidas somente como digest SHA-256 e nunca retornam nos contratos públicos.
-- Queries privadas usam a identidade da sessão nas chaves (`['account', sessionId, ...]`), recebem `meta.private` e são removidas no logout.
-- Perfil, avatar, senha e carteiras possuem endpoints e mutations separados. Carteiras têm IDs estáveis, endereço validado por rede, prioridade principal/secundária e conflito de endereço por usuário.
-- Schemas Zod centralizados validam autenticação no cliente, enquanto os handlers repetem a validação no limite do servidor simulado. React Hook Form é o padrão definido para os formulários maiores de perfil, carteira e checkout.
-- `PasswordInput` é compartilhado entre autenticação e perfil; o input de arquivo do avatar usa o wrapper shadcn `Input` com nome acessível.
-- O Dialog desktop preserva valores somente durante a alternância interna entre login/cadastro; fechar ou autenticar limpa campos, erros e mensagens transitórias.
-- Autenticação usa um único contrato React Hook Form + Zod para login e cadastro; a troca de modo preserva valores úteis, enquanto fechar a experiência limpa campos, erros REST e mensagens de recuperação.
-- `/login` e `/register` são entradas dedicadas para mobile, respeitam safe areas e aceitam somente destinos internos permitidos em `returnTo`, incluindo detalhes de NFT validados por padrão interno. `/profile`, `/profile/wallets` e `/profile/favorites` redirecionam visitantes para login e retomam a rota depois da sessão confirmada.
-- Favoritar sem sessão abre o Dialog sobre a tela atual no desktop e mantém a página de autenticação dedicada no mobile. A intenção de favoritar é executada pela API após autenticação confirmada; falhas são apresentadas sem exibir sucesso fictício.
-- “Minha conta” no header desktop abre perfil, carteiras e saída. Essa entrada foi adicionada porque os frames do Figma não deixavam claro como chegar a essas páginas depois do login; no mobile, o ícone de perfil leva à área privada e o `AccountShell` oferece as mesmas seções e a ação “Sair”.
-- A área privada começa em `/profile` e reutiliza `AccountShell` para navegação e composição. Itens ainda fora do escopo permanecem visíveis em todos os viewports como controles desabilitados, sem links ou sucesso fictício.
-- Após logout confirmado, a navegação retorna à home antes de limpar a sessão em cache; assim, rotas privadas não interceptam a saída e redirecionam o usuário para login com `returnTo` da página anterior.
-- O perfil usa React Hook Form com schemas Zod compartilhados; erros retornados pelo REST são associados aos campos. Dados cadastrais, avatar e senha possuem formulários e mutations independentes.
-- Upload de avatar aceita PNG, JPEG e WebP de até 1 MB, gera preview local somente para envio ao backend simulado e atualiza o cache privado após confirmação.
-- As rotas `/profile` e `/profile/wallets` reorganizam o shell e os formulários em uma coluna nos viewports móveis. Header e navegação inferior oferecem acesso real ao perfil; o acesso às carteiras e ao logout permanece no `AccountShell`.
-- Carteiras usam um schema Zod discriminado pela rede: Ethereum/Polygon exigem endereço hexadecimal `0x` e Solana usa Base58. Principal e secundária têm IDs estáveis; promover uma secundária rebaixa a principal anterior de forma atômica no estado simulado.
-- E-mail é identidade do perfil, não propriedade da carteira; código de indicação pertence ao contrato de checkout da Fase 5. Esses campos não são duplicados no endpoint de carteiras sem um contrato aprovado.
-- “Igual à carteira principal” significa ausência de um segundo registro. Ao adicionar uma secundária, ela passa a ser uma entidade independente e o backend rejeita endereços duplicados, evitando duas fontes para a mesma carteira.
-- Favoritos ficam no registro privado da conta simulada e são expostos por `GET/PUT/DELETE /api/favorites`. O logout remove queries com `meta.private`, impedindo que a próxima sessão observe a lista anterior. A intenção de favoritar sem sessão é retomada após autenticação, com erro visível se a mutation falhar.
-- As respostas `VALIDATION_ERROR` usam um helper HTTP compartilhado em `mocks/handlers`; o mapeamento de erros REST para campos permitidos de React Hook Form fica em `features/auth/utils`, preservando aliases de campo específicos do formulário.
-- O merge de carrinho ocorre depois da resposta de autenticação e antes da navegação de sucesso. A falha do merge não é mascarada como autenticação bem-sucedida; respostas do merge trazem a cotação/cart canônicos e conflitos de quantidade ou disponibilidade.
+A submissão usa uma referência síncrona para bloquear cliques concorrentes antes de qualquer `await`, sem depender do próximo render ou do botão desabilitado. Sucesso/recuperação mantém o bloqueio até sair do checkout; falhas recuperáveis liberam nova tentativa. A chave é consultada diretamente no `sessionStorage` por usuário antes de gerar outra, impedindo que callbacks do mesmo ciclo criem chaves distintas.
 
-## Checkout, pedidos e recibo
+Só um pedido confirmado produz recibo. O recibo contém snapshot imutável do colecionador, carteira, itens, taxas e total. Após confirmação, apenas as quantidades compradas são removidas do carrinho. Recusa e falhas preservam os itens. Transação e explorer são simulados.
 
-- `/checkout` exige sessão. `CartSummary` abre o modal de autenticação no desktop e usa `/login?returnTo=/checkout` no mobile; o cupom aplicado é preservado. Após autenticação, o merge do carrinho termina antes da sessão ser atualizada no cache.
-- As queries de carrinho usam chaves por proprietário. Login cancela leituras em andamento, coloca o resultado confirmado do merge na chave da conta e remove a chave visitante; logout cancela leituras e remove o cache de carrinho e demais queries privadas.
-- A página de checkout separa o formulário do colecionador da área de pagamento. A ordem desktop segue o Figma: nome de exibição/usuário, rede/nome do perfil, carteira/endereço ENS ou secundário, tipo de carteira/código de indicação, e-mail/nome ENS e observação opcional.
-- `routes/checkout-page.tsx` é somente a composição da tela. `useCheckoutController` combina os hooks especializados e entrega modelos e ações coesos aos componentes, sem concentrar novamente as regras em um hook monolítico.
-- `useCheckoutForm` mantém React Hook Form, preenchimento por perfil/carteira e sincronização de rede; `useCheckoutAttempt` controla a chave idempotente e recuperação de tentativa; `useCheckoutSubmission` coordena conexão, criação, recotação e erros da API. `CheckoutPageState` e `CheckoutAttemptStatus` isolam os estados que não pertencem ao formulário.
-- `CheckoutCollectorForm` encapsula os campos e validação visual; `CheckoutPaymentPanel` encapsula resumo, cupom, cotação, provedores, conexão e CTA. Eles recebem `model` e `actions`, evitando interfaces extensas de propriedades independentes. Redes, provedores e type guards ficam em `features/checkout/constants.ts`, sem configuração de domínio solta na rota.
-- Contratos de apresentação compartilhados pela rota e pelos componentes de checkout ficam em `features/checkout/types.ts`. Tipos inferidos diretamente do Zod permanecem em `schemas.ts`; props usadas somente por um componente permanecem locais. Entidades de pedido continuam em `src/types/order.ts`, pois são compartilhadas entre checkout, order, mocks e realtime.
-- Mobile usa duas etapas em `/checkout`: dados obrigatórios do colecionador, depois seleção de carteira/provedor, total e confirmação. Assim, os campos do recibo continuam acessíveis sem reduzir o layout mobile de carteira do Figma a uma cópia do formulário desktop.
-- Nome ENS e código de indicação são obrigatórios no schema e no handler; o código não é preenchido automaticamente. Endereço primário vem da carteira registrada selecionada; o endereço secundário é opcional e validado.
-- A carteira registrada (`walletId`/endereço), rede (`network`) e provedor simulado (`walletType`) são valores distintos. O seletor lista todas as carteiras do usuário; selecionar uma sincroniza sua rede e provedor, sem filtrar pelas redes dos NFTs no carrinho. No mobile, avançar para pagamento inicia a conexão simulada; no desktop, ela é iniciada ao confirmar a compra. Só uma conexão compatível permite criar o pedido; uma recusa mantém o checkout recuperável e não cria a ordem.
-- Ao sair do checkout para cadastrar uma carteira, `/profile/wallets` recebe um retorno interno validado com a rede/cupom atuais e oferece uma ação de voltar no mobile.
-- O resumo usa `CartItemRow` em variante somente leitura e exibe todos os itens e quantidades do carrinho. Checkout e carrinho usam `POST /api/cart/quote` sem filtro de rede, mantendo subtotal, desconto, taxa e total idênticos. A rede selecionada identifica a carteira/conexão de pagamento; cada NFT preserva sua própria rede no snapshot do pedido. Alteração do fingerprint exige revisão explícita antes de confirmar.
-- `/api/orders` valida sessão, conexão, carteira, cotação, preço, disponibilidade, estoque, cupom e campos do checkout no backend simulado. Idempotência recupera a mesma tentativa após timeout e rejeita a mesma chave com payload diferente.
-- Pedido mantém estados `pending`, `confirmed` ou `declined`. `order.updated` é processado pelo cliente Socket.IO; eventos antigos/duplicados não regridem a versão e pedido pendente é reconciliado por REST após reload/reconexão.
-- `routes/order-page.tsx` é o boundary visual dos estados discriminados entregues por `useOrderPageController`. O controller concentra sessão, consulta, expiração/401, navegação e retry; estados de carregamento/erro ficam em `features/order/components/order-page-states.tsx`, pedido pendente/recusado em `OrderStatusPanel` e recibo em `components/receipt`.
-- Após confirmação, só os itens e quantidades comprados são removidos do carrinho do usuário. Falha/recusa preserva o carrinho. O recibo contém snapshot imutável de dados do colecionador, carteira, itens e cotação.
-- Integrações de conexão, pagamento, transação e explorer são exclusivamente simuladas; nenhum dado ou efeito representa uma transação real.
+## Interface e desvios do layout
 
-## Estado de qualidade auditado
+Tailwind aplica tokens de cor e espaçamento; o CSS global reúne fontes, reset, acessibilidade e animações. A fonte local usa a família registrada pelo pacote, `Roboto Mono Variable`. `NftImage` oferece variantes WebP de 320/768/1254 px com `srcset` e `sizes`. Miniaturas de galeria são lazy para evitar baixar conteúdo oculto no mobile; a imagem principal permanece eager e prioritária.
 
-- A homepage/catalog possui testes comportamentais nos três viewports para busca, filtros, ordenação, faixa de preço, paginação, URL/histórico e overflow.
-- Catálogo, detalhe e carrinho possuem cobertura Playwright em 1440×900, 768×1024 e 390×844; catálogo e detalhe também cobrem reflow a 320 CSS px.
-- MSW oferece cenários determinísticos de catálogo vazio/erro e latência diferencial, detalhe com erro/retry, NFT indisponível, edições esgotadas, carrinho lento/indisponível, cotação e pedido em timeout, respostas HTTP e conflitos realtime. `catalog-out-of-order` é testado pelo worker MSW controlando a conclusão das respostas Ethereum/Polygon/Solana.
-- Baselines Playwright versionadas existem para home, detalhe, carrinho, checkout/recibo, autenticação, perfil e carteiras. A execução completa mais recente detectou 12 diferenças de screenshot: home, detalhe, carrinho e checkout/recibo em desktop/mobile, além de login/cadastro e perfil/carteiras desktop/mobile. São comparações com snapshots, não com o Figma; essas 12 diferenças ainda não foram todas revisadas como artefatos conhecidos e nenhuma baseline foi atualizada automaticamente.
-- Baselines de conta cobrem login/cadastro desktop e mobile, perfil e gerenciamento de carteiras. Testes também verificam sessão/isolamento, erros associados aos campos, validação de upload/endereço/senha, foco do Dialog e zoom/reflow a 200%.
-- A matriz Playwright completa mais recente executou 321 casos: 192 aprovados, 109 ignorados por viewport e 20 falhas (12 screenshots e 8 funcionais/assertivas). As falhas funcionais incluem seletor ambíguo no teste de merge, estado vazio de catálogo, guard do checkout, favorito, expectativas de loading no tablet, filtros mobile e recuperação de conexão da carteira. O servidor também registrou `InvalidStateError` do MSW/Service Worker durante a execução com 8 workers; a suíte não está verde e parte da flakiness ainda precisa ser isolada.
-- A cobertura E2E verifica merge idempotente, persistência por usuário, logout sem vazamento, reset determinístico e pedidos/recibos, incluindo duplicatas, eventos antigos e reconexão.
-- A build de produção passou com divisão por rota e pré-renderização. Na build atual, os maiores chunks observados ficaram em aproximadamente 476 kB (`browser`) e 304 kB (entrada principal) antes de gzip; o chunk `browser` permanece abaixo do limite de aviso de 500 kB.
-- Playwright cobre a autenticação desktop como modal, a página dedicada mobile e a retomada do favorito solicitado; os cenários de falha mantêm rollback/feedback em vez de sucesso fictício.
-- A auditoria Lighthouse exigida mede início e detalhe três vezes por perfil desktop/mobile. Configuração, relatórios HTML/JSON e resumo da matriz estão versionados em `docs/performance/lighthouse/`; resultados, versões e condições estão em [LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md). A matriz complementar de dez rotas pré-renderizadas mantém os relatórios detalhados como artefatos locais em `reports/lighthouse/`.
-- Imagens NFT conhecidas usam `NftImage`, um componente de mídia compartilhado sobre o elemento nativo `img`, com variantes WebP 320/768/1254, `srcset`, `sizes`, loading e prioridade. shadcn/ui não oferece um primitivo genérico de imagem responsiva; `Avatar` e `AspectRatio` não substituem essa responsabilidade.
-- O shell não monta o header desktop em viewports móveis; esse bloco e suas consultas de sessão/carrinho são carregados sob demanda. A Roboto Mono variável substitui três arquivos estáticos de peso.
-- A primeira conexão Socket.IO apenas assina o catálogo no fluxo normal; invalidação REST de recursos ativos ocorre em reconexões. Cenários determinísticos do MSW reconciliam também no primeiro connect para substituir o snapshot inicial, sem impor esse refetch ao uso padrão.
-- Foco de diálogo, nomes/alt, contraste, reduced motion e reflow estão automatizados; a rodada manual completa de teclado também foi validada pelo responsável.
+Os [frames canônicos e desvios do Figma](./docs/references/figma/README.md) documentam a grade mobile alinhada, a retirada do retrato sobreposto no hero, o acesso à conta e as adaptações necessárias aos fluxos funcionais. Desktop e mobile têm composições próprias. Esses PNGs são referências de design para revisão, não testes nem snapshots; devem permanecer versionados. Perfil, carteiras e recibo funcionam no mobile mesmo sem frame dedicado.
 
-## Escopo e limitações atuais
+Skeletons preservam a geometria e respeitam movimento reduzido. Labels, erros, foco, diálogos, reflow e overflow possuem cobertura. O preço do detalhe anuncia atualizações por `aria-live="polite"`. Screenshots comparam a UI com baselines aprovadas; não certificam automaticamente fidelidade integral ao Figma.
 
-Implementado: homepage e catálogo, detalhe de NFT e carrinho responsivos; contratos summary/detail/cart/quote; acesso direto/404; persistência visitante e carrinhos autenticados; cotação e cupom; mutations otimistas; conflitos de preço/disponibilidade; atualização versionada via Socket.IO e reconciliação REST; sessão simulada, autenticação desktop/mobile, merge idempotente, perfil, carteiras e favoritos por usuário; checkout, pedidos idempotentes, confirmação/recusa simuladas e recibo imutável.
+A galeria reutiliza as artes locais disponíveis. Avaliações exibem resumo/contagem e não permitem envio. Páginas editoriais, suporte, ofertas, downloads, blockchain e pagamentos reais estão fora do escopo. Controles auxiliares comunicam sua indisponibilidade sem apresentar sucesso fictício.
 
-O código-fonte está publicado no repositório público [angelobarilari/kurio-marketplace](https://github.com/angelobarilari/kurio-marketplace), e a aplicação está publicada em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app). Alguns diffs visuais históricos foram aceitos por inconsistências conhecidas nos frames Figma, mas esse aceite não se estende automaticamente às 12 diferenças da execução mais recente. O status das metas Lighthouse e as pendências estão em [LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md) e no [roadmap](./IMPLEMENTATION-ROADMAP.md). Integrações reais com blockchain/carteiras/gateway de pagamento permanecem fora do escopo.
+## Decisões arquiteturais e motivo
 
-Conclusão atual: **as Fases 1 a 6 estão implementadas e publicadas, mas a validação completa ainda tem pendências**: a suíte Playwright registrou 20 falhas e a Performance mobile da matriz obrigatória ficou abaixo de 90 na homepage e no detalhe. Não declarar conformidade integral até revisar esses resultados.
+As escolhas abaixo descrevem o sistema implementado. Cada motivo está ligado a comportamento observável ou a uma validação repetível; quando a evidência é parcial, isso é indicado explicitamente.
+
+| Decisão                                                          | Por que                                                                                                                                                                                                                                                    | Evidência reproduzível                                                                                                                                                                                                                                                                                                   |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Separar testes unitários, integração e navegador                 | Regras puras são rápidas e isoladas; stores/handlers precisam provar efeitos e contratos reais; interface, acessibilidade e navegação precisam de browser. Isso evita um teste E2E genérico para cada regra e evita duplicar em DOM os mesmos contratos.   | [Schemas unitários](./tests/unit/auth/schemas.test.ts), [schemas de checkout](./tests/unit/checkout/schemas.test.ts), [integrações HTTP MSW](./tests/integration/mocks/http-contracts.test.ts) e [configuração Playwright](./playwright.config.ts).                                                                      |
+| Testar todos os schemas de runtime, sem manter cobertura parcial | A validação de payload e campos é uma regra isolável. O inventário encontrou somente dois módulos de schema Zod de produção; testar todos os exports mantém um padrão uniforme sem trazer jornadas de formulário para Vitest.                              | [Schemas de auth](./tests/unit/auth/schemas.test.ts), [schemas de checkout](./tests/unit/checkout/schemas.test.ts) e inventário/regras em [AUDIT.md](./docs/quality/AUDIT.md).                                                                                                                                           |
+| Manter busca, filtros e paginação na URL; dados remotos em Query | A URL preserva estado navegável no refresh/histórico, enquanto Query controla cache e reconciliação dos dados assíncronos.                                                                                                                                 | [Validação de parâmetros](./tests/unit/routing/search.test.ts), [jornada de catálogo](./tests/catalog.spec.ts) e [cache/realtime](./tests/integration/catalog/realtime-cache.test.ts).                                                                                                                                   |
+| Validar handlers HTTP diretamente além das jornadas              | Uma jornada atravessa só parte das respostas de cada endpoint. `fetch` contra handlers reais verifica status, payload, autenticação e efeitos persistidos; `onUnhandledRequest: 'error'` impede sucesso silencioso por rota não interceptada.              | [Contratos de auth/conta/favoritos/carrinho/pedidos](./tests/integration/mocks/http-contracts.test.ts), [contratos do catálogo](./tests/integration/mocks/catalog-http.test.ts), `npm run test:integration`.                                                                                                             |
+| Isolar recursos privados por sessão/usuário                      | Cache e conexão de carteira não devem sobreviver a uma troca de sessão como se pertencessem ao novo usuário; tentativas/pedidos também precisam respeitar propriedade.                                                                                     | [Testes de sessão e propriedade](./tests/integration/auth/session.test.ts), [isolamento/cache realtime](./tests/integration/catalog/realtime-cache.test.ts) e cenários de conta/pedido em [Playwright](./tests/checkout.spec.ts).                                                                                        |
+| Usar wei inteiro, quote revision e idempotência no checkout      | `Number` decimal não representa ETH com exatidão. O fingerprint obriga revisão de valores/disponibilidade obsoletos, e a chave idempotente evita pedidos duplicados após retry/timeout.                                                                    | [Conversões ETH/wei](./tests/unit/lib/eth.test.ts), [estados de carrinho](./tests/integration/cart/cart-state.test.ts), [pedidos e recuperação](./tests/integration/order/order-state.test.ts) e [jornadas de checkout](./tests/checkout.spec.ts).                                                                       |
+| Pré-renderizar dados públicos, nunca o estado privado            | HTML estático pode ser servido a visitantes diferentes; serializar sessão, carrinho, carteira ou pedido poderia misturar dados. Query pública melhora a primeira pintura sem transformar o build em renderização por requisição.                           | [Entrada SSR](./src/entry-server.tsx), [gerador de rotas](./scripts/prerender-routes.mjs), `npm run build` e `npm run test:preview` verificam documentos, cache privado vazio, navegação e hidratação atrasada. A entrada tem coverage instrumentado zero; build/preview são evidência funcional, não coverage unitário. |
+| Manter o gate de 80% combinado e gates locais de branches        | Vitest e Playwright compartilham linhas e têm instrumentos/denominadores diferentes; exigir 80% para cada camada duplicaria uma meta sem indicar qualidade. Quatro stores críticas têm gate local de branches como proteção adicional de regras de estado. | Thresholds em [vitest.config.ts](./vitest.config.ts); coleta/fusão em [run-coverage.mjs](./scripts/run-coverage.mjs) e [merge-browser-coverage.mjs](./scripts/merge-browser-coverage.mjs); números e execução em [RESULTS.md](./docs/quality/RESULTS.md).                                                                |
+| Não instalar mutation testing nem impor score global agora       | Um piloto pequeno pode mostrar se assertions críticas detectam regressões, mas um score sem escopo ou baseline estável pode incentivar mutações sem valor de produto.                                                                                      | O piloto manual da regra de carteira primária foi detectado pelo teste em [account-state.test.ts](./tests/integration/auth/account-state.test.ts); procedimento, resultado e decisão de não instalar ferramenta estão no [roadmap de testes](./docs/quality/TESTING-ROADMAP.md).                                         |
+
+O mapa de evidências não torna todos os detalhes de implementação automaticamente provados: documentação visual, restrições do teste técnico e decisões de produto também dependem de suas fontes próprias. Referências Figma servem para inspeção visual, não como teste automatizado; screenshots verificam diferenças contra baselines, não fidelidade integral. Veja os [resultados observados](./docs/quality/RESULTS.md) e a [auditoria de qualidade](./docs/quality/AUDIT.md) para limites, ambiente e proveniência.
+
+## Evidências e entrega
+
+Vitest valida regras isoladas em `tests/unit/` e integrações locais em `tests/integration/`, com arquivos por domínio. `tests/support/` concentra fixtures tipadas e o reset de stores/armazenamento; cada arquivo é isolado pelo runner. As suites HTTP exercitam os handlers MSW reais de catálogo, auth, conta, favoritos, carrinho e pedido por requisições `fetch`, com falha em requisições não tratadas. Os testes de domínio chamam os stores reais e verificam valores exatos, idempotência, reconciliação, autorização e propriedade dos dados. Essa camada não certifica renderização, interação por teclado, service worker no navegador ou transporte Socket.IO; esses comportamentos permanecem no Playwright. `tsconfig.test.json` aplica tipagem estrita sem incluir os testes no bundle da aplicação.
+
+Coverage mede execução e os mapas por camada não comprovam que assertions são suficientes. `npm run test:coverage:vitest` roda ambos os projetos Vitest; `npm run test:coverage` combina os mapas Vitest e Playwright. Os 80% são threshold somente do mapa combinado, não 80% por ferramenta. O relatório por camada é diagnóstico; as jornadas E2E são avaliadas pelas assertions de comportamento. A configuração Playwright executa Chromium em 1440 × 900, 768 × 1024 e 390 × 844; os casos condicionados ao viewport não contam como aprovados nos relatórios. Veja [RESULTS.md](./docs/quality/RESULTS.md), [AUDIT.md](./docs/quality/AUDIT.md) e [TESTING-ROADMAP.md](./docs/quality/TESTING-ROADMAP.md) para métricas, reprodução e prioridades.
+
+[LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md) registra a matriz, condições, metas e limitações. O [checklist de entrega](./IMPLEMENTATION-ROADMAP.md) relaciona essas evidências ao enunciado.
+
+Os endereços da aplicação e do repositório estão no README. A validação local não comprova que a URL publicada contém as correções locais. Nenhum deploy faz parte desta execução.

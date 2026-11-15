@@ -1,0 +1,4997 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "a4ab13ca32f523554443cde612c1882a7b995d41",
+  "sourceSha256": "07e31036ddbf278a788c39fe43fd4ae6fb2b3453df241be9e3e62e648cf7830b",
+  "files": [
+    {
+      "path": ".editorconfig",
+      "sha256": "a6b98ea7cb6d61ed8d430dd0dffa46c87012b5cf859d4ce7207898954951fdcd"
+    },
+    {
+      "path": ".env.example",
+      "sha256": "a2360bc1ded7d91c67cf3733968ba4779918a25d6c8b3e3bda9bf83311632f37"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "615fd3fce80a4cf91d50fd0f3f81b0493b7345718f6bfbd2e417db234c51fa4e"
+    },
+    {
+      "path": ".prettierignore",
+      "sha256": "84ef9dcb70e50074f051c557a58716914c8db9856a365c0d2e3b56b26cdf0613"
+    },
+    {
+      "path": ".prettierrc.json",
+      "sha256": "fe206336d00d5f8505712b96ce21ac17ecc0f9f9c45c886bb615457719ca10e8"
+    },
+    {
+      "path": ".vercelignore",
+      "sha256": "6e6cf2d844d0e4239927d42fefa9deb7b19492a7df35070c427355dbe36709be"
+    },
+    {
+      "path": "TECHNICAL-CHALLENGE.md",
+      "sha256": "a90d1b45b96d375bdc0844e67d38d9cb06c6a670c673c287566f90bbd1104e9e"
+    },
+    {
+      "path": "components.json",
+      "sha256": "d0ada54e59710099b766eae59a1a35d31b717a6ec43d73a8814de1815ddc1749"
+    },
+    {
+      "path": "eslint.config.js",
+      "sha256": "00ea876f199304a304c4e5b86d54c1e99e55e144c5acfaa9e8a569a6e9472164"
+    },
+    {
+      "path": "index.html",
+      "sha256": "f2a40fcd3db1896ad1597246c520520f7502cd7861b0bd621bd5529c1c89eb8f"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "2acb9ffe7d9a5399eb4c6344855630f3964af1d52402789effddd76b9e4202ed"
+    },
+    {
+      "path": "package.json",
+      "sha256": "55755034feaaad0ff8d1394d090a3036ec5aae6507337e13434c8f6e9abee38b"
+    },
+    {
+      "path": "playwright.config.ts",
+      "sha256": "e37005b098b5f25a0820e26ff8273422295034312b3c75be02bc52c119e8ac95"
+    },
+    {
+      "path": "public/favicon.svg",
+      "sha256": "8a8fa7cb8fae530e5c5aaaadb1f3ea9e099d9ee2d49686978cc8550a59d5fba7"
+    },
+    {
+      "path": "public/icons.svg",
+      "sha256": "b45fa506195cfcdef406ba9f0c77b36ddc1a7c224040926ec70abc2fdea7b93a"
+    },
+    {
+      "path": "public/mockServiceWorker.js",
+      "sha256": "26171599d94d5445297303f3a1f1cedec26835ea3d0057dcfa92ec520cb35cca"
+    },
+    {
+      "path": "public/robots.txt",
+      "sha256": "d1ff0b018d0899c45ee29d8f0b11cf756ecdac00a81820d7159b460b6cbd9601"
+    },
+    {
+      "path": "scripts/generate-responsive-images.mjs",
+      "sha256": "05c1d402a290d44739563a2fbb0cbf8b460acce2ef20ed658b048901f18c0c0d"
+    },
+    {
+      "path": "scripts/lighthouse-matrix.config.json",
+      "sha256": "4412a3b0d4671032740f9aabf6e79e8235475e274ec013dcd97f8ae1d1630562"
+    },
+    {
+      "path": "scripts/lighthouse-matrix.mjs",
+      "sha256": "91b759a97f77f1f60be576eba23c9ae78765c072d2cd38fe371e87441c5f62a5"
+    },
+    {
+      "path": "scripts/lighthouse-prerendered-routes.config.json",
+      "sha256": "51a674e5768874b1b88a48df3c8498a07b104efb53b8511a549a607064657b07"
+    },
+    {
+      "path": "scripts/lighthouse-prerendered-routes.mjs",
+      "sha256": "c13c5ba7fc0b8485e47d17d9cb69d01692d966ccf258406a69e582db421af346"
+    },
+    {
+      "path": "scripts/merge-browser-coverage.mjs",
+      "sha256": "cc284e39138ac9106b8e98e78f360f48c84ab32c2f977a8d83c6626b5c943705"
+    },
+    {
+      "path": "scripts/prerender-routes.mjs",
+      "sha256": "b16a555900459026b9bb883eedba9f555b10d5d4483bd585badeec648b15afe7"
+    },
+    {
+      "path": "scripts/release-snapshot.mjs",
+      "sha256": "6b673e175d07fda8edb2e14ee62535af5b3e4164dbea80fc4d2c76f7dd96e84f"
+    },
+    {
+      "path": "scripts/run-coverage.mjs",
+      "sha256": "2fb0edfdfcb752b5602e795853c3c0efe131b49b16ebe4630ed778a1fe3e328f"
+    },
+    {
+      "path": "scripts/verify-preview.mjs",
+      "sha256": "3b095c438beba2d064a737cd846a6e861587995f34a1d85eff604ce5749c9749"
+    },
+    {
+      "path": "src/assets/emerald-ape.webp",
+      "sha256": "d8bebe91bcfe30f77cf742679639a915e329f6521fed3dbc260a97bfcc8e8cca"
+    },
+    {
+      "path": "src/assets/generated/emerald-ape-320.webp",
+      "sha256": "ee700b676d407ee7660484bea5a59c76c81f71c3eff6b86752974d075323217d"
+    },
+    {
+      "path": "src/assets/generated/emerald-ape-768.webp",
+      "sha256": "c174d28d671a8960f760d66ad61abd4e0d8011763b12cc167a08c6f6972011e6"
+    },
+    {
+      "path": "src/assets/generated/golden-beat-320.webp",
+      "sha256": "47c657aa9c3319ee76b72b6d9c3d64f2635a8935d467cbd457db7d46e63908f5"
+    },
+    {
+      "path": "src/assets/generated/golden-beat-768.webp",
+      "sha256": "5533f11a68ef36b1bd8b935ec2bef80aab5cf48a914cb15be5d7bfacf4f89dd5"
+    },
+    {
+      "path": "src/assets/generated/ivory-baron-320.webp",
+      "sha256": "7d02016da3357f0121d0e0ecfd0fb1e0a3ff071bbf06f46d801c9fa871429eb0"
+    },
+    {
+      "path": "src/assets/generated/ivory-baron-768.webp",
+      "sha256": "399c88054eb56ffc1ef07aa78e570c2e09b8fb2be86ce98c3357b02d18c557b7"
+    },
+    {
+      "path": "src/assets/generated/sage-nomad-320.webp",
+      "sha256": "48192e2d3f1ccfdfe172351da9f07a28e30c98597d631a76343c2025e2ca81da"
+    },
+    {
+      "path": "src/assets/generated/sage-nomad-768.webp",
+      "sha256": "1f882645f13e0a21e4bb4c3cf10efdd6bc7d1acec81056cfa51133f9f0898f54"
+    },
+    {
+      "path": "src/assets/golden-beat.webp",
+      "sha256": "bc8a9af89837c74873b277b2df5124c9e77bb395eeb13a1980a836209dd1abd0"
+    },
+    {
+      "path": "src/assets/index.ts",
+      "sha256": "049ee461e0f984c8d897b669cb6792cbcebabfcbf50661b2272007f8b4ceba93"
+    },
+    {
+      "path": "src/assets/ivory-baron.webp",
+      "sha256": "6bdc58e5d9d8e4b623668f5375efa0e65688d985c5c549d6a3f699c1c6b54c22"
+    },
+    {
+      "path": "src/assets/sage-nomad.webp",
+      "sha256": "e3faf3c6ea9fe4d43be6db6aaa35151f6c14f44b215f38afa70ce735f9e9fa8e"
+    },
+    {
+      "path": "src/components/layout/desktop-marketplace-header.tsx",
+      "sha256": "9a854c9fa47a541aebd6217dfb638d25f6dbc58122e69837adf6a07d5218568a"
+    },
+    {
+      "path": "src/components/layout/marketplace-breadcrumb.tsx",
+      "sha256": "025055352f3d0f7e68544034df6ebd3bb55722342dae3b7ac1df1cd4c18b24b2"
+    },
+    {
+      "path": "src/components/layout/marketplace-commerce-page.tsx",
+      "sha256": "2fb7d075f182e42d7b66b65a47657156d62bd150bef15be9dd8a31eaf5553848"
+    },
+    {
+      "path": "src/components/layout/marketplace-shell.tsx",
+      "sha256": "754bb00880437309756efa21f03e19dbb7711166928621079a89c650420ad6df"
+    },
+    {
+      "path": "src/components/layout/mobile-bottom-panel.tsx",
+      "sha256": "80ebeb20d0acf9f06a561bb9cd680ae816f517e16e3aee0045edd753b76b65fa"
+    },
+    {
+      "path": "src/components/layout/root-layout.tsx",
+      "sha256": "cb0a527e820c2b4df388405e126ee297063fb77bf30ae740b7107f495ff9955b"
+    },
+    {
+      "path": "src/components/layout/site-footer-content.ts",
+      "sha256": "518eff3858436143e9b339452fd910bf9de2dd6715ad0138701e9d13e5cfad07"
+    },
+    {
+      "path": "src/components/layout/site-footer.tsx",
+      "sha256": "9f3fd3bcd68a49616f387ae8746e1b2667d48340696ff755f0ee1c114b4d03d1"
+    },
+    {
+      "path": "src/components/layout/site-header.tsx",
+      "sha256": "84851b525c6e3c5ac08eab966b07fd832e3e03e547545e93e620d9a0390aa5cb"
+    },
+    {
+      "path": "src/components/media/nft-image.tsx",
+      "sha256": "bcdf748ace780a647f5e21d69c83a3f46d1babc4547af8b5b4a6bc5be81f346d"
+    },
+    {
+      "path": "src/components/ui/badge.tsx",
+      "sha256": "e8495b542bf9efe22d7ba29097a70645d2b2a69f6a494b71aa105955dae99f73"
+    },
+    {
+      "path": "src/components/ui/breadcrumb.tsx",
+      "sha256": "bc6c02f53374c3d4fdf3a945e4955b02bd04046d409cc3d0be3fb4bd251a05c9"
+    },
+    {
+      "path": "src/components/ui/button.tsx",
+      "sha256": "49345fb37a54a80b51e16e4c40729bcda0e6a86ce7a60b390fe9737089ab66f9"
+    },
+    {
+      "path": "src/components/ui/carousel.tsx",
+      "sha256": "c9443f44842ce7171731de2448be7d2d876997c3c2372d7dbeb335bbc34bac01"
+    },
+    {
+      "path": "src/components/ui/dialog.tsx",
+      "sha256": "dd0876e0a37b88a3e5c302921a6dc8e69cebed58066bc11a875455ccd4bcf820"
+    },
+    {
+      "path": "src/components/ui/field-error.tsx",
+      "sha256": "96a36a23bd2cd59480775ec44bd1539b0153d010da28ca79d21c960422350e77"
+    },
+    {
+      "path": "src/components/ui/field-label.tsx",
+      "sha256": "675d87c59022a302930bd87db062f3ad5d8e243d885a128ad44d22025db8cbac"
+    },
+    {
+      "path": "src/components/ui/input.tsx",
+      "sha256": "3e02aa90ca279f8e063fc45d7dc253a1314a133fc776b0ea4328bbaedb83dc09"
+    },
+    {
+      "path": "src/components/ui/pagination.tsx",
+      "sha256": "6b0a35ad5476c4340cdcd4631b87b4872759f67d9b226de06f283ca0396695bc"
+    },
+    {
+      "path": "src/components/ui/popover.tsx",
+      "sha256": "751b7ac377cb76fc3a9295887acc3e60a69df021d2769caecf0a14df1c5c0e32"
+    },
+    {
+      "path": "src/components/ui/rating-stars.tsx",
+      "sha256": "ffde046d171ce4606ee308789a91003148faad2948f7647d7cb8550e5ce9619b"
+    },
+    {
+      "path": "src/components/ui/select.tsx",
+      "sha256": "9eaed66f2af3495d1f9c7b8d41631872ddd95afcc78478e657ebd6e230170e1d"
+    },
+    {
+      "path": "src/components/ui/separator.tsx",
+      "sha256": "b55e74a721b92b0f763ad3c0e7e540de554b95bf1e518de72733856db0e3e622"
+    },
+    {
+      "path": "src/components/ui/sheet.tsx",
+      "sha256": "2313e9d65e8c20adea5af077d67b6a36dad5151d809f60ddf3da0615180896b7"
+    },
+    {
+      "path": "src/components/ui/skeleton.tsx",
+      "sha256": "d19b6ebf1ae7c4067908f668f611fad60badf8b06de239e33190fd2a71f29d75"
+    },
+    {
+      "path": "src/components/ui/slider.tsx",
+      "sha256": "9418df71176a7545fc165ebea34fe8c9e301fe3ce15aa2941543759b9adb83b6"
+    },
+    {
+      "path": "src/components/ui/tabs.tsx",
+      "sha256": "9e9204512a451a10b89a6d53bf0b991744f4e8d9e7fb2e049459dd9cfa74979f"
+    },
+    {
+      "path": "src/components/ui/textarea.tsx",
+      "sha256": "56fc17a3a1303c7c2f796dae2e94ea908d0066b7d7b8545c00a27f4ec75c9016"
+    },
+    {
+      "path": "src/components/ui/toggle-group.tsx",
+      "sha256": "e0708184c0a85e4a66ab28000cdb0ec5627ae013413ed7fc4c8b7c636e72a61f"
+    },
+    {
+      "path": "src/components/ui/tooltip.tsx",
+      "sha256": "cbc4dc9ede4b52ffa38e8adf479de798e169591201b300a58ef9679da56096a8"
+    },
+    {
+      "path": "src/components/ui/unavailable-action.tsx",
+      "sha256": "c2df0212143d15bf89eab6fb6e469dd6af8fc76b72a50d9712051b83dca94c61"
+    },
+    {
+      "path": "src/entry-server.tsx",
+      "sha256": "2922fa6271a247bf97d740d2f3c7fdf06c86289f2aefcf8c7e883a1c238e2c7a"
+    },
+    {
+      "path": "src/features/auth/api/account.ts",
+      "sha256": "a2fac75817cc68b0e507f493c28efc04c2ad1aa8244a41c936c1972fcc46ec8a"
+    },
+    {
+      "path": "src/features/auth/api/auth.ts",
+      "sha256": "f1ad58b4b314c5dbf73e9f29f3cf5b9f0ef552b68cebee685814dabea9257683"
+    },
+    {
+      "path": "src/features/auth/components/account-shell.tsx",
+      "sha256": "34009037d3ecb9d9bddd5c9d2ed86917c4b735ccc3418b9c2484e3b5333b8a3d"
+    },
+    {
+      "path": "src/features/auth/components/auth-authenticated-redirect.tsx",
+      "sha256": "b2dde50c35ddde43aaba91b38c468915c976ddb6f568770e1d6f68d3c9c50ed9"
+    },
+    {
+      "path": "src/features/auth/components/auth-dialog.tsx",
+      "sha256": "d464c68a1d23b4bcabc98599c487e355bb2ffd6b745dcf58b83ffa13f0b9b77c"
+    },
+    {
+      "path": "src/features/auth/components/auth-flow-context.ts",
+      "sha256": "06c72936d4017ca0c9cf40752aa050b3ab4391c3a4852fe3a7bd291332c95b43"
+    },
+    {
+      "path": "src/features/auth/components/auth-flow-provider.tsx",
+      "sha256": "29236373ac22bad6d68f0c7848eae1f65066f7fa65252473f5317c8308f458aa"
+    },
+    {
+      "path": "src/features/auth/components/password-input.tsx",
+      "sha256": "deeae9837110ef79305e6c6adb021511ace309e467c5841b24d14b1e1a567002"
+    },
+    {
+      "path": "src/features/auth/components/profile-forms.tsx",
+      "sha256": "b686c577a547bc17903e34a99112d267c3aa2b5ed97fe7c3e2436ebf8f6bb0e8"
+    },
+    {
+      "path": "src/features/auth/components/wallet-form.tsx",
+      "sha256": "7bee9109293f46f91009b9d6a61b9208fa7259d1920ff1284bec27b47c2e2d04"
+    },
+    {
+      "path": "src/features/auth/components/wallets-content.tsx",
+      "sha256": "6c1154775cad5ae5ef63fcdc2fc4b73bd0cf6e0bf19219644478bdaf2d466be5"
+    },
+    {
+      "path": "src/features/auth/hooks/use-account.ts",
+      "sha256": "0f89a4810e82c7f6126cba121eb7672d23780f7e712f6d85bbf8f90ead2329b6"
+    },
+    {
+      "path": "src/features/auth/hooks/use-auth-mutations.ts",
+      "sha256": "51b80ce8a1ef6207ef3c1544fd1d9d0d7c38491b394f715130d295e89a511173"
+    },
+    {
+      "path": "src/features/auth/hooks/use-auth-return-navigation.ts",
+      "sha256": "66b7e591c1520e1d81754c6b6a3e60c0b3941a7c55696717d50a0bb8e7e49e0e"
+    },
+    {
+      "path": "src/features/auth/hooks/use-session.ts",
+      "sha256": "c2a7676006c158453865daa5d785203854a86b299e5c1473560a51aa39ba5b91"
+    },
+    {
+      "path": "src/features/auth/query-keys.ts",
+      "sha256": "b1ebd227f6cabb659eaa4ad09d15ca58bf2e7e5ec289f7b9dde36cf84dc1e35b"
+    },
+    {
+      "path": "src/features/auth/schemas.ts",
+      "sha256": "cb8485cf528fda15ddfdf4dd7059df89d8051b35502a664a9b6bdbbb67e3c88a"
+    },
+    {
+      "path": "src/features/auth/types.ts",
+      "sha256": "f75e4d0397e9951ae754f5489b0051741dad57e634daeb0ee0af36cfa6147a05"
+    },
+    {
+      "path": "src/features/auth/utils/form-errors.ts",
+      "sha256": "a75acefb1a2c413465b48c8ab5af79740bbcd297ed15fc6fad03c667be15c76e"
+    },
+    {
+      "path": "src/features/auth/utils/get-api-error.ts",
+      "sha256": "96870b098a4cbb85e2202b709da77b812a75c7a6a93b3c8a3abee6476697218c"
+    },
+    {
+      "path": "src/features/cart/api/cart.ts",
+      "sha256": "ed12780fc8328f57bd4af4ae4d83bc64687dd3b46fb86c733d04d96f590b1e18"
+    },
+    {
+      "path": "src/features/cart/components/cart-item-row.tsx",
+      "sha256": "4a6816215073e701873b33546f40c1a436c892d5a722e66bdbe6da5b6a169e7d"
+    },
+    {
+      "path": "src/features/cart/components/cart-recommendations.tsx",
+      "sha256": "600e6f892e9b3409fe75c29e2ff92b7af0a3af2e52316147b4fc3e6f1633bd84"
+    },
+    {
+      "path": "src/features/cart/components/cart-skeleton.tsx",
+      "sha256": "e9bf39db39ed2bc9f8d567febbaaf65e5a481e4daa13d8bde71a65987f341281"
+    },
+    {
+      "path": "src/features/cart/components/cart-summary.tsx",
+      "sha256": "665e7755443c080131b1580647ac882d699c515c86aa5cf58d47a8f221f40c3c"
+    },
+    {
+      "path": "src/features/cart/components/cart-table-layout.ts",
+      "sha256": "cf544d93bba4334040b0d8a7c950d47891056b5d5d0a47ced3d6e9b3b9d4b02b"
+    },
+    {
+      "path": "src/features/cart/hooks/use-cart-page-controller.ts",
+      "sha256": "ab9e2baeddc3b1ab7dd6104a4a17c953ae5ec4f85869275d330fe6595005aa47"
+    },
+    {
+      "path": "src/features/cart/hooks/use-cart.ts",
+      "sha256": "049f77472ae722feb8fbc1f08582e69bde32a348ba31e6430b339c1f9dbb6f11"
+    },
+    {
+      "path": "src/features/cart/hooks/use-coupon-application.ts",
+      "sha256": "855e0009241ba7db98b07fc1e008ff49c5670390a60a35acb5c12a992d2bf72f"
+    },
+    {
+      "path": "src/features/cart/query-keys.ts",
+      "sha256": "bfb0a1c23a29747674f88f99ee3cd853c58198c5463256ce95df35f7c33891cd"
+    },
+    {
+      "path": "src/features/cart/types.ts",
+      "sha256": "1278f8d1bc466246e912f9bb1bdc2e35933d7a3bc46a1dd691d15410aaccc495"
+    },
+    {
+      "path": "src/features/catalog/api/nfts.ts",
+      "sha256": "def21060463a7f9fbf22a4b584b7ea519f46fba105ec2b6860edff60146988c5"
+    },
+    {
+      "path": "src/features/catalog/catalog-options.ts",
+      "sha256": "83f304a2907ae82a8f71073beb25d46a52cb6556b27fef877da88f6409c15d0e"
+    },
+    {
+      "path": "src/features/catalog/components/catalog-filters.tsx",
+      "sha256": "1ee722f4adfbb057ef60e78352dd25f42696d4824268a0b480fb0b39e3741160"
+    },
+    {
+      "path": "src/features/catalog/components/catalog-realtime-sync.tsx",
+      "sha256": "690e322bf5a4c1ff6eacd896e8524b08e613d91a8378b24dc03f4a11d8d03c09"
+    },
+    {
+      "path": "src/features/catalog/components/desktop-catalog-sort.tsx",
+      "sha256": "20d301d9f17eaec7b5727341c101b582dd17b7fa1d3e9e7fc36f7b4de8f80f51"
+    },
+    {
+      "path": "src/features/catalog/components/nft-card-skeleton.tsx",
+      "sha256": "86198c2d7644576b27d288c1461edd9ce787d86ee93b2684f249b04e0567ae99"
+    },
+    {
+      "path": "src/features/catalog/components/nft-card.tsx",
+      "sha256": "faf40ac40db8f0bc3bab9058b05d507efc6e03d0abe0570c03178be7b84bf6f3"
+    },
+    {
+      "path": "src/features/catalog/components/price-filter.tsx",
+      "sha256": "1dade7edd7392cf3c2c6b4b79349de418b79160ce5dc6385db930dc2f0793441"
+    },
+    {
+      "path": "src/features/catalog/hooks/use-catalog-search.ts",
+      "sha256": "d965a8d59c9c8c86256ac6dde411280543c4865099a2cec29826482f95895b8c"
+    },
+    {
+      "path": "src/features/catalog/hooks/use-nft-catalog.ts",
+      "sha256": "81002499a0d0e1410d0a4b2850475687091124bb3cf853c130a5682a8e97a327"
+    },
+    {
+      "path": "src/features/catalog/types.ts",
+      "sha256": "7e30248df8bf67cb10acaa7764ce362c7c2efa575d83bd6873c7c967c69b1983"
+    },
+    {
+      "path": "src/features/catalog/utils/apply-nft-update.ts",
+      "sha256": "8f0fc0b377acca26f8791e742d0a5404d759a2f2b9a909f64a9e2bd430add256"
+    },
+    {
+      "path": "src/features/catalog/utils/sort-nfts.ts",
+      "sha256": "55a7586f4da5e7f1d7ca04cb5c41ca869f13071c051fd6d4bd2fd5a32b71d281"
+    },
+    {
+      "path": "src/features/checkout/api/checkout.ts",
+      "sha256": "755b03dc97752c7f603e5a6dc106da000779343d57e947df5fb5657e3ae2f1dd"
+    },
+    {
+      "path": "src/features/checkout/components/checkout-attempt-status.tsx",
+      "sha256": "84535372e9f3ef24bb8e3497fde421b01836e83ac725eb61a6df5416a88b6dbb"
+    },
+    {
+      "path": "src/features/checkout/components/checkout-collector-form.tsx",
+      "sha256": "c0135f7572a7ff4719b24760990c0cea8a6f6faa38b67b19af4cb8fc56d5386b"
+    },
+    {
+      "path": "src/features/checkout/components/checkout-page-state.tsx",
+      "sha256": "f521c79298952eb6699f5ee9dd5220cd289c8982e202ff2653bbf327cafeadad"
+    },
+    {
+      "path": "src/features/checkout/components/checkout-payment-panel.tsx",
+      "sha256": "4dadc5188ec53d80875e510631426e61049d6279e4fa8327ea7acb9f2cf19b72"
+    },
+    {
+      "path": "src/features/checkout/components/checkout-skeleton.tsx",
+      "sha256": "440b70ea3677d30b66a214fa4349a0f6c20800241e47cfe3582e7e50fa6c2a96"
+    },
+    {
+      "path": "src/features/checkout/components/checkout-wallet-picker.tsx",
+      "sha256": "e8664360a5e6b161546e259e021721135c30fae89ab48fb609d3d854eda18889"
+    },
+    {
+      "path": "src/features/checkout/constants.ts",
+      "sha256": "fb0373f5d0ec801481e9a24e4774e738f2e489c857c750e6b1a886692af27137"
+    },
+    {
+      "path": "src/features/checkout/hooks/use-checkout-attempt.ts",
+      "sha256": "a4a07995ee8f8ac3f2382ab16ce3be89269f26589431ea764b20f30fe2af1af7"
+    },
+    {
+      "path": "src/features/checkout/hooks/use-checkout-controller.ts",
+      "sha256": "891cf14311030d503e4adf6cad790c13fb01c7565a1457cb273c2ac6267398d2"
+    },
+    {
+      "path": "src/features/checkout/hooks/use-checkout-form.ts",
+      "sha256": "1dee9c8a6094bb9aaf6c829726db4addcccbd2a86b101469223860d2ddde25c1"
+    },
+    {
+      "path": "src/features/checkout/hooks/use-checkout-submission.ts",
+      "sha256": "3a46ae0b76b0843351e8bf5c5a6943627605574cd3cdc9509ac29782804ef2af"
+    },
+    {
+      "path": "src/features/checkout/hooks/use-checkout.ts",
+      "sha256": "f086d2c3683afbb943c25ed794819dda33c33a7173c6d9a92a3b1daef1580c5f"
+    },
+    {
+      "path": "src/features/checkout/schemas.ts",
+      "sha256": "91efd51c708e342bb2c7658deccf3900b59a2825633577addeb985955d2caa47"
+    },
+    {
+      "path": "src/features/checkout/types.ts",
+      "sha256": "448ed2cf05439f5121148e056c0dff0fdd72856d57792d1a32c1655b9cb1c770"
+    },
+    {
+      "path": "src/features/favorites/api/favorites.ts",
+      "sha256": "d397052911ec59083d9a900978248885a9926d35b74237302f492f5ffb6e351a"
+    },
+    {
+      "path": "src/features/favorites/components/favorite-button.tsx",
+      "sha256": "9bf9abd482247fb8dee6b6526449f8921ff07fa198a87e2124b6ec79a3500ca3"
+    },
+    {
+      "path": "src/features/favorites/components/favorites-content.tsx",
+      "sha256": "5766b988b83b7dfd872406e1bfaf71404a4d63ad9f29fa9898a2e312f9df934e"
+    },
+    {
+      "path": "src/features/favorites/hooks/use-favorites.ts",
+      "sha256": "9c0547b24c796cfecda7224e859e89639c3d67c964d3b80747680c1bf9c507d9"
+    },
+    {
+      "path": "src/features/favorites/types.ts",
+      "sha256": "64e4e2e06b770da1b849c13d0ffcfe1c8c6e096c2b5ca3c1dcca1513cfe59f0c"
+    },
+    {
+      "path": "src/features/home/components/hero-section.tsx",
+      "sha256": "ef170e9f5beac21a6c944fb7266dda0ec856344e23756a56fa41fa825a786fc0"
+    },
+    {
+      "path": "src/features/home/components/home-editorial.tsx",
+      "sha256": "3cd0980608a15a1a965ef41d90f4a3401919026c5ac4e2e3e14320ba8088628d"
+    },
+    {
+      "path": "src/features/home/components/journal-card.tsx",
+      "sha256": "cec4a2c3697bb7edd55f57b3eb91080f1375c5fdd3afa7aabfcff6f39f7fa592"
+    },
+    {
+      "path": "src/features/home/components/mobile-bottom-nav.tsx",
+      "sha256": "b61d2f47e2ec8d33b0b9469833ab0106dfcebef919247b50634de9a9c96fea42"
+    },
+    {
+      "path": "src/features/home/components/mobile-search.tsx",
+      "sha256": "21c1d0e717c3806ad70930270687160451048d13055fc8e3aca57720a1884127"
+    },
+    {
+      "path": "src/features/home/components/promo-card.tsx",
+      "sha256": "0a86bc502abf944a0daf22be20253ac655b8c93985d6ddf802ed658e989f2f69"
+    },
+    {
+      "path": "src/features/home/home-content.ts",
+      "sha256": "e25d0d50657adcdb6207bc907b571f9d57afddb7089d9024177c592e16523108"
+    },
+    {
+      "path": "src/features/nft-detail/api/nfts.ts",
+      "sha256": "157fd2378872ea741bc8f7fd1b14d9bcf470b667de5747768974f6924fbbc406"
+    },
+    {
+      "path": "src/features/nft-detail/components/nft-detail-content.tsx",
+      "sha256": "49a808aa9b6f83445047b6e97277aa258f2a15331353f024641dad186004570c"
+    },
+    {
+      "path": "src/features/nft-detail/components/nft-detail-skeleton.tsx",
+      "sha256": "14f6ec77560627e1066bdb81da036a8523fc796b2563d2e1d3ffb861a9879ce6"
+    },
+    {
+      "path": "src/features/nft-detail/components/nft-gallery.tsx",
+      "sha256": "fd7730b2139f171edefa649e718dceb8586115213ec4bca02f2ec30280037161"
+    },
+    {
+      "path": "src/features/nft-detail/components/nft-purchase-panel.tsx",
+      "sha256": "10c4aa8de13d547b3076978168e3a0c612090bf0f07e9a2072eb29c3df4e7add"
+    },
+    {
+      "path": "src/features/nft-detail/hooks/use-nft-detail.ts",
+      "sha256": "7b06032f6b55284cdedc7129640239b04b7b23e60d089aba638552c5162972e6"
+    },
+    {
+      "path": "src/features/order/api/orders.ts",
+      "sha256": "e20f09a9561545f1d1b9bd030169398f6e62e43483fb853319bfda47144ba75a"
+    },
+    {
+      "path": "src/features/order/components/order-items.tsx",
+      "sha256": "98f30b110fa06e1fa57d5c1f292b2bf5ea8dc4e38e4822906dabe28313981a8b"
+    },
+    {
+      "path": "src/features/order/components/order-page-states.tsx",
+      "sha256": "a0fa49a61174461ed7adc6ab36d68e8651bdd63e0d2450a161edc10b37f726f7"
+    },
+    {
+      "path": "src/features/order/components/order-realtime-sync.tsx",
+      "sha256": "2de05e2efa7b38a9592c5fa8e6e62e08101ecba7b247822cee9a61954231ee62"
+    },
+    {
+      "path": "src/features/order/components/order-skeleton.tsx",
+      "sha256": "54832ced83441b8be0b72dabd38d2ae93e1a657b6b5a4f5ff941f564d2d45e63"
+    },
+    {
+      "path": "src/features/order/components/order-status-panel.tsx",
+      "sha256": "0d053c654a0a30b111892183bc85a4edc8fb157b907288236d46888d9656f9b7"
+    },
+    {
+      "path": "src/features/order/components/receipt/receipt-confirmation.tsx",
+      "sha256": "99108871cee4354430e7adfede1f845ca96a873875232c3272d7405fdd4b8e49"
+    },
+    {
+      "path": "src/features/order/components/receipt/receipt-items.tsx",
+      "sha256": "433095adabdfd628faf468e2b1af973cdb9ad2b3a827e5888ca4d26cbfa63248"
+    },
+    {
+      "path": "src/features/order/components/receipt/receipt-summary.tsx",
+      "sha256": "70331ccc009cf8702dbab4d035b62e4a38479fccd7a9bcec3835b67aca193437"
+    },
+    {
+      "path": "src/features/order/components/receipt/receipt-totals.tsx",
+      "sha256": "e60d530336c2fa5520ae56c00d48d611b57951e24001f07268e4da10a31c75b4"
+    },
+    {
+      "path": "src/features/order/hooks/use-order-page-controller.ts",
+      "sha256": "66e7aab42170fbc04c56111c4ceba7faf57ce1fdc6c495ccd756fab14aaf8ac4"
+    },
+    {
+      "path": "src/features/order/hooks/use-orders.ts",
+      "sha256": "d4b822adbee191c805b6d5b05cc34595ac2047d887ef8f459cebcbcf72ccf686"
+    },
+    {
+      "path": "src/hooks/use-media-query.ts",
+      "sha256": "4aa79c2b8bc082d8af9120656016da6420e62216bf14596c7786d0bdc1337e1f"
+    },
+    {
+      "path": "src/index.css",
+      "sha256": "d5cb37184588a00fc71485515b362f4b4fc3a66deab46f270193c6fab49d3cbb"
+    },
+    {
+      "path": "src/lib/api-readiness.ts",
+      "sha256": "f578275364f6a1475afec72b165c6174dc9980b2bf6d31cefb77c9ebfc44da23"
+    },
+    {
+      "path": "src/lib/eth-to-wei.ts",
+      "sha256": "254dd8a9e443178b0dda9da19956b40c78ca71f90ca23d4ac472cb64f8e5be3a"
+    },
+    {
+      "path": "src/lib/http-client.ts",
+      "sha256": "225d127a3b18997466019b607a113b17ae29f97f3db367790e2408a9dd386a67"
+    },
+    {
+      "path": "src/lib/query-client.ts",
+      "sha256": "db03340038d3a811dc025a2f367fa3f6f1508a830218c4b46b8aa6ee874affde"
+    },
+    {
+      "path": "src/lib/utils.ts",
+      "sha256": "fd6d1f9e994574291570a7826d67d380652c443be69edf36568a5230495db438"
+    },
+    {
+      "path": "src/lib/wei-to-eth.ts",
+      "sha256": "d15a1519a831ef0df01d42681efa789b48297551be8dbc41e5a67537d3120dce"
+    },
+    {
+      "path": "src/main.tsx",
+      "sha256": "131ba2f0be0cec81f059b6d1965c7cc481007d92617fe90a2f9628eabd43c38f"
+    },
+    {
+      "path": "src/mocks/api-url.ts",
+      "sha256": "9c743572d94d141f8d7ae3fb418810b7d76c7a359c06b79d018567e95a32c261"
+    },
+    {
+      "path": "src/mocks/browser.ts",
+      "sha256": "d6b257d41c565df099873809b27bd90510f2d2ff41e4bfc27ce07b53dccd81d3"
+    },
+    {
+      "path": "src/mocks/fixtures/accounts.ts",
+      "sha256": "f503723522626070c1e7e73f2b96c58b8ba3c801645d847b255f14d1649f2169"
+    },
+    {
+      "path": "src/mocks/fixtures/catalog.ts",
+      "sha256": "af3d3f718e32c57932b4bc418ef9538ee241be9fcf75d0be6fc4d13745c8a7f5"
+    },
+    {
+      "path": "src/mocks/handlers/account-http.ts",
+      "sha256": "872b5cc2709da7903cfe50bb137b50f364a0d53b465a623eee1a610c78cf01be"
+    },
+    {
+      "path": "src/mocks/handlers/auth-http.ts",
+      "sha256": "3979c42b9921460b84a97db2d1780ca76fc94dbf73ec787c2249d2e19d148ef6"
+    },
+    {
+      "path": "src/mocks/handlers/cart-http.ts",
+      "sha256": "13fbb097c572d05c86c92651dd800486e712ceb5d94c8ece9b6be089b92bdd3e"
+    },
+    {
+      "path": "src/mocks/handlers/catalog-http.ts",
+      "sha256": "bebbd63bdc5bdf61143c93813f9eeb446d6b8020f55cec41aa02a00617b18e6b"
+    },
+    {
+      "path": "src/mocks/handlers/catalog-realtime.ts",
+      "sha256": "9cd2ebaf829207c805408636bb3e9aeeffe47d8b3b99e3b817787a71284b7323"
+    },
+    {
+      "path": "src/mocks/handlers/favorites-http.ts",
+      "sha256": "bce08cec4f63c1b4f33c4b8fa913a0e8f44e71efe34720f6b7ff984519aeef44"
+    },
+    {
+      "path": "src/mocks/handlers/http-utils.ts",
+      "sha256": "be65990124fc14e18b0ae9a3e4b3ebff4b3b3aa245eee8f871d3983d51b7783b"
+    },
+    {
+      "path": "src/mocks/handlers/index.ts",
+      "sha256": "8deaf1497de56cd27ebb36244d05df6b0ce0e9f2c1a35ce55cad11b35a84e456"
+    },
+    {
+      "path": "src/mocks/handlers/order-http.ts",
+      "sha256": "42a82f0e6e7e8275df3e08e6ff220a70cb4fa057b9a4ea7537f70c86685d9f3c"
+    },
+    {
+      "path": "src/mocks/server.ts",
+      "sha256": "bf39ec8020301030722f23f6983401825c7071f2efa2bea13648c744fb6f7e26"
+    },
+    {
+      "path": "src/mocks/state/account-store.ts",
+      "sha256": "4323b50b970a5440d2a2796dce291bc3256735317c7fb745282602d3102cfde3"
+    },
+    {
+      "path": "src/mocks/state/cart-store.ts",
+      "sha256": "af7f6e1eae8d47d8f8825433360dcecb768aac00362dbd541286e43cf1585061"
+    },
+    {
+      "path": "src/mocks/state/catalog-store.ts",
+      "sha256": "af0ab579a857ed5cb653f94da9ef7084b6c6581ded50234b8cc69ec28dada8c4"
+    },
+    {
+      "path": "src/mocks/state/order-store.ts",
+      "sha256": "a9dcc0e1ef7ab9dd90b4f47b82b7a4bf2b914141872287398c95107cd47fffee"
+    },
+    {
+      "path": "src/router-search.ts",
+      "sha256": "18932298eef78891b4e1a0daff531e11b5907fd4b70377f534cdc72c0092ee0b"
+    },
+    {
+      "path": "src/router.tsx",
+      "sha256": "12e4758d155f71c299447a01cb906e9a58e8adffbe787c1d22758dd4f71734a8"
+    },
+    {
+      "path": "src/routes/auth-page.tsx",
+      "sha256": "5a1bc123b52b0fedda929b3bd69f700d76e52c9688cd0a97f6f8fa3112604421"
+    },
+    {
+      "path": "src/routes/cart-page.tsx",
+      "sha256": "c162a01e41846d9117462dddbe4dfc1039642726fd299152f81966d366b6e507"
+    },
+    {
+      "path": "src/routes/checkout-page.tsx",
+      "sha256": "43aea833c6e888f4a7bb03c4df75f16d5c1ed45e1c4082895e8685fdcf67b437"
+    },
+    {
+      "path": "src/routes/favorites-page.tsx",
+      "sha256": "f8688b617713b69cd33136ca15b12100cf3a570eb112aa9ee0028bd14a7ac348"
+    },
+    {
+      "path": "src/routes/home-page.tsx",
+      "sha256": "0743ef798b4e25ef333c319ccc31b326d160a58407346a14708a681e98bc9826"
+    },
+    {
+      "path": "src/routes/nft-detail-page.tsx",
+      "sha256": "e81c2011bf119ad5b0ac1eb7b009174401db90f26f53988991bc470494ad854e"
+    },
+    {
+      "path": "src/routes/order-page.tsx",
+      "sha256": "332cccab8096cf8c5ee0d95ca06c0c1c7a60602074e5024b1136298538fcd954"
+    },
+    {
+      "path": "src/routes/profile-page.tsx",
+      "sha256": "53b9cf824cfd23e87eb393b1ee60e7d5f1283d090e8e25183e5c174da9b2a1f1"
+    },
+    {
+      "path": "src/routes/wallets-page.tsx",
+      "sha256": "e8019cb692e972a3f8c7f45946503ccac890368c1b8b4feacc1ad81d5c36b3d4"
+    },
+    {
+      "path": "src/types/account.ts",
+      "sha256": "9a09a05a2b35efa7b0012f0d2abdb884090a29b0aeba9ce52dca55cbbab52b88"
+    },
+    {
+      "path": "src/types/nft.ts",
+      "sha256": "4201c59c0dd4a7267a49317330d168292e0d6ff42189f5e18c6d7304fe882c27"
+    },
+    {
+      "path": "src/types/order.ts",
+      "sha256": "d1fcdd250f39de7286bfd7dab5e78ac5861389bc32be5c38a6e093560a541158"
+    },
+    {
+      "path": "src/types/quote.ts",
+      "sha256": "54d15b65ab9e803187669f1f0505be88a2ce2adcd9c199e3b363a14f2b83b62c"
+    },
+    {
+      "path": "src/vite-env.d.ts",
+      "sha256": "b95fc6665057585844ac2ad0b6beef63437ed35cc968ac4eff7b20c322cfc93e"
+    },
+    {
+      "path": "tests/account-visual.spec.ts",
+      "sha256": "59afbf405e8dda3f8d3c9e6d05adb2dfff0aa5ae1e814212c4fc79fa87f28340"
+    },
+    {
+      "path": "tests/account-visual.spec.ts-snapshots/auth-login-desktop-chromium-desktop-win32.png",
+      "sha256": "2919c24e5b4961192e5515eb2f8ccaa8c3efb37b9612cc5da5578109f8451de7"
+    },
+    {
+      "path": "tests/account-visual.spec.ts-snapshots/auth-login-mobile-chromium-mobile-win32.png",
+      "sha256": "3ef584bd1b6dc09fd13302e70fe739415d2a5b7e7c6eeabd8e79bcb8bcf640bc"
+    },
+    {
+      "path": "tests/account-visual.spec.ts-snapshots/auth-register-desktop-chromium-desktop-win32.png",
+      "sha256": "aa7fd032e3f65a461543e9485ba669532d1d6c22c3e307a019d7c888b5315beb"
+    },
+    {
+      "path": "tests/account-visual.spec.ts-snapshots/auth-register-mobile-chromium-mobile-win32.png",
+      "sha256": "f5194b11b908d1ebb33659894176650e3cc01bfd690ec5f0a556bde0a125a6a7"
+    },
+    {
+      "path": "tests/account-visual.spec.ts-snapshots/profile-desktop-chromium-desktop-win32.png",
+      "sha256": "05d415c4a43b4c85da042e396e1856fca33df2a26f53eeef31ae3af50e28ea46"
+    },
+    {
+      "path": "tests/account-visual.spec.ts-snapshots/profile-mobile-chromium-mobile-win32.png",
+      "sha256": "8ece00cc774731ace2cd052d903328f7e26f57ed53d6e9499694c1611dc025e9"
+    },
+    {
+      "path": "tests/account-visual.spec.ts-snapshots/wallets-desktop-chromium-desktop-win32.png",
+      "sha256": "9b8b5212278c2ef260cfe711e7d641ae8154a2cff74bd27ed8a0d4b1a42eabed"
+    },
+    {
+      "path": "tests/account-visual.spec.ts-snapshots/wallets-mobile-chromium-mobile-win32.png",
+      "sha256": "ff168efc34f18636dc8c4a0123adfb78d54ec55c0ccadf7db631f1a507a8ea55"
+    },
+    {
+      "path": "tests/account.spec.ts",
+      "sha256": "4fa8e85dcefad8161ac9c39c289f01b4e02582a9189ef9ea5a629b717febaedf"
+    },
+    {
+      "path": "tests/cart.spec.ts",
+      "sha256": "a74b861acce7c7c69dd512bb483a80fea7de4628641d90fb0db50ed8f8ae0c60"
+    },
+    {
+      "path": "tests/catalog.spec.ts",
+      "sha256": "bba053ab0adf3c6832dc0d96d84666ea63b07754ea36c4031abaace11bfaaa6b"
+    },
+    {
+      "path": "tests/checkout.spec.ts",
+      "sha256": "d704e77f65b87679a2a75fed7a24b6542c575ef53655009313d2ac4f8d170e16"
+    },
+    {
+      "path": "tests/favorites.spec.ts",
+      "sha256": "9e58757605743e3a51ac3c796fe0769334ca2509b466e2e8013c878cafe11806"
+    },
+    {
+      "path": "tests/helpers/coverage-fixture.ts",
+      "sha256": "357e528707a8c2e3d892d8ebbd473da2444cbfffc7a7a3e9c5050b8cf102365d"
+    },
+    {
+      "path": "tests/helpers/mock-api.ts",
+      "sha256": "50495da7452bd2055478307e7b4a2348f19fd94e9665fd4ca2caae69ca1235ed"
+    },
+    {
+      "path": "tests/integration/auth/account-state.test.ts",
+      "sha256": "bf6518f8e9d35b12410f31140fdb6384367d0e9d891a89fbcaf68196a53c5b83"
+    },
+    {
+      "path": "tests/integration/auth/session.test.ts",
+      "sha256": "25af793855c5af31606ee158959147dfb3405f6ce67acfe213dcb21442950584"
+    },
+    {
+      "path": "tests/integration/cart/cart-state.test.ts",
+      "sha256": "eaf820a61f2b264ce271d9b6db23e3183283c0081c64687bf890ab94ba56afcf"
+    },
+    {
+      "path": "tests/integration/catalog/inventory-state.test.ts",
+      "sha256": "a9af8931d1a10d7ce3358c06d1932c01c9d9d39c978625a98a4cbdf4c3fba079"
+    },
+    {
+      "path": "tests/integration/catalog/realtime-cache.test.ts",
+      "sha256": "7cbd300e6ea3a00e06392042b943f796b90b11527e1d8d797c0493b30b899731"
+    },
+    {
+      "path": "tests/integration/mocks/catalog-http.test.ts",
+      "sha256": "a0edb66894e3c3b3252d8e4bddb6c3bb854a850c631e10209b0d5b92507cead1"
+    },
+    {
+      "path": "tests/integration/mocks/http-contracts.test.ts",
+      "sha256": "6f12264d70173990d020551ac1173e6caaa2526faadd2cb3abbb66fc255c070f"
+    },
+    {
+      "path": "tests/integration/order/order-state.test.ts",
+      "sha256": "68a70b44cb8ae2087f1746c7b647044df2ca4d6b18f62a8d37349c38641f2dd2"
+    },
+    {
+      "path": "tests/nft-detail.spec.ts",
+      "sha256": "191268092157511cc51585188b8d2d951af8e254501fbd21797b4624f5fb6ea6"
+    },
+    {
+      "path": "tests/support/checkout.ts",
+      "sha256": "a846689942e617f207ba1ccfb1fc0cefa3eab14e2f8e244b56c601c6e9b57d44"
+    },
+    {
+      "path": "tests/support/nft.ts",
+      "sha256": "d2c6ab927cdbec155e347e8686b63c438988933fb8179cd77aa69a8845d92930"
+    },
+    {
+      "path": "tests/support/setup-state.ts",
+      "sha256": "0ee197ac031f916e6a7867a123d70a1daaf74f515a9d6345c50f927ecd72b585"
+    },
+    {
+      "path": "tests/unit/auth/api-errors.test.ts",
+      "sha256": "69dd8cc27dcfadd869fda85238f210ddc197e173930274aa3638068c19ecab2d"
+    },
+    {
+      "path": "tests/unit/auth/auth-api.test.ts",
+      "sha256": "ddf78705423d5545fc8bb8dcbdb6c22fb9eabecb7dc3e26e628caebcf68c4812"
+    },
+    {
+      "path": "tests/unit/auth/schemas.test.ts",
+      "sha256": "2f4816b14ae8270c6d923ad959276ddfa0b3934228393e85c1a33d88d2747a08"
+    },
+    {
+      "path": "tests/unit/catalog/sort-nfts.test.ts",
+      "sha256": "6eb0f53eae55f9836e81f893c051f1b434ba6727ea043fedd4e8bbc3b73eac4f"
+    },
+    {
+      "path": "tests/unit/checkout/schemas.test.ts",
+      "sha256": "59f388584d80600196815a3dc065d9a40f8dbdffdb4270d0431c616065044af2"
+    },
+    {
+      "path": "tests/unit/lib/eth.test.ts",
+      "sha256": "a86b642dd05b88fa4b5aa8f5e801fb792b98fda1b6e2b3b957fdf0188deada65"
+    },
+    {
+      "path": "tests/unit/routing/search.test.ts",
+      "sha256": "5ada94da1a1c2bf74b12dd80259a9652063d866a99853c4de42e54367d8a3478"
+    },
+    {
+      "path": "tests/visual.spec.ts",
+      "sha256": "47e76436647c12aea441c1b520bdd38ea1ccd784be2861afc9797762d9228d01"
+    },
+    {
+      "path": "tests/visual.spec.ts-snapshots/cart-chromium-desktop-win32.png",
+      "sha256": "f7ef2cec75474861824f4f7428519f0d27e4c3e4d108fc4565f5563b7fd7cb05"
+    },
+    {
+      "path": "tests/visual.spec.ts-snapshots/cart-chromium-mobile-win32.png",
+      "sha256": "bbd98a8b7a186e90041a1fb3079cfe762d6b8e495a920fe63295badf41e94484"
+    },
+    {
+      "path": "tests/visual.spec.ts-snapshots/checkout-chromium-desktop-win32.png",
+      "sha256": "5c361c2189c8e3597c3e797de0f6ebe8f0ad0934806d22cb1ce5c5c28df68b09"
+    },
+    {
+      "path": "tests/visual.spec.ts-snapshots/checkout-chromium-mobile-win32.png",
+      "sha256": "f3c37f900776133428f31ba6a77ee0537940554a1a3d51e480b82bf27fba6259"
+    },
+    {
+      "path": "tests/visual.spec.ts-snapshots/home-chromium-desktop-win32.png",
+      "sha256": "a597cdb4eaf5a64618cd4e6bc5ee62c1f37e6a7f47353613a7703e52e43bc1af"
+    },
+    {
+      "path": "tests/visual.spec.ts-snapshots/home-chromium-mobile-win32.png",
+      "sha256": "6114ef1f6576171dfca1a345bba31a5968715de74a4c8fe7c573427d16ceb302"
+    },
+    {
+      "path": "tests/visual.spec.ts-snapshots/nft-detail-chromium-desktop-win32.png",
+      "sha256": "c54643540d4c936215884bb60ec79e46c3f843832cfd6710b5d36fab4b237ce1"
+    },
+    {
+      "path": "tests/visual.spec.ts-snapshots/nft-detail-chromium-mobile-win32.png",
+      "sha256": "c8ddbac4a9b8400e6e5ef66d1e4ecc6eb000933bf6e1c4e37c505afbbadd9a64"
+    },
+    {
+      "path": "tests/visual.spec.ts-snapshots/order-confirmation-chromium-desktop-win32.png",
+      "sha256": "05a1988abe03f85d5e8f4b12a02c0a6989a0c853f18aa87e95410737efe1ead1"
+    },
+    {
+      "path": "tests/visual.spec.ts-snapshots/order-confirmation-chromium-mobile-win32.png",
+      "sha256": "e472e9111b024ecc504b70a7c0624f193f3ed5bb31ec6036e7d53dc3b9595edb"
+    },
+    {
+      "path": "tsconfig.app.json",
+      "sha256": "42e2ac780ef3012109b9321e883ef4dbd7e90242435d873ae1a0a9e4e0814e6b"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "97e2457c3c872161faa1b6ebd68df2728ed7dc2d264afe09ad2aed1982393f7f"
+    },
+    {
+      "path": "tsconfig.node.json",
+      "sha256": "d366cc0827139db39c61815f22491bbfda56c654354a42ad7795143d314e45e8"
+    },
+    {
+      "path": "tsconfig.test.json",
+      "sha256": "66fd5f632861cf66edc3e26afa5c35f36b97e2792122c08bed8d435cfac2eee8"
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "24d4618b557ffa8fbdf7051075678cd27cd6db0770cb0e8f8aa6a61a8305bd6c"
+    },
+    {
+      "path": "vite.config.ts",
+      "sha256": "9e33b1aeb03eb26580ed3240121a1f39057316701c9d4fd522c0c982f5c79534"
+    },
+    {
+      "path": "vitest.config.ts",
+      "sha256": "69c08b81ff4460031c69a3608307e965c7aa8978672f5a74aace58d4e50288d3"
+    }
+  ],
+  "changes": [
+    {
+      "status": " M",
+      "path": ".prettierignore",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "AI-PROJECT-GUIDE.md",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "ARCHITECTURE.md",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "IMPLEMENTATION-ROADMAP.md",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "README.md",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "docs/performance/LIGHTHOUSE.md",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-desktop-1.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-desktop-1.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-desktop-2.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-desktop-2.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-desktop-3.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-desktop-3.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-mobile-1.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-mobile-1.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-mobile-2.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-mobile-2.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-mobile-3.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/detail-mobile-3.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-desktop-1.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-desktop-1.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-desktop-2.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-desktop-2.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-desktop-3.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-desktop-3.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-mobile-1.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-mobile-1.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-mobile-2.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-mobile-2.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-mobile-3.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/home-mobile-3.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " D",
+      "path": "docs/performance/lighthouse/phase-13-final-2026-11-15/summary.md",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " M",
+      "path": "docs/references/figma/README.md",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": " M",
+      "path": "eslint.config.js",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "index.html",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "package-lock.json",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "package.json",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "playwright.config.ts",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "public/favicon.svg",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "scripts/lighthouse-matrix.config.json",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "scripts/lighthouse-matrix.mjs",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "scripts/prerender-routes.mjs",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": " M",
+      "path": "src/entry-server.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/auth/components/auth-dialog.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/auth/hooks/use-session.ts",
+      "category": "application"
+    },
+    {
+      "status": " D",
+      "path": "src/features/catalog/api/mock-initial-data.ts",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/catalog/components/catalog-realtime-sync.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/catalog/hooks/use-nft-catalog.ts",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/checkout/components/checkout-payment-panel.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/checkout/hooks/use-checkout-attempt.ts",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/checkout/hooks/use-checkout-controller.ts",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/checkout/hooks/use-checkout-submission.ts",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/checkout/types.ts",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/home/components/home-editorial.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/home/components/journal-card.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/nft-detail/components/nft-gallery.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/nft-detail/components/nft-purchase-panel.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/features/nft-detail/hooks/use-nft-detail.ts",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/index.css",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/main.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/mocks/handlers/catalog-http.ts",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/mocks/handlers/catalog-realtime.ts",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/mocks/state/catalog-store.ts",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/router.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "src/routes/home-page.tsx",
+      "category": "application"
+    },
+    {
+      "status": " M",
+      "path": "tests/account-visual.spec.ts",
+      "category": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/account-visual.spec.ts-snapshots/auth-login-desktop-chromium-desktop-win32.png",
+      "category": "visual-baseline"
+    },
+    {
+      "status": " M",
+      "path": "tests/account-visual.spec.ts-snapshots/auth-register-desktop-chromium-desktop-win32.png",
+      "category": "visual-baseline"
+    },
+    {
+      "status": " M",
+      "path": "tests/account.spec.ts",
+      "category": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/cart.spec.ts",
+      "category": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/catalog.spec.ts",
+      "category": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/checkout.spec.ts",
+      "category": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/favorites.spec.ts",
+      "category": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/nft-detail.spec.ts",
+      "category": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/visual.spec.ts",
+      "category": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/visual.spec.ts-snapshots/cart-chromium-desktop-win32.png",
+      "category": "visual-baseline"
+    },
+    {
+      "status": " M",
+      "path": "tests/visual.spec.ts-snapshots/home-chromium-desktop-win32.png",
+      "category": "visual-baseline"
+    },
+    {
+      "status": " M",
+      "path": "tests/visual.spec.ts-snapshots/home-chromium-mobile-win32.png",
+      "category": "visual-baseline"
+    },
+    {
+      "status": " M",
+      "path": "tests/visual.spec.ts-snapshots/nft-detail-chromium-desktop-win32.png",
+      "category": "visual-baseline"
+    },
+    {
+      "status": " M",
+      "path": "tests/visual.spec.ts-snapshots/nft-detail-chromium-mobile-win32.png",
+      "category": "visual-baseline"
+    },
+    {
+      "status": " M",
+      "path": "tests/visual.spec.ts-snapshots/order-confirmation-chromium-desktop-win32.png",
+      "category": "visual-baseline"
+    },
+    {
+      "status": " M",
+      "path": "tests/visual.spec.ts-snapshots/order-confirmation-chromium-mobile-win32.png",
+      "category": "visual-baseline"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-desktop-1.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-desktop-1.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-desktop-2.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-desktop-2.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-desktop-3.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-desktop-3.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-mobile-1.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-mobile-1.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-mobile-2.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-mobile-2.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-mobile-3.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/detail-mobile-3.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-desktop-1.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-desktop-1.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-desktop-2.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-desktop-2.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-desktop-3.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-desktop-3.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-mobile-1.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-mobile-1.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-mobile-2.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-mobile-2.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-mobile-3.report.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/performance/lighthouse/current/home-mobile-3.report.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/AUDIT.md",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/RESULTS.md",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/TESTING-ROADMAP.md",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/base.css",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/block-navigation.js",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/coverage-final.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/coverage-summary.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/favicon.png",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/prettify.css",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/prettify.js",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/sort-arrow-sprite.png",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/sorter.js",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/assets/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/assets/index.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/layout/desktop-marketplace-header.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/layout/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/layout/marketplace-breadcrumb.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/layout/marketplace-commerce-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/layout/marketplace-shell.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/layout/mobile-bottom-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/layout/root-layout.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/layout/site-footer-content.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/layout/site-footer.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/layout/site-header.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/media/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/media/nft-image.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/badge.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/breadcrumb.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/button.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/carousel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/dialog.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/field-error.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/field-label.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/input.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/pagination.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/popover.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/rating-stars.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/select.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/separator.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/sheet.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/slider.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/tabs.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/textarea.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/toggle-group.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/tooltip.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/components/ui/unavailable-action.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/entry-server.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/api/account.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/api/auth.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/components/account-shell.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/components/auth-authenticated-redirect.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/components/auth-dialog.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/components/auth-flow-context.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/components/auth-flow-provider.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/components/password-input.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/components/profile-forms.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/components/wallet-form.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/components/wallets-content.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/hooks/use-account.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/hooks/use-auth-return-navigation.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/hooks/use-session.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/schemas.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/utils/form-errors.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/utils/get-api-error.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/auth/utils/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/api/cart.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/components/cart-item-row.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/components/cart-recommendations.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/components/cart-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/components/cart-summary.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/components/cart-table-layout.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/hooks/use-cart-page-controller.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/hooks/use-cart.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/hooks/use-coupon-application.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/query-keys.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/cart/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/api/nfts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/catalog-options.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/components/catalog-filters.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/components/catalog-realtime-sync.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/components/desktop-catalog-sort.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/components/nft-card-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/components/nft-card.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/components/price-filter.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/hooks/use-catalog-search.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/hooks/use-nft-catalog.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/utils/apply-nft-update.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/utils/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/catalog/utils/sort-nfts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/api/checkout.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/components/checkout-attempt-status.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/components/checkout-collector-form.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/components/checkout-page-state.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/components/checkout-payment-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/components/checkout-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/components/checkout-wallet-picker.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/constants.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/hooks/use-checkout-attempt.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/hooks/use-checkout-controller.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/hooks/use-checkout-form.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/hooks/use-checkout-submission.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/hooks/use-checkout.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/schemas.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/checkout/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/favorites/api/favorites.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/favorites/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/favorites/components/favorite-button.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/favorites/components/favorites-content.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/favorites/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/favorites/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/favorites/hooks/use-favorites.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/favorites/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/favorites/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/home/components/hero-section.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/home/components/home-editorial.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/home/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/home/components/journal-card.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/home/components/mobile-bottom-nav.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/home/components/mobile-search.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/home/components/promo-card.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/home/home-content.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/home/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/nft-detail/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/nft-detail/api/nfts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/nft-detail/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/nft-detail/components/nft-detail-content.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/nft-detail/components/nft-detail-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/nft-detail/components/nft-gallery.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/nft-detail/components/nft-purchase-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/nft-detail/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/nft-detail/hooks/use-nft-detail.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/api/orders.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/order-items.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/order-page-states.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/order-realtime-sync.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/order-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/order-status-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/receipt/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/receipt/receipt-confirmation.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/receipt/receipt-items.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/receipt/receipt-summary.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/components/receipt/receipt-totals.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/hooks/use-order-page-controller.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/features/order/hooks/use-orders.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/hooks/use-media-query.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/lib/api-readiness.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/lib/eth-to-wei.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/lib/http-client.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/lib/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/lib/query-client.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/lib/utils.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/lib/wei-to-eth.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/main.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/api-url.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/browser.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/fixtures/accounts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/fixtures/catalog.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/fixtures/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/handlers/account-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/handlers/auth-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/handlers/cart-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/handlers/catalog-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/handlers/catalog-realtime.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/handlers/favorites-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/handlers/http-utils.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/handlers/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/handlers/index.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/handlers/order-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/server.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/state/account-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/state/cart-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/state/catalog-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/state/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/mocks/state/order-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/router-search.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/router.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/routes/auth-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/routes/cart-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/routes/checkout-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/routes/favorites-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/routes/home-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/routes/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/routes/nft-detail-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/routes/order-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/routes/profile-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/routes/wallets-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/types/account.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/types/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/types/nft.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/types/order.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/current/src/types/quote.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/base.css",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/block-navigation.js",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/coverage-final.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/coverage-summary.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/favicon.png",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/prettify.css",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/prettify.js",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/sort-arrow-sprite.png",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/sorter.js",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/assets/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/assets/index.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/layout/desktop-marketplace-header.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/layout/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/layout/marketplace-breadcrumb.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/layout/marketplace-commerce-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/layout/marketplace-shell.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/layout/mobile-bottom-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/layout/root-layout.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/layout/site-footer-content.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/layout/site-footer.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/layout/site-header.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/media/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/media/nft-image.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/badge.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/breadcrumb.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/button.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/carousel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/dialog.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/field-error.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/field-label.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/input.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/pagination.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/popover.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/rating-stars.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/select.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/separator.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/sheet.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/slider.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/tabs.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/textarea.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/toggle-group.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/tooltip.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/components/ui/unavailable-action.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/entry-server.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/api/account.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/api/auth.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/components/account-shell.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/components/auth-authenticated-redirect.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/components/auth-dialog.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/components/auth-flow-context.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/components/auth-flow-provider.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/components/password-input.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/components/profile-forms.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/components/wallet-form.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/components/wallets-content.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/hooks/use-account.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/hooks/use-auth-return-navigation.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/hooks/use-session.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/schemas.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/utils/form-errors.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/utils/get-api-error.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/auth/utils/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/api/cart.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/components/cart-item-row.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/components/cart-recommendations.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/components/cart-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/components/cart-summary.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/components/cart-table-layout.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/hooks/use-cart-page-controller.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/hooks/use-cart.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/hooks/use-coupon-application.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/query-keys.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/cart/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/api/nfts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/catalog-options.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/components/catalog-filters.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/components/catalog-realtime-sync.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/components/desktop-catalog-sort.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/components/nft-card-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/components/nft-card.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/components/price-filter.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/hooks/use-catalog-search.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/hooks/use-nft-catalog.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/utils/apply-nft-update.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/utils/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/catalog/utils/sort-nfts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/api/checkout.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/components/checkout-attempt-status.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/components/checkout-collector-form.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/components/checkout-page-state.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/components/checkout-payment-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/components/checkout-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/components/checkout-wallet-picker.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/constants.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/hooks/use-checkout-attempt.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/hooks/use-checkout-controller.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/hooks/use-checkout-form.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/hooks/use-checkout-submission.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/hooks/use-checkout.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/schemas.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/checkout/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/favorites/api/favorites.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/favorites/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/favorites/components/favorite-button.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/favorites/components/favorites-content.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/favorites/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/favorites/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/favorites/hooks/use-favorites.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/favorites/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/favorites/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/home/components/hero-section.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/home/components/home-editorial.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/home/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/home/components/journal-card.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/home/components/mobile-bottom-nav.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/home/components/mobile-search.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/home/components/promo-card.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/home/home-content.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/home/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/nft-detail/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/nft-detail/api/nfts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/nft-detail/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/nft-detail/components/nft-detail-content.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/nft-detail/components/nft-detail-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/nft-detail/components/nft-gallery.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/nft-detail/components/nft-purchase-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/nft-detail/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/nft-detail/hooks/use-nft-detail.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/api/orders.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/order-items.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/order-page-states.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/order-realtime-sync.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/order-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/order-status-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/receipt/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/receipt/receipt-confirmation.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/receipt/receipt-items.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/receipt/receipt-summary.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/components/receipt/receipt-totals.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/hooks/use-order-page-controller.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/features/order/hooks/use-orders.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/hooks/use-media-query.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/lib/api-readiness.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/lib/eth-to-wei.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/lib/http-client.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/lib/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/lib/query-client.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/lib/utils.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/lib/wei-to-eth.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/main.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/api-url.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/browser.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/fixtures/accounts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/fixtures/catalog.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/fixtures/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/handlers/account-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/handlers/auth-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/handlers/cart-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/handlers/catalog-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/handlers/catalog-realtime.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/handlers/favorites-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/handlers/http-utils.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/handlers/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/handlers/index.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/handlers/order-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/server.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/state/account-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/state/cart-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/state/catalog-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/state/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/mocks/state/order-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/router-search.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/router.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/routes/auth-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/routes/cart-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/routes/checkout-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/routes/favorites-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/routes/home-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/routes/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/routes/nft-detail-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/routes/order-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/routes/profile-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/routes/wallets-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/types/account.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/types/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/types/nft.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/types/order.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/playwright-only/src/types/quote.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/base.css",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/block-navigation.js",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/coverage-final.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/coverage-summary.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/favicon.png",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/prettify.css",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/prettify.js",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/sort-arrow-sprite.png",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/sorter.js",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/assets/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/assets/index.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/layout/desktop-marketplace-header.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/layout/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/layout/marketplace-breadcrumb.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/layout/marketplace-commerce-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/layout/marketplace-shell.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/layout/mobile-bottom-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/layout/root-layout.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/layout/site-footer-content.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/layout/site-footer.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/layout/site-header.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/media/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/media/nft-image.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/badge.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/breadcrumb.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/button.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/carousel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/dialog.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/field-error.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/field-label.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/input.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/pagination.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/popover.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/rating-stars.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/select.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/separator.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/sheet.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/slider.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/tabs.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/textarea.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/toggle-group.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/tooltip.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/components/ui/unavailable-action.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/entry-server.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/api/account.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/api/auth.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/components/account-shell.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/components/auth-authenticated-redirect.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/components/auth-dialog.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/components/auth-flow-context.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/components/auth-flow-provider.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/components/password-input.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/components/profile-forms.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/components/wallet-form.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/components/wallets-content.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/hooks/use-account.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/hooks/use-auth-return-navigation.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/hooks/use-session.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/schemas.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/utils/form-errors.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/utils/get-api-error.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/auth/utils/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/api/cart.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/components/cart-item-row.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/components/cart-recommendations.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/components/cart-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/components/cart-summary.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/components/cart-table-layout.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/hooks/use-cart-page-controller.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/hooks/use-cart.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/hooks/use-coupon-application.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/query-keys.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/cart/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/api/nfts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/catalog-options.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/components/catalog-filters.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/components/catalog-realtime-sync.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/components/desktop-catalog-sort.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/components/nft-card-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/components/nft-card.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/components/price-filter.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/hooks/use-catalog-search.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/hooks/use-nft-catalog.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/utils/apply-nft-update.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/utils/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/catalog/utils/sort-nfts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/api/checkout.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/components/checkout-attempt-status.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/components/checkout-collector-form.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/components/checkout-page-state.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/components/checkout-payment-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/components/checkout-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/components/checkout-wallet-picker.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/constants.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/hooks/use-checkout-attempt.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/hooks/use-checkout-controller.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/hooks/use-checkout-form.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/hooks/use-checkout-submission.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/hooks/use-checkout.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/schemas.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/checkout/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/favorites/api/favorites.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/favorites/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/favorites/components/favorite-button.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/favorites/components/favorites-content.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/favorites/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/favorites/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/favorites/hooks/use-favorites.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/favorites/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/favorites/types.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/home/components/hero-section.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/home/components/home-editorial.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/home/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/home/components/journal-card.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/home/components/mobile-bottom-nav.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/home/components/mobile-search.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/home/components/promo-card.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/home/home-content.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/home/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/nft-detail/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/nft-detail/api/nfts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/nft-detail/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/nft-detail/components/nft-detail-content.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/nft-detail/components/nft-detail-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/nft-detail/components/nft-gallery.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/nft-detail/components/nft-purchase-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/nft-detail/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/nft-detail/hooks/use-nft-detail.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/api/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/api/orders.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/order-items.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/order-page-states.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/order-realtime-sync.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/order-skeleton.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/order-status-panel.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/receipt/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/receipt/receipt-confirmation.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/receipt/receipt-items.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/receipt/receipt-summary.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/components/receipt/receipt-totals.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/hooks/use-order-page-controller.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/features/order/hooks/use-orders.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/hooks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/hooks/use-media-query.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/lib/api-readiness.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/lib/eth-to-wei.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/lib/http-client.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/lib/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/lib/query-client.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/lib/utils.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/lib/wei-to-eth.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/main.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/api-url.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/browser.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/fixtures/accounts.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/fixtures/catalog.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/fixtures/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/handlers/account-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/handlers/auth-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/handlers/cart-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/handlers/catalog-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/handlers/catalog-realtime.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/handlers/favorites-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/handlers/http-utils.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/handlers/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/handlers/index.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/handlers/order-http.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/server.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/state/account-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/state/cart-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/state/catalog-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/state/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/mocks/state/order-store.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/router-search.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/router.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/routes/auth-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/routes/cart-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/routes/checkout-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/routes/favorites-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/routes/home-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/routes/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/routes/nft-detail-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/routes/order-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/routes/profile-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/routes/wallets-page.tsx.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/types/account.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/types/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/types/nft.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/types/order.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/coverage/vitest-only/src/types/quote.ts.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/playwright/core.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/playwright/coverage-run.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/playwright/index.html",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/release.json",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "docs/quality/vitest-results.xml",
+      "category": "documentation-and-evidence"
+    },
+    {
+      "status": "??",
+      "path": "public/build-info.json",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": "??",
+      "path": "public/robots.txt",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": "??",
+      "path": "scripts/merge-browser-coverage.mjs",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": "??",
+      "path": "scripts/release-snapshot.mjs",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": "??",
+      "path": "scripts/run-coverage.mjs",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": "??",
+      "path": "scripts/verify-preview.mjs",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": "??",
+      "path": "src/components/layout/root-layout.tsx",
+      "category": "application"
+    },
+    {
+      "status": "??",
+      "path": "src/features/auth/hooks/use-auth-mutations.ts",
+      "category": "application"
+    },
+    {
+      "status": "??",
+      "path": "src/features/auth/query-keys.ts",
+      "category": "application"
+    },
+    {
+      "status": "??",
+      "path": "src/features/catalog/utils/apply-nft-update.ts",
+      "category": "application"
+    },
+    {
+      "status": "??",
+      "path": "src/mocks/api-url.ts",
+      "category": "application"
+    },
+    {
+      "status": "??",
+      "path": "src/mocks/server.ts",
+      "category": "application"
+    },
+    {
+      "status": "??",
+      "path": "tests/helpers/coverage-fixture.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/helpers/mock-api.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/integration/auth/account-state.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/integration/auth/session.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/integration/cart/cart-state.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/integration/catalog/inventory-state.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/integration/catalog/realtime-cache.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/integration/mocks/catalog-http.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/integration/mocks/http-contracts.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/integration/order/order-state.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/support/checkout.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/support/nft.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/support/setup-state.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/auth/api-errors.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/auth/auth-api.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/auth/schemas.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/catalog/sort-nfts.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/checkout/schemas.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/lib/eth.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/unit/routing/search.test.ts",
+      "category": "test"
+    },
+    {
+      "status": "??",
+      "path": "tsconfig.test.json",
+      "category": "tooling-and-public-assets"
+    },
+    {
+      "status": "??",
+      "path": "vitest.config.ts",
+      "category": "tooling-and-public-assets"
+    }
+  ]
+}

@@ -1,16 +1,15 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './helpers/coverage-fixture'
+import { resetMockApi } from './helpers/mock-api'
 
 const resetMocks = async (page: import('@playwright/test').Page) => {
-  await page.goto('/')
-  await page.evaluate(() => localStorage.removeItem('kurio:mock-scenario'))
-  await page.evaluate(() => localStorage.removeItem('kurio:visitor-cart'))
-  await page.request.post('/api/mock/reset')
+  await resetMockApi(page)
 }
 
 const addEmeraldApe = async (page: import('@playwright/test').Page) => {
   await page.goto('/nfts/emerald-ape-042')
   await page.getByRole('button', { name: 'Comprar NFT' }).click()
   await expect(page).toHaveURL(/\/cart$/)
+  await expect(page.getByRole('region', { name: 'NFTs', exact: true })).toBeVisible()
 }
 
 test.beforeEach(async ({ page }) => resetMocks(page))
@@ -42,7 +41,7 @@ test('merges an existing NFT and respects the edition limit', async ({ page }) =
   await addEmeraldApe(page)
   await page.goto('/nfts/emerald-ape-042')
   await page.getByRole('button', { name: 'Comprar NFT' }).click()
-  const items = page.getByRole('region', { name: 'NFTs' })
+  const items = page.getByRole('region', { name: 'NFTs', exact: true })
   await expect(items.getByRole('heading', { name: 'Emerald Ape #042' })).toHaveCount(1)
   const output = items.getByRole('status').filter({ visible: true })
   await expect(output).toHaveText('2')
@@ -102,6 +101,7 @@ test('merges the visitor cart once after login and keeps user carts isolated', a
   await page.getByRole('button', { name: 'Comprar NFT' }).click()
   await expect(page).toHaveURL(/\/cart$/)
   await expect(page.getByRole('link', { name: 'Carrinho, 1 item' })).toBeVisible()
+  await expect(page.getByRole('region', { name: 'NFTs', exact: true })).toBeVisible()
 
   await page.getByRole('button', { name: 'Minha conta' }).click()
   await page.getByRole('button', { name: 'Sair' }).click()
@@ -118,7 +118,7 @@ test('merges the visitor cart once after login and keeps user carts isolated', a
     idempotencyKey: string
     items: Array<{ id: string; nftId: string; editionId: string; quantity: number }>
   }
-  await expect(page.getByRole('heading', { name: 'Emerald Ape #042' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: 'Emerald Ape #042' })).toBeVisible()
   await expect(page.getByRole('link', { name: 'Carrinho, 2 itens' })).toBeVisible()
   await expect.poll(() => page.evaluate(() => localStorage.getItem('kurio:visitor-cart'))).toBeNull()
   await page.goto('/cart')
@@ -342,13 +342,12 @@ test('recommendations reuse an accessible carousel', async ({ page }, testInfo) 
   const next = recommendations.getByRole('button', { name: 'Próximo item' })
   await expect(previous).toBeVisible()
   await expect(next).toBeVisible()
-  const recommendationsBox = await recommendations.boundingBox()
-  const controlsBox = await next.boundingBox()
-  expect(recommendationsBox).not.toBeNull()
-  expect(controlsBox).not.toBeNull()
-  expect(
-    recommendationsBox!.y + recommendationsBox!.height - (controlsBox!.y + controlsBox!.height),
-  ).toBeGreaterThanOrEqual(24)
+  const controlsBottomGap = await recommendations.evaluate((element) => {
+    const controls = element.querySelector<HTMLButtonElement>('button[aria-label="Próximo item"]')
+    if (!controls) throw new Error('Carousel next control is missing')
+    return element.getBoundingClientRect().bottom - controls.getBoundingClientRect().bottom
+  })
+  expect(controlsBottomGap).toBeGreaterThanOrEqual(24)
   await next.click()
   await expect(previous).toBeEnabled()
 })

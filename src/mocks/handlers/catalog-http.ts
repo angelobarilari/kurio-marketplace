@@ -7,6 +7,7 @@ import { resetCart } from '@/mocks/state/cart-store'
 import { resetAccountState } from '@/mocks/state/account-store'
 import { resetOrderState } from '@/mocks/state/order-store'
 import type { CatalogSort } from '@/features/catalog/types'
+import { mockApiUrl } from '@/mocks/api-url'
 
 const pageSize = 9
 const validSorts: CatalogSort[] = ['recent', 'newest', 'popular', 'price-asc', 'price-desc']
@@ -14,7 +15,7 @@ const isEthAmount = (value: string): boolean => /^\d+(?:\.\d{1,18})?$/.test(valu
 const getScenario = (request: Request): string => request.headers.get('x-kurio-mock-scenario') ?? 'default'
 
 export const catalogHttpHandlers = [
-  http.get('/api/nfts', async ({ request }) => {
+  http.get(mockApiUrl('/api/nfts'), async ({ request }) => {
     const scenario = getScenario(request)
     const url = new URL(request.url)
     const network = url.searchParams.get('network')
@@ -92,9 +93,16 @@ export const catalogHttpHandlers = [
     })
   }),
 
-  http.get('/api/nfts/:id', async ({ params, request }) => {
-    await delay(0)
+  http.get(mockApiUrl('/api/nfts/:id'), async ({ params, request }) => {
     const scenario = getScenario(request)
+    if (scenario === 'detail-realtime-slow') {
+      const snapshot = getNftDetailState(String(params.id))
+      await delay(1500)
+      return snapshot
+        ? HttpResponse.json(snapshot)
+        : HttpResponse.json({ code: 'NFT_NOT_FOUND' }, { status: 404 })
+    }
+    await delay(scenario === 'detail-slow' ? 1500 : 0)
     if (scenario === 'detail-error') {
       return HttpResponse.json({ code: 'NFT_DETAIL_UNAVAILABLE' }, { status: 503 })
     }

@@ -1,4 +1,5 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './helpers/coverage-fixture'
+import { resetMockApi } from './helpers/mock-api'
 
 const loginWithGoogle = async (page: import('@playwright/test').Page) => {
   await page.getByRole('button', { name: 'Entrar' }).click()
@@ -6,8 +7,7 @@ const loginWithGoogle = async (page: import('@playwright/test').Page) => {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/')
-  await page.request.post('/api/mock/reset')
+  await resetMockApi(page)
   await page.reload()
 })
 

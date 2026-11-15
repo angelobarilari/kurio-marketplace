@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import type { Socket } from 'socket.io-client'
-import type { NftListResponse } from '@/features/catalog/types'
-import type { NftDetail, NftUpdatedEvent } from '@/types/nft'
+import type { NftUpdatedEvent } from '@/types/nft'
+import { applyNftUpdate as updateNftCache } from '@/features/catalog/utils/apply-nft-update'
 import { waitForApiReadiness } from '@/lib/api-readiness'
 
 export const CatalogRealtimeSync = () => {
@@ -15,47 +15,31 @@ export const CatalogRealtimeSync = () => {
 
     let socket: Socket | undefined
     let disposed = false
+    const latestEvents = new Map<string, NftUpdatedEvent>()
+
+    const applyNftUpdate = (event: NftUpdatedEvent) => {
+      updateNftCache(queryClient, event)
+    }
 
     const handleNftUpdate = (event: NftUpdatedEvent) => {
-      queryClient.setQueriesData<NftListResponse>(
-        { predicate: (query) => query.queryKey[0] === 'nfts' && query.queryKey.length === 2 },
-        (current) => {
-          if (!current) return current
-          const item = current.items.find((nft) => nft.id === event.id)
-          if (!item || item.version >= event.version) return current
-
-          return {
-            ...current,
-            items: current.items.map((nft) =>
-              nft.id === event.id
-                ? {
-                    ...nft,
-                    version: event.version,
-                    priceEth: event.priceEth,
-                    available: event.available,
-                  }
-                : nft,
-            ),
-          }
-        },
-      )
-
-      queryClient.setQueryData<NftDetail>(['nfts', 'detail', event.id], (current) => {
-        if (!current || current.version >= event.version) return current
-
-        return {
-          ...current,
-          version: event.version,
-          priceEth: event.priceEth,
-          available: event.available,
-          editions: current.editions.map((edition) =>
-            edition.id === 'default' ? { ...edition, priceEth: event.priceEth } : edition,
-          ),
-        }
-      })
-
+      if ((latestEvents.get(event.id)?.version ?? -1) >= event.version) return
+      latestEvents.set(event.id, event)
+      applyNftUpdate(event)
       void queryClient.invalidateQueries({ queryKey: ['cart'] })
     }
+
+    // A REST snapshot may finish after a newer socket event, including before
+    // the first cache entry exists. Reapply only newer versions after that fetch.
+    const unsubscribeCache = queryClient.getQueryCache().subscribe((event) => {
+      if (
+        event.type === 'updated' &&
+        event.query.queryKey[0] === 'nfts' &&
+        event.action.type === 'success' &&
+        !event.action.manual
+      ) {
+        latestEvents.forEach(applyNftUpdate)
+      }
+    })
 
     void waitForApiReadiness()
       .then(() => import('socket.io-client'))
@@ -69,8 +53,7 @@ export const CatalogRealtimeSync = () => {
 
         let hasConnected = false
         socket.on('connect', () => {
-          const hasMockScenario = Boolean(globalThis.localStorage?.getItem('kurio:mock-scenario'))
-          if (hasConnected || hasMockScenario) {
+          if (hasConnected) {
             void queryClient.invalidateQueries({
               predicate: (query) => query.queryKey[0] === 'nfts' && query.getObserversCount() > 0,
             })
@@ -84,6 +67,8 @@ export const CatalogRealtimeSync = () => {
 
     return () => {
       disposed = true
+      unsubscribeCache()
+      latestEvents.clear()
       socket?.removeAllListeners()
       socket?.disconnect()
     }
