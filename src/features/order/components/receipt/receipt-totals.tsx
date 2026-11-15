@@ -1,4 +1,3 @@
-import { Separator } from '@/components/ui/separator'
 import type { Receipt } from '@/types/order'
 
 export const ReceiptTotals = ({ receipt }: { receipt: Receipt }) => (
@@ -13,8 +12,7 @@ export const ReceiptTotals = ({ receipt }: { receipt: Receipt }) => (
       <dt>Taxa de rede</dt>
       <dd className="m-0 shrink-0">{receipt.quote.networkFeeEth} ETH</dd>
     </div>
-    <Separator className="my-1" />
-    <div className="flex justify-between gap-4 text-base font-bold">
+    <div className="flex justify-between gap-4 border-t border-(--color-border) pt-1 text-base font-bold">
       <dt>Total</dt>
       <dd className="m-0 shrink-0 text-lg text-(--color-primary-bright)">{receipt.quote.totalEth} ETH</dd>
     </div>

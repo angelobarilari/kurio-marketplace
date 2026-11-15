@@ -4,9 +4,9 @@ import type { OrderItemSnapshot } from '@/types/order'
 
 export const ReceiptItems = ({ items }: { items: OrderItemSnapshot[] }) => (
   <section className="px-11 pt-5 max-[760px]:px-5" aria-labelledby="receipt-items-title">
-    <h3 id="receipt-items-title" className="mb-2 font-bold">
+    <h2 id="receipt-items-title" className="mb-2 font-bold">
       Detalhes da transação
-    </h3>
+    </h2>
     <div className="grid grid-cols-[minmax(0,1fr)_72px_120px] border-b border-(--color-border) py-2 text-sm font-bold max-[520px]:grid-cols-[minmax(0,1fr)_88px]">
       <span>NFTs</span>
       <span className="text-center max-[520px]:hidden">Edições</span>

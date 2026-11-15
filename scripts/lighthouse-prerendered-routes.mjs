@@ -27,7 +27,8 @@ if (!targets.length || !Number.isInteger(runsPerTarget) || runsPerTarget < 1) {
   throw new Error('Use --target=<route>[,...] and --runs=<positive integer>.')
 }
 const distDirectory = path.join(root, 'dist')
-const outputDirectory = path.join(root, config.outputDirectory)
+const outputDirectory = path.resolve(root, options.outputDirectory ?? config.outputDirectory)
+const relativeOutputDirectory = path.relative(root, outputDirectory).split(path.sep).join('/')
 const lighthouseEntry = path.join(root, 'node_modules', 'lighthouse', 'cli', 'index.js')
 const baseUrl = new URL(config.baseUrl)
 const port = Number(baseUrl.port || 4175)
@@ -398,7 +399,7 @@ try {
   const markdown = [
     '# Lighthouse — rotas pré-renderizadas',
     '',
-    `Execução concluída em ${firstReport.fetchTime}. Cada rota foi medida ${runsPerTarget} vezes em perfis isolados; a tabela contém medianas. Relatórios HTML/JSON locais em \`${config.outputDirectory}/\`.`,
+    `Execução concluída em ${firstReport.fetchTime}. Cada rota foi medida ${runsPerTarget} vezes em perfis isolados; a tabela contém medianas. Relatórios HTML/JSON locais em \`${relativeOutputDirectory}/\`.`,
     '',
     `- Lighthouse: ${firstReport.lighthouseVersion}`,
     `- Navegador: ${firstReport.hostUserAgent}`,
@@ -420,7 +421,7 @@ try {
 
   await writeFile(path.join(outputDirectory, 'summary.json'), JSON.stringify(reportData, null, 2))
   await writeFile(path.join(outputDirectory, 'summary.md'), markdown)
-  console.log(`\nSaved ${path.join(config.outputDirectory, 'summary.md')}`)
+  console.log(`\nSaved ${path.join(relativeOutputDirectory, 'summary.md')}`)
 } finally {
   await closeServer()
 }

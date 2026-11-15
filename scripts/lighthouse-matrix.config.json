@@ -1,7 +1,7 @@
 {
   "baseUrl": "http://127.0.0.1:4173",
   "runsPerTarget": 3,
-  "outputDirectory": "reports/lighthouse/phase-6",
+  "outputDirectory": "docs/performance/lighthouse/phase-13-final-2026-11-15",
   "targets": [
     { "name": "home", "path": "/", "profile": "desktop" },
     { "name": "home", "path": "/", "profile": "mobile" },

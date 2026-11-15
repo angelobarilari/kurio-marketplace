@@ -142,8 +142,12 @@ export const CartSummary = ({ hasItems, hasConflict }: CartSummaryProps) => {
                 <span className="block text-xs text-(--color-primary-bright)">Taxa estimada</span>
               </dd>
             </div>
-            <Separator />
-            <div className={`flex justify-between gap-4 font-bold ${mobile ? 'text-base' : 'text-lg'}`}>
+            <div
+              className={cn(
+                'flex justify-between gap-4 border-t border-(--color-border) font-bold',
+                mobile ? 'pt-3 text-base' : 'pt-4 text-lg',
+              )}
+            >
               <dt>Total</dt>
               <dd className="m-0 shrink-0 text-(--color-primary-bright)">
                 {quote.data?.totalEth ?? '0'} ETH

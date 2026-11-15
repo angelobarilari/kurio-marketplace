@@ -121,12 +121,11 @@ O reset restaura sessão, contas, favoritos, catálogo, carrinhos e pedidos. O c
 | --------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `npm run typecheck`                                             | Verifica os tipos TypeScript.                                             |
 | `npm run lint:check`                                            | Verifica Prettier e ESLint sem alterar arquivos.                          |
-| `npm run build`                                                 | Gera a build de produção.                                                 |
+| `npm run build`                                                 | Gera a build e os documentos HTML pré-renderizados elegíveis.             |
 | `npm run test:e2e -- --project=chromium-desktop --grep "termo"` | Executa um recorte Playwright direcionado.                                |
 | `npm run test:e2e`                                              | Executa a matriz Playwright completa.                                     |
 | `npm run test:visual`                                           | Executa as regressões visuais.                                            |
 | `npm run audit:lighthouse:matrix`                               | Executa três medições Lighthouse por rota e perfil, após `npm run build`. |
-| `npm run build`                                                 | Gera a build e os documentos HTML pré-renderizados elegíveis.             |
 | `npm run audit:lighthouse:prerendered`                          | Mede as rotas pré-renderizadas; exige build com mocks habilitados.        |
 
 Na primeira execução dos testes, instale o navegador gerenciado pelo Playwright:
@@ -135,9 +134,9 @@ Na primeira execução dos testes, instale o navegador gerenciado pelo Playwrigh
 npx playwright install chromium
 ```
 
-O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile (390 × 844). A suíte inclui testes funcionais e regressões por screenshots. A execução completa mais recente registrou 179 casos aprovados, 91 ignorados por viewport e nove diferenças visuais conhecidas. Essas diferenças foram aceitas pelo responsável por inconsistências nos frames do Figma; isso não significa equivalência pixel a pixel nem autorização para atualizar baselines em lote.
+O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile (390 × 844). A suíte inclui testes funcionais e regressões por screenshots. A execução completa local mais recente (15/11/2026, 8 workers) registrou 192 testes aprovados, 109 ignorados por viewport e 20 falhas (12 visuais e 8 funcionais); portanto, a suíte não está verde. O relatório HTML e os traces foram gerados localmente em `playwright-report/` e `test-results/`, ignorados pelo Git. Diferenças visuais aceitas anteriormente por inconsistências nos frames do Figma não significam equivalência pixel a pixel nem autorização para atualizar baselines em lote; as falhas funcionais ainda precisam ser investigadas.
 
-A matriz Lighthouse inicia um Vite Preview local e salva relatórios HTML/JSON em `reports/lighthouse/phase-6/`. A auditoria de rotas pré-renderizadas usa o servidor local próprio na porta `4175` e aceita seletores como `npm run audit:lighthouse:prerendered -- --target=checkout --runs=1`. Os relatórios HTML/JSON ficam em `reports/lighthouse/` (artefatos locais ignorados pelo Git); resultados e condições estão em `docs/performance/LIGHTHOUSE.md`.
+A matriz Lighthouse inicia um Vite Preview local e versiona os relatórios HTML/JSON e o resumo em `docs/performance/lighthouse/phase-13-final-2026-11-15/`. A auditoria complementar das rotas pré-renderizadas usa o servidor local próprio na porta `4175` e aceita seletores como `npm run audit:lighthouse:prerendered -- --target=checkout --runs=1`; seus relatórios adicionais ficam em `reports/lighthouse/` (artefatos locais ignorados pelo Git). Resultados e condições estão em `docs/performance/LIGHTHOUSE.md`.
 
 `npm run build` também gera HTML estático para as rotas aplicáveis. Para incluir a homepage e os detalhes dos NFTs de demonstração, configure `VITE_ENABLE_MOCKS=true` no ambiente de build (no setup local, `.env` já vem com esse valor). Páginas privadas recebem apenas sua estrutura inicial; sessão, carrinho, carteira e pedido são carregados no cliente. Isso é pré-renderização estática de build, não SSR dinâmico.
 

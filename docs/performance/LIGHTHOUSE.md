@@ -1,6 +1,23 @@
 # Lighthouse - desempenho mobile
 
-Este é o documento único para resultados, decisões e próximos passos de performance Lighthouse. Os relatórios brutos ficam localmente em `reports/lighthouse/` e não são documentação versionada.
+Este documento consolida resultados, decisões e próximos passos de performance Lighthouse. A matriz obrigatória do teste técnico e seus relatórios HTML/JSON estão versionados; auditorias complementares ficam localmente em `reports/lighthouse/` e não são versionadas.
+
+## Matriz obrigatória do teste técnico — 15/11/2026
+
+Build de produção via Vite Preview, com MSW habilitado, Lighthouse 12.8.2 e três execuções por rota/perfil. O perfil desktop usa 1350 x 940 CSS px, DPR 1, RTT 40 ms, 10.240 Kbps e CPU x1. O perfil mobile simula Moto G Power (2022), 412 x 823 CSS px, DPR 1,75, RTT 150 ms, 1.638,4 Kbps e CPU x4. O cache e o armazenamento do navegador são limpos em cada execução. O [resumo com versões, user-agents e condições](./lighthouse/phase-13-final-2026-11-15/summary.md) e os 12 relatórios HTML/12 JSON ficam na mesma pasta versionada.
+
+| Rota / perfil   | Performance | Acessibilidade | Boas práticas | SEO |      LCP |    CLS |   TBT |
+| --------------- | ----------: | -------------: | ------------: | --: | -------: | -----: | ----: |
+| Início desktop  |         100 |            100 |            96 |  92 |   792 ms | 0,0074 |  0 ms |
+| Início mobile   |          84 |            100 |            96 |  92 | 4.112 ms | 0,0000 | 26 ms |
+| Detalhe desktop |          99 |            100 |            96 |  92 |   802 ms | 0,0000 |  0 ms |
+| Detalhe mobile  |          88 |            100 |            96 |  92 | 3.419 ms | 0,0000 | 14 ms |
+
+Accessibility, Best Practices e SEO atingiram as metas em todos os quatro alvos. Performance desktop também atingiu a meta; no mobile, Início ficou 6 pontos e Detalhe 2 pontos abaixo de 90. A variação entre as três execuções também foi relevante: Performance/LCP variaram de 83 a 90/3.170 a 4.163 ms na homepage e de 79 a 88/3.388 a 4.472 ms no detalhe. As medianas da tabela, e não o melhor resultado, são a referência exigida.
+
+O LCP mobile é a imagem do primeiro NFT na homepage e a imagem principal no detalhe. Em todas as execuções a imagem foi descoberta no HTML inicial, carregada eager e priorizada com `fetchpriority=high`; portanto, a descoberta tardia não explica o resultado. O diagnóstico de LCP aponta atraso de renderização como a maior parcela: 78–86% nas execuções da homepage e 61–72% no detalhe. No detalhe, a imagem solicitada tem 768 x 768 px para uma área de 368 x 368 px, com economia estimada de 23 KiB se dimensionada melhor. Lighthouse também estima 117 KiB de JavaScript não utilizado nas páginas mobile; isso é uma oportunidade de redução, não uma causa isolada comprovada. O TBT mediano é baixo (26 ms na homepage e 14 ms no detalhe), então os relatórios não justificam atribuir o atraso apenas a long tasks de JavaScript. Os JSON contêm os diagnósticos completos por execução.
+
+Os resultados são de uma simulação local, não uma garantia de pontuação no deploy ou em aparelho/rede reais. Os resultados abaixo da meta estão identificados; não devem ser apresentados como conformes.
 
 ## Referência anterior aos ajustes do carrinho
 
@@ -195,6 +212,6 @@ Os valores de `resourceSize` das imagens servidas localmente pelo MSW não são 
 
 ## Execução e validação
 
-`npm run audit:lighthouse:matrix` executa a matriz configurada em `scripts/lighthouse-matrix.config.json` após `npm run build`. Os relatórios HTML/JSON e o resumo gerado ficam em `reports/lighthouse/phase-6/` (artefatos locais ignorados pelo Git). A matriz padrão não semeia o estado autenticado do carrinho; para repetir esta auditoria, use o mesmo estado de quatro itens e um perfil frio isolado.
+`npm run audit:lighthouse:matrix` executa três medições para início e detalhe em desktop/mobile, conforme `scripts/lighthouse-matrix.config.json`, após `npm run build`. Os relatórios HTML/JSON e o resumo gerado são versionados em `docs/performance/lighthouse/phase-13-final-2026-11-15/`.
 
-`npm run audit:lighthouse:prerendered` executa três auditorias mobile por rota configuradas em `scripts/lighthouse-prerendered-routes.config.json`, após `VITE_ENABLE_MOCKS=true npm run build`. O harness também aceita `--target=checkout --runs=1` para uma verificação direcionada.
+`npm run audit:lighthouse:prerendered` executa três auditorias mobile por rota configuradas em `scripts/lighthouse-prerendered-routes.config.json`, após `VITE_ENABLE_MOCKS=true npm run build`. Os relatórios dessa matriz ampliada são suplementares e ficam em `reports/lighthouse/` (ignorados pelo Git); o harness também aceita `--target=checkout --runs=1` para uma verificação direcionada.

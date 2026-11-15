@@ -26,11 +26,16 @@ export const FavoritesContent = ({ sessionId }: { sessionId: string }) => {
       <h1 className="mb-2 text-2xl font-bold">Lista de interesse</h1>
       <p className="mb-7 text-sm text-(--color-muted)">NFTs salvos para consultar novamente quando quiser.</p>
       {favorites.data.items.length ? (
-        <div className="grid grid-cols-3 gap-x-5 gap-y-9 max-[1100px]:grid-cols-2 max-[540px]:grid-cols-1">
-          {favorites.data.items.map((nft, index) => (
-            <NftCard key={nft.id} nft={nft} priority={index === 0} />
-          ))}
-        </div>
+        <section aria-labelledby="favorite-nfts-heading">
+          <h2 id="favorite-nfts-heading" className="sr-only">
+            NFTs salvos
+          </h2>
+          <div className="grid grid-cols-3 gap-x-5 gap-y-9 max-[1100px]:grid-cols-2 max-[540px]:grid-cols-1">
+            {favorites.data.items.map((nft, index) => (
+              <NftCard key={nft.id} nft={nft} priority={index === 0} />
+            ))}
+          </div>
+        </section>
       ) : (
         <div className="rounded-lg bg-(--color-panel) px-5 py-12 text-center">
           <h2 className="mb-2 text-lg font-bold">Sua lista está vazia</h2>
