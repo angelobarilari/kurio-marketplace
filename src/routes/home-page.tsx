@@ -1,33 +1,44 @@
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { nftImages } from '@/assets'
 import { MarketplaceShell } from '@/components/layout/marketplace-shell'
+import { NftImage } from '@/components/media/nft-image'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Pagination, PaginationContent, PaginationItem } from '@/components/ui/pagination'
-import {
-  catalogCategories,
-  catalogNetworks,
-  catalogSortOptions,
-  catalogSortTabs,
-} from '@/features/catalog/catalog-options'
-import { CatalogFilters } from '@/features/catalog/components/catalog-filters'
+import { catalogCategories, catalogNetworks, catalogSortTabs } from '@/features/catalog/catalog-options'
 import { NftCard } from '@/features/catalog/components/nft-card'
 import { NftCardSkeleton } from '@/features/catalog/components/nft-card-skeleton'
 import { useCatalogSearch } from '@/features/catalog/hooks/use-catalog-search'
 import { useNftCatalog } from '@/features/catalog/hooks/use-nft-catalog'
 import type { CatalogSearch } from '@/features/catalog/types'
 import { HeroSection } from '@/features/home/components/hero-section'
-import { HomeEditorial } from '@/features/home/components/home-editorial'
 import { MobileBottomNav } from '@/features/home/components/mobile-bottom-nav'
 import { MobileSearch } from '@/features/home/components/mobile-search'
 import { ethToWei } from '@/lib/eth-to-wei'
+import { useMediaQuery } from '@/hooks/use-media-query'
+
+const HomeEditorial = lazy(() =>
+  import('@/features/home/components/home-editorial').then((module) => ({
+    default: module.HomeEditorial,
+  })),
+)
+const CatalogFilters = lazy(() =>
+  import('@/features/catalog/components/catalog-filters').then((module) => ({
+    default: module.CatalogFilters,
+  })),
+)
+const DesktopCatalogSort = lazy(() =>
+  import('@/features/catalog/components/desktop-catalog-sort').then((module) => ({
+    default: module.DesktopCatalogSort,
+  })),
+)
 
 const gridClass =
   'grid grid-cols-3 gap-x-5.5 gap-y-7 max-[1100px]:gap-x-3.5 max-[760px]:grid-cols-2 max-[760px]:gap-x-3.5 max-[760px]:gap-y-5.5 max-[390px]:gap-x-2.5'
 
 export const HomePage = () => {
+  const isMobile = useMediaQuery('(max-width: 760px)')
   const { search, updateSearch, clearSearch } = useCatalogSearch()
   const [filtersOpen, setFiltersOpen] = useState(false)
   const catalogSearch: CatalogSearch = { ...search, sort: search.sort ?? 'recent', page: search.page ?? 1 }
@@ -79,18 +90,22 @@ export const HomePage = () => {
           id="catalog"
           aria-label="Catálogo de NFTs"
         >
-          <CatalogFilters
-            search={search}
-            categories={categories}
-            networks={networks}
-            priceFilterKey={[search.minPriceEth ?? '', search.maxPriceEth ?? ''].join(':')}
-            hasInvalidPriceRange={invalidRange}
-            hasActiveFilters={hasFilters}
-            mobileOpen={filtersOpen}
-            onCloseMobile={() => setFiltersOpen(false)}
-            onUpdate={updateSearch}
-            onClear={clearSearch}
-          />
+          {(!isMobile || filtersOpen) && (
+            <Suspense fallback={null}>
+              <CatalogFilters
+                search={search}
+                categories={categories}
+                networks={networks}
+                priceFilterKey={[search.minPriceEth ?? '', search.maxPriceEth ?? ''].join(':')}
+                hasInvalidPriceRange={invalidRange}
+                hasActiveFilters={hasFilters}
+                mobileOpen={filtersOpen}
+                onCloseMobile={() => setFiltersOpen(false)}
+                onUpdate={updateSearch}
+                onClear={clearSearch}
+              />
+            </Suspense>
+          )}
           <div className="col-start-2 row-span-2 row-start-1 min-w-0">
             <h2 className="sr-only">NFTs disponíveis</h2>
 
@@ -113,25 +128,14 @@ export const HomePage = () => {
                 ))}
               </ToggleGroup>
 
-              <div className="flex items-center gap-1.5 text-xs whitespace-nowrap text-(--color-muted) max-[760px]:hidden">
-                <span>Ordenar por:</span>
-                <Select
-                  value={search.sort ?? 'recent'}
-                  onValueChange={(value) => updateSearch({ sort: value as CatalogSearch['sort'] })}
-                >
-                  <SelectTrigger className="h-8 border-0 px-2 text-xs" aria-label="Ordenar por">
-                    <SelectValue />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    {catalogSortOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              {!isMobile && (
+                <Suspense fallback={null}>
+                  <DesktopCatalogSort
+                    value={search.sort ?? 'recent'}
+                    onValueChange={(value) => updateSearch({ sort: value as CatalogSearch['sort'] })}
+                  />
+                </Suspense>
+              )}
             </div>
 
             {invalidRange ? (
@@ -217,10 +221,11 @@ export const HomePage = () => {
               NFT em destaque
             </p>
             <h2 className="text-center text-[13px] uppercase">Oferta limitada</h2>
-            <img
+            <NftImage
               className="aspect-[0.82] w-full rounded-[10px] object-cover"
               src={nftImages.sageNomad}
               alt="Sage Nomad, NFT da coleção Kurio Apes"
+              sizes="264px"
             />
             <p className="mt-3.5">
               Sage Nomad <span className="text-(--color-muted)">#009</span>
@@ -229,7 +234,11 @@ export const HomePage = () => {
           </aside>
         </section>
 
-        <HomeEditorial />
+        {!isMobile && (
+          <Suspense fallback={null}>
+            <HomeEditorial />
+          </Suspense>
+        )}
       </main>
 
       <MobileBottomNav hidden={filtersOpen} />

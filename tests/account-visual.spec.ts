@@ -4,6 +4,7 @@ const resetMocks = async (page: Page) => {
   await page.addInitScript(() => localStorage.setItem('kurio:mock-scenario', 'socket-offline'))
   await page.goto('/')
   await page.waitForFunction(() => Boolean(document.querySelector('#root')?.childElementCount))
+  await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller))
   await page.evaluate(async () => {
     localStorage.setItem('kurio:mock-scenario', 'socket-offline')
     localStorage.removeItem('kurio:visitor-cart')

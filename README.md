@@ -121,11 +121,12 @@ O reset restaura sessão, contas, favoritos, catálogo, carrinhos e pedidos. O c
 | --------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `npm run typecheck`                                             | Verifica os tipos TypeScript.                                             |
 | `npm run lint:check`                                            | Verifica Prettier e ESLint sem alterar arquivos.                          |
-| `npm run build`                                                 | Gera a build de produção.                                                 |
+| `npm run build`                                                 | Gera a build e os documentos HTML pré-renderizados elegíveis.             |
 | `npm run test:e2e -- --project=chromium-desktop --grep "termo"` | Executa um recorte Playwright direcionado.                                |
 | `npm run test:e2e`                                              | Executa a matriz Playwright completa.                                     |
 | `npm run test:visual`                                           | Executa as regressões visuais.                                            |
 | `npm run audit:lighthouse:matrix`                               | Executa três medições Lighthouse por rota e perfil, após `npm run build`. |
+| `npm run audit:lighthouse:prerendered`                          | Mede as rotas pré-renderizadas; exige build com mocks habilitados.        |
 
 Na primeira execução dos testes, instale o navegador gerenciado pelo Playwright:
 
@@ -133,9 +134,11 @@ Na primeira execução dos testes, instale o navegador gerenciado pelo Playwrigh
 npx playwright install chromium
 ```
 
-O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile (390 × 844). A suíte inclui testes funcionais e regressões por screenshots. A execução completa mais recente registrou 179 casos aprovados, 91 ignorados por viewport e nove diferenças visuais conhecidas. Essas diferenças foram aceitas pelo responsável por inconsistências nos frames do Figma; isso não significa equivalência pixel a pixel nem autorização para atualizar baselines em lote.
+O Playwright cobre Chromium desktop (1440 × 900), tablet (768 × 1024) e mobile (390 × 844). A suíte inclui testes funcionais e regressões por screenshots. A execução completa local mais recente (15/11/2026, 8 workers) registrou 192 testes aprovados, 109 ignorados por viewport e 20 falhas (11 visuais e 9 funcionais/assertivas); portanto, a suíte não está verde. As 11 falhas visuais são comparações com baselines Playwright — não uma comparação automática com o Figma — e ainda não foram todas revisadas/aceitas como artefatos da referência. As 9 falhas funcionais/assertivas incluem expectativas de estado vazio/rota/favorito, ausência dos cards do carrinho mobile e timeouts; durante a execução também ocorreram erros `InvalidStateError` do MSW/Service Worker, então há suspeita de flakiness sob concorrência, não uma classificação definitiva de defeito do produto. O [roadmap](./IMPLEMENTATION-ROADMAP.md) e o [inventário Figma](./docs/references/figma/README.md) detalham o resultado. O relatório HTML e os traces foram gerados localmente em `playwright-report/` e `test-results/`, ignorados pelo Git; não atualizar baselines em lote.
 
-A matriz Lighthouse inicia um Vite Preview local e salva relatórios HTML/JSON em `reports/lighthouse/phase-6/`. Essa pasta é um artefato local ignorado pelo Git; as medianas versionadas ficam em `docs/performance/LIGHTHOUSE-PHASE-6.md`. Não mantenha outro servidor usando a porta `4173` durante essas execuções.
+A matriz Lighthouse inicia um Vite Preview local e versiona os relatórios HTML/JSON e o resumo em `docs/performance/lighthouse/phase-13-final-2026-11-15/`. A auditoria complementar das rotas pré-renderizadas usa o servidor local próprio na porta `4175` e aceita seletores como `npm run audit:lighthouse:prerendered -- --target=checkout --runs=1`; seus relatórios adicionais ficam em `reports/lighthouse/` (artefatos locais ignorados pelo Git). Resultados e condições estão em `docs/performance/LIGHTHOUSE.md`.
+
+`npm run build` também gera HTML estático para as rotas aplicáveis. Para incluir a homepage e os detalhes dos NFTs de demonstração, configure `VITE_ENABLE_MOCKS=true` no ambiente de build (no setup local, `.env` já vem com esse valor). Páginas privadas recebem apenas sua estrutura inicial; sessão, carrinho, carteira e pedido são carregados no cliente. Isso é pré-renderização estática de build, não SSR dinâmico.
 
 ## Documentação
 
@@ -144,10 +147,10 @@ A matriz Lighthouse inicia um Vite Preview local e salva relatórios HTML/JSON e
 - [Roadmap e auditoria de requisitos](./IMPLEMENTATION-ROADMAP.md)
 - [Guia de implementação e convenções](./AI-PROJECT-GUIDE.md)
 - [Inventário dos frames do Figma](./docs/references/figma/README.md)
-- [Resultados Lighthouse](./docs/performance/LIGHTHOUSE.md) e [matriz da Fase 6](./docs/performance/LIGHTHOUSE-PHASE-6.md)
+- [Resultados e próximos passos Lighthouse](./docs/performance/LIGHTHOUSE.md)
 
 ## Estado da entrega
 
 O código-fonte está publicado no repositório público [angelobarilari/kurio-marketplace](https://github.com/angelobarilari/kurio-marketplace), e a aplicação está disponível em [kurio-marketplace-two.vercel.app](https://kurio-marketplace-two.vercel.app).
 
-As diferenças visuais conhecidas e a decisão de manter o Lighthouse mobile atual estão registradas no roadmap. A rodada manual completa de teclado foi validada pelo responsável; foco, semântica, reflow e cenários automatizáveis também possuem cobertura Playwright.
+As diferenças visuais conhecidas estão registradas no roadmap; os resultados e próximos passos Lighthouse estão consolidados em [um único documento](./docs/performance/LIGHTHOUSE.md). A rodada manual completa de teclado foi validada pelo responsável; foco, semântica, reflow e cenários automatizáveis também possuem cobertura Playwright.

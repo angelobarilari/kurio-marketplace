@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { nftImages } from '@/assets'
+import { NftImage } from '@/components/media/nft-image'
 import { Button } from '@/components/ui/button'
 
 const heroSlides = [
@@ -70,11 +71,12 @@ export const HeroSection = () => {
         className="relative col-start-2 row-start-1 min-h-97.5 self-stretch max-[1100px]:min-h-80 max-[760px]:absolute max-[760px]:top-3 max-[760px]:right-3.5 max-[760px]:aspect-square max-[760px]:min-h-0 max-[760px]:w-[36%]"
         data-testid="hero-art"
       >
-        <img
+        <NftImage
           className="h-full max-h-102.5 w-full rounded-[18px] object-cover object-[center_35%] max-[760px]:rounded-2xl max-[760px]:object-[center_25%]"
           src={slide.image}
           alt={slide.alt}
           fetchPriority="high"
+          sizes="(max-width: 760px) 36vw, (max-width: 1100px) 40vw, 480px"
         />
       </div>
       <div
@@ -86,11 +88,16 @@ export const HeroSection = () => {
           <button
             key={item.name}
             type="button"
-            className={`size-2.5 rounded-full transition-colors ${activeSlide === index ? 'bg-(--color-primary)' : 'bg-primary/50'}`}
+            className="grid size-6 place-items-center rounded-full"
             aria-label={`Mostrar destaque ${index + 1}: ${item.name}`}
             aria-pressed={activeSlide === index}
             onClick={() => setActiveSlide(index)}
-          />
+          >
+            <span
+              className={`size-2.5 rounded-full transition-colors ${activeSlide === index ? 'bg-(--color-primary)' : 'bg-primary/50'}`}
+              aria-hidden="true"
+            />
+          </button>
         ))}
       </div>
     </section>

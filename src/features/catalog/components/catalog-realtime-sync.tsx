@@ -67,10 +67,15 @@ export const CatalogRealtimeSync = () => {
           reconnection: true,
         })
 
+        let hasConnected = false
         socket.on('connect', () => {
-          void queryClient.invalidateQueries({
-            predicate: (query) => query.queryKey[0] === 'nfts' && query.getObserversCount() > 0,
-          })
+          const hasMockScenario = Boolean(globalThis.localStorage?.getItem('kurio:mock-scenario'))
+          if (hasConnected || hasMockScenario) {
+            void queryClient.invalidateQueries({
+              predicate: (query) => query.queryKey[0] === 'nfts' && query.getObserversCount() > 0,
+            })
+          }
+          hasConnected = true
           socket?.emit('catalog.subscribe')
         })
         socket.on('nft.updated', handleNftUpdate)

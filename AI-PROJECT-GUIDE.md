@@ -141,7 +141,7 @@ Antes de criar HTML/Radix novo, procure o wrapper local em `src/components/ui`. 
 
 Teste resultados observáveis, semântica acessível e cenários relevantes. Use `--grep`, arquivo/projeto Playwright específicos para validação focada; execute toda a suíte ao fechar uma fase ou quando solicitado. Mudanças visuais relevantes exigem comparação com o frame e manutenção consciente dos baselines, não apenas atualização automática das imagens.
 
-A auditoria atual encontrou Performance Lighthouse mobile abaixo da meta e diferenças nas baselines visuais. O responsável aceitou manter esses resultados na entrega atual, mas isso não autoriza regressões futuras nem atualização automática dos snapshots: compare mudanças com os frames canônicos e consulte o roadmap. A aplicação já possui deploy público; não altere configuração, projeto ou provedor de hospedagem sem solicitação explícita.
+A auditoria mais recente mediu dez rotas mobile pré-renderizadas: Início e Carteiras ficaram em 88, enquanto as demais ficaram entre 91 e 97. Uma rodada separada da homepage chegou a 90; as medições são simuladas e variam, portanto não garantem o mesmo resultado no deploy ou em aparelho real. Preserve as imagens responsivas, não atualize baselines visuais automaticamente e consulte [docs/performance/LIGHTHOUSE.md](./docs/performance/LIGHTHOUSE.md) antes de alterar o caminho crítico. A aplicação já possui deploy público; não altere configuração, projeto ou provedor de hospedagem sem solicitação explícita.
 
 ```bash
 npm run typecheck

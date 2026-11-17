@@ -1,6 +1,7 @@
 import { Minus, Plus, Trash2 } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
+import { NftImage } from '@/components/media/nft-image'
 import { cartDesktopGridClass } from '@/features/cart/components/cart-table-layout'
 import type { CartItem } from '@/features/cart/types'
 import { cn } from '@/lib/utils'
@@ -9,6 +10,7 @@ type CartItemSummaryProps = { item: CartItem; variant: 'summary' }
 type EditableCartItemProps = {
   item: CartItem
   variant?: 'cart'
+  priority?: boolean
   pending: boolean
   onQuantityChange: (item: CartItem, quantity: number) => void
   onRemove: (item: CartItem) => void
@@ -53,7 +55,7 @@ export const CartItemRow = (props: CartItemRowProps) => {
     )
   }
 
-  const { pending, onQuantityChange, onRemove } = props
+  const { pending, onQuantityChange, onRemove, priority = false } = props
   return (
     <article
       className={cn(
@@ -63,9 +65,12 @@ export const CartItemRow = (props: CartItemRowProps) => {
     >
       <div className="flex min-w-0 items-center gap-4 max-[760px]:contents">
         <Link to="/nfts/$nftId" params={{ nftId: item.nft.id }} className="shrink-0">
-          <img
+          <NftImage
             src={item.nft.image}
             alt={item.nft.name}
+            sizes="(max-width: 760px) 96px, 70px"
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={priority ? 'high' : undefined}
             className="size-17.5 rounded-md object-cover max-[760px]:h-full max-[760px]:min-h-24 max-[760px]:w-24 max-[760px]:rounded-none"
           />
         </Link>

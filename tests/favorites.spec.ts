@@ -58,6 +58,11 @@ test('keeps mobile authentication dedicated and completes the requested home fav
 
   await expect(page).toHaveURL('/')
   await expect(card.getByRole('button')).toHaveAttribute('aria-pressed', 'true')
+
+  await page.goto('/profile/favorites')
+  const favoriteImage = page.getByTestId('nft-card').first().locator('img')
+  await expect(favoriteImage).toHaveAttribute('srcset', /320w/)
+  await expect(favoriteImage).toHaveAttribute('fetchpriority', 'high')
 })
 
 test('shows an error when the requested favorite fails after authentication', async ({ page }, testInfo) => {

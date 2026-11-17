@@ -104,7 +104,10 @@ test.describe('versioned visual baselines', () => {
     await page.goto('/')
     await expect(page.getByRole('heading', { name: 'NFTs disponíveis' })).toBeAttached()
     await expect(page.getByTestId('nft-card')).toHaveCount(9)
-    await expect(page.getByTestId('journal-card')).toHaveCount(4)
+    await expect(page.getByTestId('journal-card')).toHaveCount(
+      (page.viewportSize()?.width ?? 0) <= 760 ? 0 : 4,
+    )
+    await expect(page.getByRole('contentinfo')).toHaveCount((page.viewportSize()?.width ?? 0) <= 760 ? 0 : 1)
     await waitForImages(page)
     await expect(page).toHaveScreenshot('home.png', {
       animations: 'disabled',

@@ -1,11 +1,19 @@
 import { Link } from '@tanstack/react-router'
+import { NftImage } from '@/components/media/nft-image'
 import type { OrderItemSnapshot } from '@/types/order'
 
 export const OrderItems = ({ items }: { items: OrderItemSnapshot[] }) => (
   <div className="space-y-4">
-    {items.map((item) => (
+    {items.map((item, index) => (
       <article key={item.id} className="flex items-center gap-4">
-        <img src={item.image} alt="" className="size-16 shrink-0 rounded-md object-cover" />
+        <NftImage
+          src={item.image}
+          alt=""
+          sizes="64px"
+          loading={index === 0 ? 'eager' : 'lazy'}
+          fetchPriority={index === 0 ? 'high' : undefined}
+          className="size-16 shrink-0 rounded-md object-cover"
+        />
         <div className="min-w-0 flex-1">
           <Link
             to="/nfts/$nftId"

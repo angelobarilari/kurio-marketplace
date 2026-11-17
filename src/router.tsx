@@ -1,6 +1,7 @@
 import {
   createRootRoute,
   createRoute,
+  createMemoryHistory,
   createRouter,
   lazyRouteComponent,
   Link,
@@ -12,7 +13,7 @@ import type { AuthReturnTo } from '@/features/auth/types'
 import type { CatalogSearch } from '@/features/catalog/types'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { AuthFlowProvider } from '@/features/auth/components/auth-flow-provider'
-import type { Network } from '@/types/account'
+import { parseCouponCodeSearch, parseNetworkSearch } from '@/router-search'
 
 const HomePage = lazyRouteComponent(() => import('@/routes/home-page'), 'HomePage')
 const NftDetailPage = lazyRouteComponent(() => import('@/routes/nft-detail-page'), 'NftDetailPage')
@@ -24,6 +25,32 @@ const CheckoutPage = lazyRouteComponent(() => import('@/routes/checkout-page'), 
 const OrderPage = lazyRouteComponent(() => import('@/routes/order-page'), 'OrderPage')
 const LoginPage = lazyRouteComponent(() => import('@/routes/auth-page'), 'LoginPage')
 const RegisterPage = lazyRouteComponent(() => import('@/routes/auth-page'), 'RegisterPage')
+
+type RoutePreloader = () => Promise<unknown> | undefined
+
+const exactRoutePreloaders: Record<string, RoutePreloader> = {
+  '/': () => HomePage.preload?.(),
+  '/cart': () => CartPage.preload?.(),
+  '/checkout': () => CheckoutPage.preload?.(),
+  '/profile': () => ProfilePage.preload?.(),
+  '/profile/wallets': () => WalletsPage.preload?.(),
+  '/profile/favorites': () => FavoritesPage.preload?.(),
+  '/login': () => LoginPage.preload?.(),
+  '/register': () => RegisterPage.preload?.(),
+}
+
+const dynamicRoutePreloaders: { pattern: RegExp; preload: RoutePreloader }[] = [
+  { pattern: /^\/nfts\/[^/]+$/, preload: () => NftDetailPage.preload?.() },
+  { pattern: /^\/orders\/[^/]+$/, preload: () => OrderPage.preload?.() },
+]
+
+export const preloadAppRoute = (pathname: string) => {
+  const exactPreloader = Object.hasOwn(exactRoutePreloaders, pathname)
+    ? exactRoutePreloaders[pathname]
+    : undefined
+  if (exactPreloader) return exactPreloader()
+  return dynamicRoutePreloaders.find(({ pattern }) => pattern.test(pathname))?.preload()
+}
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -98,14 +125,8 @@ const profileRoute = createRoute({
 
 const validateWalletsSearch = (search: Record<string, unknown>) => {
   const returnTo = search.returnTo === '/checkout' ? '/checkout' : undefined
-  const network: Network | undefined =
-    search.network === 'Ethereum' || search.network === 'Polygon' || search.network === 'Solana'
-      ? search.network
-      : undefined
-  const couponCode =
-    typeof search.couponCode === 'string' && /^[A-Za-z0-9-]{1,32}$/.test(search.couponCode)
-      ? search.couponCode.toUpperCase()
-      : undefined
+  const network = parseNetworkSearch(search.network)
+  const couponCode = parseCouponCodeSearch(search.couponCode)
   return {
     ...(returnTo ? { returnTo } : {}),
     ...(network ? { network } : {}),
@@ -127,14 +148,8 @@ const favoritesRoute = createRoute({
 })
 
 const validateCheckoutSearch = (search: Record<string, unknown>) => {
-  const couponCode =
-    typeof search.couponCode === 'string' && /^[A-Za-z0-9-]{1,32}$/.test(search.couponCode)
-      ? search.couponCode.toUpperCase()
-      : undefined
-  const network =
-    search.network === 'Ethereum' || search.network === 'Polygon' || search.network === 'Solana'
-      ? search.network
-      : undefined
+  const couponCode = parseCouponCodeSearch(search.couponCode)
+  const network = parseNetworkSearch(search.network)
 
   return {
     ...(couponCode ? { couponCode } : {}),
@@ -175,10 +190,7 @@ const validateAuthSearch = (
         /^\/orders\/order-[a-z0-9-]+$/.test(returnTo))
         ? (returnTo as AuthReturnTo)
         : undefined,
-    couponCode:
-      typeof search.couponCode === 'string' && /^[A-Za-z0-9-]{1,32}$/.test(search.couponCode)
-        ? search.couponCode.toUpperCase()
-        : undefined,
+    couponCode: parseCouponCodeSearch(search.couponCode),
   }
 }
 
@@ -209,10 +221,14 @@ const routeTree = rootRoute.addChildren([
   registerRoute,
 ])
 
-export const router = createRouter({ routeTree })
+export const createAppRouter = (initialPath?: string) =>
+  createRouter({
+    routeTree,
+    ...(initialPath ? { history: createMemoryHistory({ initialEntries: [initialPath] }) } : {}),
+  })
 
 declare module '@tanstack/react-router' {
   interface Register {
-    router: typeof router
+    router: ReturnType<typeof createAppRouter>
   }
 }

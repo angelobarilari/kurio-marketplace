@@ -1,26 +1,30 @@
 import { Link } from '@tanstack/react-router'
+import { NftImage } from '@/components/media/nft-image'
 import type { OrderItemSnapshot } from '@/types/order'
 
 export const ReceiptItems = ({ items }: { items: OrderItemSnapshot[] }) => (
   <section className="px-11 pt-5 max-[760px]:px-5" aria-labelledby="receipt-items-title">
-    <h3 id="receipt-items-title" className="mb-2 font-bold">
+    <h2 id="receipt-items-title" className="mb-2 font-bold">
       Detalhes da transação
-    </h3>
+    </h2>
     <div className="grid grid-cols-[minmax(0,1fr)_72px_120px] border-b border-(--color-border) py-2 text-sm font-bold max-[520px]:grid-cols-[minmax(0,1fr)_88px]">
       <span>NFTs</span>
       <span className="text-center max-[520px]:hidden">Edições</span>
       <span className="text-right">Subtotal</span>
     </div>
     <div>
-      {items.map((item) => (
+      {items.map((item, index) => (
         <article
           key={item.id}
           className="grid grid-cols-[minmax(0,1fr)_72px_120px] items-center gap-2 py-3 max-[520px]:grid-cols-[minmax(0,1fr)_88px]"
         >
           <div className="flex min-w-0 items-center gap-3 max-[520px]:gap-2">
-            <img
+            <NftImage
               src={item.image}
               alt=""
+              sizes="(max-width: 520px) 56px, 80px"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : undefined}
               className="size-20 shrink-0 rounded-md object-cover max-[520px]:size-14"
             />
             <div className="min-w-0">

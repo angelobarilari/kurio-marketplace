@@ -1,7 +1,13 @@
 import * as React from 'react'
+import { createPortal } from 'react-dom'
+import { useSyncExternalStore } from 'react'
 import { X } from 'lucide-react'
 import { Dialog as DialogPrimitive } from 'radix-ui'
 import { cn } from '@/lib/utils'
+
+const subscribeToPortalTarget = () => () => {}
+const getPortalTarget = () => document.body
+const getServerPortalTarget = () => null
 
 const Dialog = DialogPrimitive.Root
 const DialogTrigger = DialogPrimitive.Trigger
@@ -25,26 +31,32 @@ const DialogContent = ({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content>) => (
-  <DialogPrimitive.Portal>
-    <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/75" />
-    <DialogPrimitive.Content
-      data-slot="dialog-content"
-      className={cn(
-        'fixed top-1/2 left-1/2 z-50 w-[min(92vw,900px)] -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-background p-5 shadow-xl outline-none',
-        className,
-      )}
-      {...props}
-    >
-      {children}
-      <DialogPrimitive.Close
-        className="absolute top-3 right-3 grid size-9 place-items-center bg-transparent text-(--color-primary-bright) outline-none hover:text-(--color-primary) focus-visible:ring-2 focus-visible:ring-ring"
-        aria-label="Fechar"
+}: React.ComponentProps<typeof DialogPrimitive.Content>) => {
+  const portalTarget = useSyncExternalStore(subscribeToPortalTarget, getPortalTarget, getServerPortalTarget)
+
+  const content = (
+    <>
+      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/75" />
+      <DialogPrimitive.Content
+        data-slot="dialog-content"
+        className={cn(
+          'fixed top-1/2 left-1/2 z-50 w-[min(92vw,900px)] -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-background p-5 shadow-xl outline-none',
+          className,
+        )}
+        {...props}
       >
-        <X className="size-4" />
-      </DialogPrimitive.Close>
-    </DialogPrimitive.Content>
-  </DialogPrimitive.Portal>
-)
+        {children}
+        <DialogPrimitive.Close
+          className="absolute top-3 right-3 grid size-9 place-items-center bg-transparent text-(--color-primary-bright) outline-none hover:text-(--color-primary) focus-visible:ring-2 focus-visible:ring-ring"
+          aria-label="Fechar"
+        >
+          <X className="size-4" />
+        </DialogPrimitive.Close>
+      </DialogPrimitive.Content>
+    </>
+  )
+
+  return portalTarget ? createPortal(content, portalTarget) : content
+}
 
 export { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger }

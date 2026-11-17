@@ -31,6 +31,11 @@ test('adds an NFT from detail and derives the header count from the remote cart'
       .filter({ visible: true })
       .first(),
   ).toBeVisible()
+  const cartImage = page
+    .getByRole('region', { name: 'NFTs', exact: true })
+    .getByRole('img', { name: 'Emerald Ape' })
+  await expect(cartImage).toHaveAttribute('srcset', /320w/)
+  await expect(cartImage).toHaveAttribute('fetchpriority', 'high')
 })
 
 test('merges an existing NFT and respects the edition limit', async ({ page }) => {
@@ -325,7 +330,11 @@ test('realtime availability changes mark a sold-out cart item', async ({ page },
   await expect(page.getByRole('button', { name: /Conectar e finalizar|Atualizando cotação/ })).toBeDisabled()
 })
 
-test('recommendations reuse an accessible carousel', async ({ page }) => {
+test('recommendations reuse an accessible carousel', async ({ page }, testInfo) => {
+  test.skip(
+    testInfo.project.name.includes('mobile'),
+    'The recommendations carousel is not displayed on mobile.',
+  )
   await addEmeraldApe(page)
   const recommendations = page.getByRole('region', { name: 'NFTs recomendados' })
   await expect(recommendations).toBeVisible()
@@ -342,6 +351,23 @@ test('recommendations reuse an accessible carousel', async ({ page }) => {
   ).toBeGreaterThanOrEqual(24)
   await next.click()
   await expect(previous).toBeEnabled()
+})
+
+test('mobile cart does not fetch hidden recommendations', async ({ page }, testInfo) => {
+  test.skip(!testInfo.project.name.includes('mobile'))
+  const recommendationRequests: string[] = []
+  page.on('request', (request) => {
+    const url = new URL(request.url())
+    if (url.pathname === '/api/nfts' && url.searchParams.get('sort') === 'popular') {
+      recommendationRequests.push(url.href)
+    }
+  })
+
+  await addEmeraldApe(page)
+  const summary = page.getByTestId('mobile-cart-summary')
+  await expect(summary).toBeVisible()
+  await expect(summary.getByText('Subtotal')).toBeVisible()
+  expect(recommendationRequests).toHaveLength(0)
 })
 
 test('cart reflows without horizontal overflow and exposes keyboard focus', async ({ page }) => {
@@ -420,4 +446,22 @@ test('mobile cart uses compact cards without horizontal overflow', async ({ page
     content: document.documentElement.scrollWidth,
   }))
   expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport)
+})
+
+test('mobile cart keeps the summary panel height stable while the quote loads', async ({
+  page,
+}, testInfo) => {
+  test.skip(!testInfo.project.name.includes('mobile'))
+  await page.evaluate(() => localStorage.setItem('kurio:mock-scenario', 'quote-slow'))
+  await addEmeraldApe(page)
+
+  const summary = page.getByTestId('mobile-cart-summary')
+  await expect(summary.getByText('Atualizando valores...', { exact: true })).toBeVisible()
+  const pendingBox = await summary.boundingBox()
+  await expect(summary.getByText('Subtotal', { exact: true })).toBeVisible()
+  const loadedBox = await summary.boundingBox()
+
+  expect(pendingBox).not.toBeNull()
+  expect(loadedBox).not.toBeNull()
+  expect(Math.abs(pendingBox!.height - loadedBox!.height)).toBeLessThanOrEqual(1)
 })
